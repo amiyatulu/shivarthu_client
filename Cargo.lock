@@ -1390,6 +1390,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "jsonrpsee-wasm-client"
+version = "0.16.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "46811fcec615d8e58228e7e281b3238693b26da1eb2469ac208af40a217bc8d9"
+dependencies = [
+ "jsonrpsee-client-transport",
+ "jsonrpsee-core",
+ "jsonrpsee-types",
+]
+
+[[package]]
 name = "keccak"
 version = "0.1.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2454,6 +2465,8 @@ dependencies = [
  "futures",
  "gloo 0.8.0",
  "hex",
+ "jsonrpsee-core",
+ "jsonrpsee-wasm-client",
  "parity-scale-codec",
  "serde",
  "serde_json",

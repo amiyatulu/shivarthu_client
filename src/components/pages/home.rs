@@ -1,7 +1,6 @@
 use gloo::console::log;
 use wasm_bindgen_futures;
 use yew::prelude::*;
-
 use sp_keyring::AccountKeyring;
 use subxt::config::PolkadotConfig;
 
@@ -29,6 +28,7 @@ pub fn home() -> Html {
                 let period_storage = polkadot::storage().template_module().period_name(&key);
                 let period = client.storage().fetch(&period_storage, None).await.unwrap();
                 log!(format!("{:?}", period));
+                // log!(serde_json::to_string_pretty(&period).unwrap());
             });
             first_load.set(false);
         }
