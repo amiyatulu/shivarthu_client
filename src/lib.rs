@@ -28,7 +28,7 @@ pub fn app() -> Html {
 
     html! (
        <BrowserRouter>
-           <Switch<Route> render={Switch::render(switch)} />
+           <Switch<Route> render={switch} />
        </BrowserRouter>
     )
 }
