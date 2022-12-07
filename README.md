@@ -2,5 +2,5 @@
 
 ## rpc call to substrate
 ## transaction
-## strorage call
+## storage call
 ## file upload
