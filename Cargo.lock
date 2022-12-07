@@ -2490,6 +2490,7 @@ dependencies = [
  "futures",
  "gloo",
  "hex",
+ "js-sys",
  "jsonrpsee-core",
  "jsonrpsee-wasm-client",
  "parity-scale-codec",
