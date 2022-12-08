@@ -4,6 +4,7 @@ use stylist::yew::styled_component;
 use yew::prelude::*;
 use yew_router::prelude::*;
 mod components;
+mod constants;
 mod router;
 use serde::{self, Serialize, Deserialize};
 

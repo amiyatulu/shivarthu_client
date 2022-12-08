@@ -1,0 +1,2 @@
+
+pub const CRUST_TOKEN: &str = "Basic token";
