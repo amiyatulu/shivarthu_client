@@ -1,6 +1,7 @@
 use gloo::console::log;
 use web_sys::{File, FileList, HtmlInputElement};
 use yew::prelude::*;
+use crate::components::api::ipfs_request::ipfs_call;
 
 #[function_component(FileUpload)]
 pub fn file_upload() -> Html {
@@ -12,10 +13,11 @@ pub fn file_upload() -> Html {
             let file = event.data_transfer().unwrap().files().unwrap().get(0);
             log!(file.clone().unwrap());
             let mut filelistvalue: Vec<_> = clone_filelist.to_vec();
-            filelistvalue.push(file.unwrap());
+            filelistvalue.push(file.clone().unwrap());
             clone_filelist.set(filelistvalue);
             wasm_bindgen_futures::spawn_local(async move {
-              
+              let response = ipfs_call(file.unwrap(), "ipfs".to_owned()).await;
+              log!(response.Hash);
             });
         })
     };

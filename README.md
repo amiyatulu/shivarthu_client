@@ -3,4 +3,4 @@
 ## rpc call to substrate
 ## transaction
 ## storage call
-## file upload
+## ipfs file upload
