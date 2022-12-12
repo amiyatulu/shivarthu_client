@@ -1,10 +1,14 @@
 use gloo::console::log;
 use web_sys::{File, FileList, HtmlInputElement};
 use yew::prelude::*;
+use yew_icons::{Icon, IconId};
+use stylist::{yew::styled_component, Style};
 use crate::components::api::ipfs_request::ipfs_call;
 
-#[function_component(FileUpload)]
+const STYLE_FILE: &str = include_str!("fileupload.css");
+#[styled_component(FileUpload)]
 pub fn file_upload() -> Html {
+    let stylesheet = Style::new(STYLE_FILE).unwrap();
     let filelist: UseStateHandle<Vec<File>> = use_state(|| vec![]);
     let clone_filelist = filelist.clone();
     let ondrop = {
@@ -39,27 +43,29 @@ pub fn file_upload() -> Html {
         })
     };
     html! {
-        <div id="wrapper">
-            <p id="title">{"I am inside file upload"}</p>
-            <label for="file-upload">
-                <div
-                    id="drop-container"
-                    ondrop={ondrop}
-                    ondragover={ondragover}
-                    ondragenter={ondragenter}
-                 >
-                 <i class="fa fa-cloud-upload"></i>
-                 <p>{"Drop your images here or click to select"}</p>
-                </div>
-            </label>
-            <input
-                id="file-upload"
-                type="file"
-                accept="image/*, video/*"
-                multiple={true}
-                onchange={onchange}
-            />
-            <div>{format!("{:?}", filelist)}</div>
+        <div class={stylesheet}>
+            <div id="wrapper">
+                <p id="title">{"I am inside file upload"}</p>
+                <label for="file-upload">
+                    <div
+                        id="drop-container"
+                        ondrop={ondrop}
+                        ondragover={ondragover}
+                        ondragenter={ondragenter}
+                    >
+                    <Icon icon_id={IconId::BootstrapCloudUpload} />
+                    <p>{"Drop your images here or click to select"}</p>
+                    </div>
+                </label>
+                <input
+                    id="file-upload"
+                    type="file"
+                    accept="image/*, video/*"
+                    multiple={true}
+                    onchange={onchange}
+                />
+                <div>{format!("{:?}", filelist)}</div>
+            </div>
         </div>
     }
 }

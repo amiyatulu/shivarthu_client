@@ -12,7 +12,7 @@ gloo = "0.8.0"
 gloo-net = { version = "0.2.5", feature = ["http"]}
 serde = "1.0.144"
 serde_json = "1.0.85"
-stylist = { version = "0.11.0", features=["yew"]}
+stylist = { version = "0.11.0", features = ["yew", "parser"] }
 yewdux = "0.9"
 wasm-bindgen = "0.2.82"
 web-sys = {version = "0.3.59", features=["HtmlInputElement", "DragEvent", "File", "DataTransfer"]}
@@ -29,4 +29,5 @@ codec = { package = "parity-scale-codec", version = "3.0.0", default-features = 
 # getrandom = { version = "0.2.7", features = ["js"] }
 subxt = { version="0.25.0", default-features = false, features = ["jsonrpsee-web"] }
 magic-crypt = "3.1.12"
+yew_icons = {version = "0.7", features = ["BootstrapCloudUpload"]}
 

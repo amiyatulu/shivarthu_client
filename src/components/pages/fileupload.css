@@ -1,15 +1,3 @@
-* {
-  box-sizing: border-box;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-  background: #2d3131;
-  color: #fcfcfc;
-}
 
 img,
 video {
@@ -45,7 +33,7 @@ input#file-upload {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #3d4141;
+  background: #3ac4c4;
   border: 1px dashed #fcfcfc;
   border-radius: 1rem;
 }

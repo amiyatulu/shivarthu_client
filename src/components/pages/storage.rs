@@ -10,8 +10,8 @@ use subxt::config::PolkadotConfig;
 )]
 pub mod polkadot {}
 
-#[function_component(Home)]
-pub fn home() -> Html {
+#[function_component(Storage)]
+pub fn storage() -> Html {
     let first_load = use_state(|| true);
 
     use_effect(move || {
@@ -36,6 +36,6 @@ pub fn home() -> Html {
     });
 
     html! {
-        <h1>{"Home"}</h1>
+        <h1>{"Storage"}</h1>
     }
 }

@@ -1,4 +1,4 @@
-use crate::components::pages::home::Home;
+use crate::components::pages::storage::Storage;
 use yew::prelude::*;
 use yew_router::prelude::*;
 use crate::components::pages::rpc_call::Rpc;
@@ -8,8 +8,8 @@ use crate::components::accounts::add_accounts::AddAccounts;
 
 #[derive(Debug, Clone, PartialEq, Routable)]
 pub enum Route {
-    #[at("/")]
-    Home,
+    #[at("/storage")]
+    Storage,
     #[at("/rpc")]
     Rpc,
     #[at("/transaction")]
@@ -22,7 +22,7 @@ pub enum Route {
 
 pub fn switch(route: Route) -> Html {
     match route {
-        Route::Home => html! { <Home />},
+        Route::Storage => html! { <Storage />},
         Route::Rpc => html! {<Rpc/>},
         Route::Transaction => html! {<Transaction/>},
         Route::FileUpload => html! {<FileUpload/>},

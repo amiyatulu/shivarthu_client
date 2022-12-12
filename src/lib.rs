@@ -7,7 +7,7 @@ mod components;
 mod constants;
 mod router;
 use serde::{self, Serialize, Deserialize};
-
+use components::navigation::nav::Nav;
 
 #[derive(Serialize, Deserialize, Clone)]
 pub struct Accounts {
@@ -28,8 +28,11 @@ pub fn app() -> Html {
     });
 
     html! (
-       <BrowserRouter>
-           <Switch<Route> render={switch} />
-       </BrowserRouter>
+        <>
+            <Nav/>    
+            <BrowserRouter>
+                <Switch<Route> render={switch} />
+            </BrowserRouter>
+       </>
     )
 }
