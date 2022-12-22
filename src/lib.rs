@@ -29,7 +29,7 @@ pub fn app() -> Html {
 
     html! (
         <>
-            <Nav/>    
+            // <Nav/>    
             <BrowserRouter>
                 <Switch<Route> render={switch} />
             </BrowserRouter>
