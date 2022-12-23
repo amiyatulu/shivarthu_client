@@ -1,7 +1,6 @@
 use gloo::console::log;
 use wasm_bindgen_futures;
 use yew::prelude::*;
-use sp_keyring::AccountKeyring;
 use subxt::config::PolkadotConfig;
 
 #[subxt::subxt(

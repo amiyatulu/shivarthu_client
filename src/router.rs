@@ -5,6 +5,7 @@ use crate::components::pages::rpc_call::Rpc;
 use crate::components::pages::transaction::Transaction;
 use crate::components::pages::fileupload::FileUpload;
 use crate::components::accounts::add_accounts::AddAccounts;
+use crate::components::accounts::account_home::AccountHome;
 
 #[derive(Debug, Clone, PartialEq, Routable)]
 pub enum Route {
@@ -18,6 +19,8 @@ pub enum Route {
     FileUpload,
     #[at("/seed")]
     AddAccounts,
+    #[at("/home")]
+    AccountHome,
 }
 
 pub fn switch(route: Route) -> Html {
@@ -27,5 +30,6 @@ pub fn switch(route: Route) -> Html {
         Route::Transaction => html! {<Transaction/>},
         Route::FileUpload => html! {<FileUpload/>},
         Route::AddAccounts => html! {<AddAccounts/>},
+        Route::AccountHome => html! {<AccountHome/>},
     }
 }
