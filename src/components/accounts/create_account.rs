@@ -1,6 +1,8 @@
+use std::ops::Deref;
+
 use crate::components::navigation::nav::Nav;
 use crate::components::accounts::multistep_account_creation::info_warning::InfoWarning;
-use crate::components::accounts::multistep_account_creation::generate_mnemonic::GenerateMnemonic;
+use crate::components::accounts::multistep_account_creation::mnemonic::Mnemonic;
 use stylist::{yew::styled_component, Style};
 use yew::{prelude::*, virtual_dom::VNode};
 const STYLE_FILE: &str = include_str!("account_home.css");
@@ -9,6 +11,7 @@ const STYLE_FILE: &str = include_str!("account_home.css");
 pub fn create_account() -> Html {
     let stylesheet = Style::new(STYLE_FILE).unwrap();
     let step_state = use_state(|| 0);
+    let mnemonic_phrase = use_state(|| "".to_string());
 
     let prev_step: Callback<()> = {
         let state = step_state.clone();
@@ -19,6 +22,11 @@ pub fn create_account() -> Html {
         let state = step_state.clone();
         Callback::from(move |_| state.set(*state + 1))
     };
+    let mnemonic_phrase_clone = mnemonic_phrase.clone();
+
+    let set_mnemonic_phrase = Callback::from(move |phrase:String| {
+            mnemonic_phrase_clone.set(phrase);
+    });
 
     let main_node = |value: VNode| {
         html! {
@@ -40,7 +48,7 @@ pub fn create_account() -> Html {
         html! {
             <>
             <p> {"current count: "} {*step_state} </p>
-            <InfoWarning continue_onclick={next_step} />
+            <InfoWarning continue_onclick={next_step} set_mnemonic_phrase={set_mnemonic_phrase} />
             </>
         }
     };
@@ -51,7 +59,7 @@ pub fn create_account() -> Html {
 
         html! {
             <>
-            <GenerateMnemonic continue_onclick={next_step} back_onclick={prev_step} />
+            <Mnemonic continue_onclick={next_step} back_onclick={prev_step} mnemonic_phrase={mnemonic_phrase.deref().clone()}  />
             </>
         }
     };
