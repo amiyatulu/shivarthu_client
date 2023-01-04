@@ -1,4 +1,6 @@
 use yew::prelude::*;
+use yewdux::prelude::*;
+use crate::components::accounts::account_store::PhraseStore;
 
 
 
@@ -6,14 +8,14 @@ use yew::prelude::*;
 pub struct Props {
     pub continue_onclick: Callback<()>,
     pub back_onclick: Callback<()>,
-    pub mnemonic_phrase: String,
 }
 
 
 #[function_component(Mnemonic)]
 pub fn mnemonic(props: &Props) -> Html  {     
+    let (store, _) = use_store::<PhraseStore>();
     let continue_onclick = props.continue_onclick.clone(); 
-    let mnemonic_phrase = props.mnemonic_phrase.clone();
+    let mnemonic_phrase = store.mnemonic_phrase.clone().unwrap_or_default();
 
     let contin = Callback::from(move |event: MouseEvent|{        
         continue_onclick.emit(());
@@ -24,11 +26,10 @@ pub fn mnemonic(props: &Props) -> Html  {
         back_onclick.emit(());
     });
     html! {
-        <>
+     <>
         <div>{mnemonic_phrase}</div>
         <button type="button" class="btn btn-warning" onclick={contin}>{"Continue"}</button>
         <button type="button" class="btn btn-warning" onclick={back}>{"Back"}</button>
-
       </>
     }
    

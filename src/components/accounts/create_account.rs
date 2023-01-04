@@ -1,17 +1,19 @@
-use std::ops::Deref;
-
+use crate::components::accounts::account_store::PhraseStore;
 use crate::components::navigation::nav::Nav;
 use crate::components::accounts::multistep_account_creation::info_warning::InfoWarning;
 use crate::components::accounts::multistep_account_creation::mnemonic::Mnemonic;
 use stylist::{yew::styled_component, Style};
 use yew::{prelude::*, virtual_dom::VNode};
+use yewdux::prelude::*;
 const STYLE_FILE: &str = include_str!("account_home.css");
 
 #[styled_component(CreateAccount)]
 pub fn create_account() -> Html {
     let stylesheet = Style::new(STYLE_FILE).unwrap();
     let step_state = use_state(|| 0);
-    let mnemonic_phrase = use_state(|| "".to_string());
+    let (_, phrase_dispatch) = use_store::<PhraseStore>();
+
+    // let mnemonic_phrase = use_state(|| "".to_string());
 
     let prev_step: Callback<()> = {
         let state = step_state.clone();
@@ -22,10 +24,10 @@ pub fn create_account() -> Html {
         let state = step_state.clone();
         Callback::from(move |_| state.set(*state + 1))
     };
-    let mnemonic_phrase_clone = mnemonic_phrase.clone();
-
+    // let mnemonic_phrase_clone = mnemonic_phrase.clone();
+    let dispatch = phrase_dispatch.clone();
     let set_mnemonic_phrase = Callback::from(move |phrase:String| {
-            mnemonic_phrase_clone.set(phrase);
+        dispatch.reduce_mut(|store| store.mnemonic_phrase = Some(phrase));
     });
 
     let main_node = |value: VNode| {
@@ -59,7 +61,7 @@ pub fn create_account() -> Html {
 
         html! {
             <>
-            <Mnemonic continue_onclick={next_step} back_onclick={prev_step} mnemonic_phrase={mnemonic_phrase.deref().clone()}  />
+            <Mnemonic continue_onclick={next_step} back_onclick={prev_step}  />
             </>
         }
     };

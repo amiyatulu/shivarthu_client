@@ -7,6 +7,7 @@ use crate::components::pages::fileupload::FileUpload;
 use crate::components::accounts::add_accounts::AddAccounts;
 use crate::components::accounts::account_home::AccountHome;
 use crate::components::accounts::create_account::CreateAccount;
+use crate::components::pages::transaction_from_hook::TransactionFromHooks;
 
 #[derive(Debug, Clone, PartialEq, Routable)]
 pub enum Route {
@@ -24,6 +25,8 @@ pub enum Route {
     AccountHome,
     #[at("/create-account")]
     CreateAccount,
+    #[at("/hook-tx")]
+    TransactionFromHooks,
 }
 
 pub fn switch(route: Route) -> Html {
@@ -35,5 +38,6 @@ pub fn switch(route: Route) -> Html {
         Route::AddAccounts => html! {<AddAccounts/>},
         Route::AccountHome => html! {<AccountHome/>},
         Route::CreateAccount => html! {<CreateAccount/>},
+        Route::TransactionFromHooks => html! {<TransactionFromHooks/>},
     }
 }
