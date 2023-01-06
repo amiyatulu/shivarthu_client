@@ -37,13 +37,17 @@ where
                     if let Some(seed) = phrase_option {
                         let pair = get_from_seed(&seed);
                         let signer = PairSigner::new(pair);
-                        let hash = client
-                            .tx()
-                            .sign_and_submit_default(&tx, &signer)
-                            .await
-                            .unwrap();
-                        hash_state_clone.set(format!("{:?}", hash.clone()));
-                        log!(format!("{:?}", hash));
+                        let result = client.tx().sign_and_submit_default(&tx, &signer).await;
+                        match result {
+                            Ok(hash) => {
+                                hash_state_clone.set(format!("{:?}", hash.clone()));
+                                log!(format!("{:?}", hash));
+                            }
+                            Err(err) => {
+                                hash_state_clone.set(format!("{:?}", err));
+                                log!(format!("{:?}", err));
+                            }
+                        }
                     } else {
                         log!(format!("Seed doesnot exists"));
                     }
