@@ -83,7 +83,7 @@ pub fn create_account() -> Html {
             </>
         },
         1 => html! {<> {main_node(step_one)} </>},
-        2 => html! {<> {main_node(step_two)} </>}, // test transaction
+        2 => html! {<> {*step_state} </>}, 
         _ => html! {<> {*step_state} </>},
     }
 }

@@ -8,6 +8,7 @@ use crate::components::accounts::add_accounts::AddAccounts;
 use crate::components::accounts::account_home::AccountHome;
 use crate::components::accounts::create_account::CreateAccount;
 use crate::components::pages::transaction_from_hook::TransactionFromHooks;
+use crate::components::accounts::set_phrase_from_pass::SetPhraseFromPass;
 
 #[derive(Debug, Clone, PartialEq, Routable)]
 pub enum Route {
@@ -27,6 +28,8 @@ pub enum Route {
     CreateAccount,
     #[at("/hook-tx")]
     TransactionFromHooks,
+    #[at("/password")]
+    SetPhraseFromPass
 }
 
 pub fn switch(route: Route) -> Html {
@@ -39,5 +42,6 @@ pub fn switch(route: Route) -> Html {
         Route::AccountHome => html! {<AccountHome/>},
         Route::CreateAccount => html! {<CreateAccount/>},
         Route::TransactionFromHooks => html! {<TransactionFromHooks/>},
+        Route::SetPhraseFromPass => html!{<SetPhraseFromPass/>},
     }
 }

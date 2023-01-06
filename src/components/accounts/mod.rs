@@ -4,3 +4,4 @@ pub mod create_account;
 pub mod account_home;
 pub mod multistep_account_creation;
 pub mod sign_tx_hook;
+pub mod set_phrase_from_pass;

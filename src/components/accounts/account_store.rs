@@ -12,3 +12,8 @@ pub (super) struct AccountStore {
 pub (super) struct PhraseStore {
     pub mnemonic_phrase: Option<String>,
 }
+
+#[derive(Default, Clone, PartialEq, Eq, Deserialize, Serialize, Store)]
+pub struct PhaseExists {
+    pub phase_exists_in_state: bool,
+}

@@ -36,7 +36,7 @@ where
                     let phrase_option = &store_clone.mnemonic_phrase;
                     if let Some(seed) = phrase_option {
                         let pair = get_from_seed(&seed);
-                        let signer = PairSigner::new(AccountKeyring::Alice.pair());
+                        let signer = PairSigner::new(pair);
                         let hash = client
                             .tx()
                             .sign_and_submit_default(&tx, &signer)
