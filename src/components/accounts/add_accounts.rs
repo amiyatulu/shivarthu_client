@@ -47,8 +47,8 @@ pub fn add_accounts() -> Html {
         event.prevent_default();
         if cloned_seed_state2.is_some() && cloned_password_state2.is_some() {
             let seed_string = cloned_seed_state2.as_ref().unwrap();
-            let mc = new_magic_crypt!(seed_string, 256);
-            let base64 = mc.encrypt_str_to_base64(cloned_password_state2.as_ref().unwrap());
+            let mc = new_magic_crypt!(cloned_password_state2.as_ref().unwrap(), 256);
+            let base64 = mc.encrypt_str_to_base64(seed_string);
             store.hash = Some(base64);
         }
     });

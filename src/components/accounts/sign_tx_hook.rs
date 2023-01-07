@@ -1,7 +1,6 @@
 use crate::components::accounts::account_store::PhraseStore;
 use gloo::console::log;
 use sp_core::{ed25519, Pair};
-use sp_keyring::AccountKeyring;
 use std::ops::Deref;
 use subxt::{tx::PairSigner, PolkadotConfig};
 use yew::prelude::*;
@@ -54,11 +53,9 @@ where
                 });
 
                 first_load.set(false);
-            }
-            || {};
+            };
         },
         store,
     );
-    // "hello".to_string()
     hash_state.deref().clone()
 }
