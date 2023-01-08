@@ -2652,7 +2652,6 @@ dependencies = [
  "serde_json",
  "sp-core",
  "sp-keyring",
- "sp-runtime",
  "stylist",
  "subxt",
  "tiny-bip39 1.0.0",

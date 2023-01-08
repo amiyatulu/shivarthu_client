@@ -32,7 +32,6 @@ subxt = { version="0.25.0", default-features = false, features = ["jsonrpsee-web
 magic-crypt = "3.1.12"
 yew_icons = { version = "0.7", features = ["BootstrapCloudUpload"]}
 sp-core = { version = "7.0.0", default-features = false }
-sp-runtime = { version = "7.0.0", default-features = false  }
 tiny-bip39 = "1.0.0"
 
 [profile.release]

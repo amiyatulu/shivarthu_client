@@ -8,6 +8,7 @@ pub (super) struct AccountStore {
     pub hash: Option<String>,
 }
 
+// Does not get stored in local storage
 #[derive(Default, Clone, PartialEq, Eq, Deserialize, Serialize, Store)]
 pub (super) struct PhraseStore {
     pub mnemonic_phrase: Option<String>,
