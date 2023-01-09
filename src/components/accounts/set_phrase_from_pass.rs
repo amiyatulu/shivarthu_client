@@ -1,4 +1,4 @@
-use crate::components::accounts::account_store::AccountStore;
+use crate::components::accounts::account_store::{AccountStore, PhraseStore, PhaseExists};
 use crate::router::Route;
 use gloo::console::log;
 use magic_crypt::{new_magic_crypt, MagicCryptTrait};
@@ -10,7 +10,9 @@ use yewdux::prelude::*;
 
 #[function_component(SetPhraseFromPass)]
 pub fn set_phrase_from_pass() -> Html {
-    let (_, auth_dispatch) = use_store::<AccountStore>();
+    let (_, auth_dispatch_account) = use_store::<AccountStore>();
+    let (_, auth_dispatch_pharase) = use_store::<PhraseStore>();
+    let (_, dispatch_phase_exists) = use_store::<PhaseExists>();
 
     let password_state: UseStateHandle<Option<String>> = use_state(|| None);
     let hash_error_sign_in = use_state(|| false);
@@ -35,13 +37,18 @@ pub fn set_phrase_from_pass() -> Html {
         cloned_password_state.set(password_value);
     });
 
-    let onsubmit = auth_dispatch.reduce_mut_callback_with(move |store, event: SubmitEvent| {
+    let onsubmit = auth_dispatch_account.reduce_mut_callback_with(move |store, event: SubmitEvent| {
         event.prevent_default();
+        let dispatch_pharase_clone = auth_dispatch_pharase.clone();
+        let dispatch_phase_exists_clone = dispatch_phase_exists.clone();
         if cloned_password_state2.is_some() {
             if let Some(hash) = &store.hash {
                 let mc = new_magic_crypt!(cloned_password_state2.as_ref().unwrap(), 256);
                 let seed = mc.decrypt_base64_to_string(&hash).unwrap();
-                log!(seed);
+                // log!(seed.clone());
+                dispatch_pharase_clone.reduce_mut(|store| store.mnemonic_phrase = Some(seed));
+                dispatch_phase_exists_clone.reduce_mut(|store| store.phase_exists_in_state = true);
+
             } else {
                 cloned_hash_error_sign_in.set(true);
                 log!("hash does not exit");

@@ -9,6 +9,9 @@ use crate::components::accounts::account_home::AccountHome;
 use crate::components::accounts::create_account::CreateAccount;
 use crate::components::pages::transaction_from_hook::TransactionFromHooks;
 use crate::components::accounts::set_phrase_from_pass::SetPhraseFromPass;
+use crate::components::pages::conditional_transaction_modal::ConditionalTransactionModal;
+
+
 
 #[derive(Debug, Clone, PartialEq, Routable)]
 pub enum Route {
@@ -29,7 +32,9 @@ pub enum Route {
     #[at("/hook-tx")]
     TransactionFromHooks,
     #[at("/password")]
-    SetPhraseFromPass
+    SetPhraseFromPass,
+    #[at("/conditional-transaction")]
+    ConditionalTransactionModal
 }
 
 pub fn switch(route: Route) -> Html {
@@ -43,5 +48,6 @@ pub fn switch(route: Route) -> Html {
         Route::CreateAccount => html! {<CreateAccount/>},
         Route::TransactionFromHooks => html! {<TransactionFromHooks/>},
         Route::SetPhraseFromPass => html!{<SetPhraseFromPass/>},
+        Route::ConditionalTransactionModal => html!{<ConditionalTransactionModal/>},
     }
 }

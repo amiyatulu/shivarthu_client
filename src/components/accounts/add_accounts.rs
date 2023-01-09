@@ -56,10 +56,9 @@ pub fn add_accounts() -> Html {
     html! {
         <>
             <Nav/> 
-            <div class="container">
-         
+            <div class="container">         
             <br/>
-                <form onsubmit={onsubmit}>
+                <form onsubmit={onsubmit} autocomplete="off">
                 <div class="mb-3">
                     <label for="seed" class="form-label">{"Seed"}</label>
                     <input type="text" class="form-control" name="seed" onchange={seed_changed}/>
