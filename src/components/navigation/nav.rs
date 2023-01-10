@@ -1,4 +1,5 @@
 use yew::prelude::*;
+use crate::components::accounts::account_address_view::AccountAddressView;
 
 #[function_component(Nav)]
 pub fn nav() -> Html {
@@ -36,11 +37,19 @@ pub fn nav() -> Html {
                             <li><a class="dropdown-item" href="#">{"Something else here"}</a></li>
                         </ul>
                         </li>
+                        <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#"><AccountAddressView/></a>
+                        </li>
                     </ul>
-                    <form class="d-flex mt-3 mt-lg-0" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-                        <button class="btn btn-outline-success" type="submit">{"Search"}</button>
-                    </form>
+                    // <form class="d-flex mt-3 mt-lg-0" role="search">
+                    //     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+                    //     <button class="btn btn-outline-success" type="submit">{"Search"}</button>
+                    // </form>
+                    // <ul class="navbar-nav -flex mt-3 mt-lg-0">
+                    //     <li class="nav-item">
+                    //     <a class="nav-link active" aria-current="page" href="#"><AccountAddressView/></a>
+                    //     </li>
+                    // </ul>
                     </div>
                 </div>
                 </div>

@@ -1,6 +1,6 @@
 use crate::components::accounts::account_store::PhraseStore;
 use gloo::console::log;
-use sp_core::{ed25519, Pair};
+use crate::components::accounts::functions::get_from_seed_sr;
 use std::ops::Deref;
 use subxt::{tx::PairSigner, PolkadotConfig};
 use yew::prelude::*;
@@ -17,11 +17,6 @@ where
 
     let hash_state = use_state(|| "".to_owned());
 
-    fn get_from_seed(seed: &str) -> ed25519::Pair {
-        ed25519::Pair::from_string(&format!("{}", seed), None)
-            .expect("static values are valid; qed")
-    }
-
     let hash_state_clone = hash_state.clone();
     use_effect_with_deps(
         move |_| {
@@ -34,7 +29,7 @@ where
                     .unwrap();
                     let phrase_option = &store_clone.mnemonic_phrase;
                     if let Some(seed) = phrase_option {
-                        let pair = get_from_seed(&seed);
+                        let pair = get_from_seed_sr(&seed);
                         let signer = PairSigner::new(pair);
                         let result = client.tx().sign_and_submit_default(&tx, &signer).await;
                         match result {
