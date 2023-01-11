@@ -1,5 +1,6 @@
 use yew::prelude::*;
 use crate::components::accounts::account_address_view::AccountAddressView;
+use crate::components::accounts::signout_view::SignOutView;
 
 #[function_component(Nav)]
 pub fn nav() -> Html {
@@ -21,9 +22,7 @@ pub fn nav() -> Html {
                         <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">{"Home"}</a>
                         </li>
-                        <li class="nav-item">
-                        <a class="nav-link" href="#">{"Link"}</a>
-                        </li>
+                        <SignOutView/>
                         <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {"Dropdown"}

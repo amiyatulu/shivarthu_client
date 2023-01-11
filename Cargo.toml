@@ -9,6 +9,7 @@ edition = "2021"
 
 yew = { version = "0.20.0", features = ["csr"] }
 gloo = "0.8.0"
+gloo-storage = "0.2.2"
 gloo-net = { version = "0.2.5", feature = ["http"]}
 gloo-timers = "0.2.4"
 serde = "1.0.144"

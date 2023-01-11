@@ -10,6 +10,7 @@ use crate::components::accounts::create_account::CreateAccount;
 use crate::components::pages::transaction_from_hook::TransactionFromHooks;
 use crate::components::accounts::set_phrase_from_pass::SetPhraseFromPass;
 use crate::components::pages::conditional_transaction_modal::ConditionalTransactionModal;
+use crate::components::accounts::clear_local_storage::ClearLocalStorage;
 
 
 
@@ -25,7 +26,7 @@ pub enum Route {
     FileUpload,
     #[at("/seed")]
     AddAccounts,
-    #[at("/home")]
+    #[at("/")]
     AccountHome,
     #[at("/create-account")]
     CreateAccount,
@@ -34,7 +35,9 @@ pub enum Route {
     #[at("/password")]
     SetPhraseFromPass,
     #[at("/conditional-transaction")]
-    ConditionalTransactionModal
+    ConditionalTransactionModal,
+    #[at("/signout")]
+    ClearLocalStorage,
 }
 
 pub fn switch(route: Route) -> Html {
@@ -49,5 +52,6 @@ pub fn switch(route: Route) -> Html {
         Route::TransactionFromHooks => html! {<TransactionFromHooks/>},
         Route::SetPhraseFromPass => html!{<SetPhraseFromPass/>},
         Route::ConditionalTransactionModal => html!{<ConditionalTransactionModal/>},
+        Route::ClearLocalStorage => html! {<ClearLocalStorage/>},
     }
 }
