@@ -2649,6 +2649,7 @@ dependencies = [
  "jsonrpsee-wasm-client",
  "magic-crypt",
  "parity-scale-codec",
+ "rand 0.8.5",
  "serde",
  "serde_json",
  "sp-core",

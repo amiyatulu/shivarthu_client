@@ -1,16 +1,32 @@
-use std::ops::Deref;
-
 use gloo::console::log;
 use wasm_bindgen::JsCast;
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
+use yewdux::prelude::*;
+use crate::components::accounts::account_store::PhraseStore;
+use rand::seq::SliceRandom;
+use rand::thread_rng;
+
+
+
+#[derive(Properties, PartialEq)]
+pub struct Props {
+    pub continue_onclick: Callback<()>,
+    pub back_onclick: Callback<()>,
+}
+
 
 
 #[function_component(CheckMnemonic)]
-pub fn check_mnemonic() -> Html {
+pub fn check_mnemonic(props: &Props) -> Html {
+    let (store, _) = use_store::<PhraseStore>();
+    let mnemonic_phrase = store.mnemonic_phrase.clone().unwrap_or_default();
+    let mut phrase_state_vec: Vec<String> = mnemonic_phrase.split_whitespace().map(str::to_string).collect();
+    let mut rng = thread_rng();
+    phrase_state_vec.shuffle(&mut rng);
     let tags_state: UseStateHandle<Vec<String>> = use_state(|| vec![]);
     let phrase_state =
-        use_state(|| vec!["India".to_owned(), "Norway".to_owned(), "Bhutan".to_owned()]);
+        use_state(|| phrase_state_vec);
     let tags_state_clone1 = tags_state.clone();
     let tags_state_clone2 = tags_state.clone();
     let phrase_state_clone = phrase_state.clone();
@@ -53,13 +69,23 @@ pub fn check_mnemonic() -> Html {
         phrase_state_clone.set(check_phrase);
         log!(format!("{:?}", tags));
     });
+    let continue_onclick = props.continue_onclick.clone(); 
+
+    let contin = Callback::from(move |event: MouseEvent|{        
+        continue_onclick.emit(());
+    });
+    let back_onclick = props.back_onclick.clone();
+    let back = Callback::from(move |event: MouseEvent|{
+        
+        back_onclick.emit(());
+    });
 
     html! {
         <>
         {for tags_state.iter().map(|cont| {
           html! {
             <>
-            <input type="text" class="form-control" readonly=true value={cont.clone()} onclick={remove_tag.clone()}/>
+            <input type="text" class="form-control bg-warning text-dark" readonly=true value={cont.clone()} onclick={remove_tag.clone()}/>
            </>
           }
         })}

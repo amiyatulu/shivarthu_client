@@ -8,6 +8,7 @@ edition = "2021"
 [dependencies]
 
 yew = { version = "0.20.0", features = ["csr"] }
+rand = "0.8.5"
 gloo = "0.8.0"
 gloo-storage = "0.2.2"
 gloo-net = { version = "0.2.5", feature = ["http"]}

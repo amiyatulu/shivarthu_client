@@ -2,6 +2,7 @@ use crate::components::accounts::account_store::PhraseStore;
 use crate::components::navigation::nav::Nav;
 use crate::components::accounts::multistep_account_creation::info_warning::InfoWarning;
 use crate::components::accounts::multistep_account_creation::mnemonic::Mnemonic;
+use crate::components::accounts::multistep_account_creation::check_mnemonic::CheckMnemonic;
 use crate::components::pages::transaction_from_hook::TransactionFromHooks;
 use stylist::{yew::styled_component, Style};
 use yew::{prelude::*, virtual_dom::VNode};
@@ -68,13 +69,23 @@ pub fn create_account() -> Html {
     };
 
     let step_two = {
+        let next_step = next_step.clone();
+        let prev_step = prev_step.clone();
+
+        html! {
+            <>
+            <CheckMnemonic continue_onclick={next_step} back_onclick={prev_step} />
+            </>
+        }
+    };
+
+    let step_three = {
         html! {
             <>
             <TransactionFromHooks/>
             </>
         }
     };
-
     let step = *step_state;
     match step {
         0 => html! {

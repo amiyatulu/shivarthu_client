@@ -11,8 +11,6 @@ use crate::components::pages::transaction_from_hook::TransactionFromHooks;
 use crate::components::accounts::set_phrase_from_pass::SetPhraseFromPass;
 use crate::components::pages::conditional_transaction_modal::ConditionalTransactionModal;
 use crate::components::accounts::clear_local_storage::ClearLocalStorage;
-use crate::components::accounts::multistep_account_creation::check_mnemonic::CheckMnemonic;
-
 
 
 #[derive(Debug, Clone, PartialEq, Routable)]
@@ -39,8 +37,6 @@ pub enum Route {
     ConditionalTransactionModal,
     #[at("/signout")]
     ClearLocalStorage,
-    #[at("/checkseed")]
-    CheckMnemonic,
 }
 
 pub fn switch(route: Route) -> Html {
@@ -56,6 +52,5 @@ pub fn switch(route: Route) -> Html {
         Route::SetPhraseFromPass => html!{<SetPhraseFromPass/>},
         Route::ConditionalTransactionModal => html!{<ConditionalTransactionModal/>},
         Route::ClearLocalStorage => html! {<ClearLocalStorage/>},
-        Route::CheckMnemonic => html! {<CheckMnemonic/>},
     }
 }
