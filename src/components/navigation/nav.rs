@@ -1,6 +1,7 @@
 use yew::prelude::*;
 use crate::components::accounts::account_address_view::AccountAddressView;
 use crate::components::accounts::signout_view::SignOutView;
+use crate::components::balance::balance::Balance;
 
 #[function_component(Nav)]
 pub fn nav() -> Html {
@@ -8,7 +9,7 @@ pub fn nav() -> Html {
         <>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Offcanvas navbar large">
                 <div class="container-fluid">
-                <a class="navbar-brand" href="#">{"Responsive offcanvas navbar"}</a>
+                <a class="navbar-brand" href="#">{"Shivarthu"}</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -37,7 +38,10 @@ pub fn nav() -> Html {
                         </ul>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#"><AccountAddressView/></a>
+                        <span class="nav-link active" aria-current="page" ><AccountAddressView/></span>
+                        </li>
+                        <li class="nav-item">
+                        <span class="nav-link active" aria-current="page" >{"Balance: "} <Balance/></span>
                         </li>
                     </ul>
                     // <form class="d-flex mt-3 mt-lg-0" role="search">

@@ -1,15 +1,12 @@
+use crate::components::accounts::account_store::AccountPubStore;
 use crate::constants::constant::NODE_URL;
 use gloo::console::log;
 use sp_core::crypto::AccountId32;
+use sp_core::crypto::Ss58Codec;
 use subxt::config::PolkadotConfig;
 use wasm_bindgen_futures;
 use yew::prelude::*;
 use yewdux::prelude::*;
-use sp_core::crypto::Ss58Codec;
-#[derive(Properties, PartialEq)]
-pub struct Props {
-    pub account_id: String,
-}
 
 #[subxt::subxt(
     runtime_metadata_path = "./artifacts/metadata.scale",
@@ -18,10 +15,13 @@ pub struct Props {
 pub mod polkadot {}
 
 #[function_component(Balance)]
-pub fn balance(props: &Props) -> Html {
-    let account_id = props.account_id.clone();
-    log!(format!("{:?}", account_id));
+pub fn balance() -> Html {
+    let (store, _) = use_store::<AccountPubStore>();
+    let address_option = store.account_address.clone();
+    let account_id = address_option.clone().unwrap();
 
+    let free_balance = use_state(|| 0);
+    let free_balance_clone = free_balance.clone();
     let account_id32 = AccountId32::from_string(&account_id).unwrap();
     let account_id32_clone = account_id32.clone();
     use_effect_with_deps(
@@ -37,13 +37,24 @@ pub fn balance(props: &Props) -> Html {
                     .await
                     .unwrap();
 
-                log!(format!("{:?}", balance_details));
+                if let Some(balance_details) = balance_details {
+                    // log!(format!("{:?}", balance_details.data.free));
+                    free_balance_clone.set(balance_details.data.free)
+                }
             });
         },
         account_id32,
     );
     html! {
         <>
+        if let Some(_address) = address_option {
+            <>
+
+
+            {*free_balance}
+
+            </>
+        }
         </>
     }
 }
