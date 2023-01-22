@@ -25,7 +25,7 @@ pub fn markdown_component() -> Html {
         parsed_text
     }
 
-    let markdown_changed = Callback::from(move |event: Event| {
+    let markdown_changed = Callback::from(move |event: KeyboardEvent| {
         let markdown = event
             .target()
             .unwrap()
@@ -47,7 +47,7 @@ pub fn markdown_component() -> Html {
         <div>
             <form>
                 <div class="mb-3">
-                    <textarea rows="10" cols="50" class="form-control" onchange={markdown_changed}/>
+                    <textarea rows="10" cols="50" class="form-control" onkeyup={markdown_changed}/>
                 </div>
             </form>
          </div>
