@@ -4,8 +4,14 @@ use web_sys::HtmlInputElement;
 use yew::prelude::*;
 use yew::{html, AttrValue, Html};
 
-#[function_component(MarkdownComponent)]
-pub fn markdown_component() -> Html {
+#[derive(Properties, PartialEq)]
+pub struct Props {
+    pub handle_onchange: Callback<String>, // New code: add handle_onchange props
+}
+
+#[function_component(MarkdownField)]
+pub fn markdown_field(props: &Props) -> Html {
+    let handle_onchange = props.handle_onchange.clone();
     let html_state: UseStateHandle<Option<String>> = use_state(|| None);
     let html_state_clone = html_state.clone();
 
@@ -37,12 +43,22 @@ pub fn markdown_component() -> Html {
         html_state_clone.set(html_value);
     });
 
+    let markdown_onchange = Callback::from(move |event: Event| {
+        let markdown = event
+            .target()
+            .unwrap()
+            .unchecked_into::<HtmlInputElement>()
+            .value();
+
+        handle_onchange.emit(markdown);
+    });
+
     html! {
         <>
         <div>
             <form>
                 <div class="mb-3">
-                    <textarea rows="10" cols="50" class="form-control" onkeyup={markdown_changed}/>
+                    <textarea rows="10" cols="50" class="form-control" onkeyup={markdown_changed} onchange={markdown_onchange}/>
                 </div>
             </form>
          </div>
