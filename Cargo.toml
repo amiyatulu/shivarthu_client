@@ -36,6 +36,7 @@ yew_icons = { version = "0.7", features = ["BootstrapCloudUpload"]}
 sp-core = { version = "7.0.0", default-features = false }
 tiny-bip39 = "1.0.0"
 pulldown-cmark = "0.9.2"
+json = "0.12.4"
 
 [profile.release]
 # less code to include into binary

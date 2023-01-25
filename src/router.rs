@@ -13,6 +13,7 @@ use crate::components::pages::conditional_transaction_modal::ConditionalTransact
 use crate::components::accounts::clear_local_storage::ClearLocalStorage;
 use crate::components::markdown::markdown_component::MarkdownComponent;
 use crate::components::profile_validation::profile::add_profile::AddProfile;
+use crate::components::ipfs::form_ipfs_upload::FormIpfsUpload;
 
 
 #[derive(Debug, Clone, PartialEq, Routable)]
@@ -43,7 +44,8 @@ pub enum Route {
     MarkdownComponent,
     #[at("/add-profile")]
     AddProfile,
-    
+    #[at("/ipfs-form")]
+    FormIpfsUpload,    
 }
 
 pub fn switch(route: Route) -> Html {
@@ -61,5 +63,6 @@ pub fn switch(route: Route) -> Html {
         Route::ClearLocalStorage => html! {<ClearLocalStorage/>},
         Route::MarkdownComponent => html! {<MarkdownComponent/>},
         Route::AddProfile => html! {<AddProfile/>},
+        Route::FormIpfsUpload => html! {<FormIpfsUpload/>},
     }
 }
