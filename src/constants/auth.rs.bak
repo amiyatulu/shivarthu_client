@@ -1,2 +1,3 @@
 
 pub const CRUST_TOKEN: &str = "Basic token";
+pub const WEB3_STORAGE_TOKEN: &str = "Bearer token";

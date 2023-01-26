@@ -4,6 +4,7 @@ use yew::prelude::*;
 use yew_icons::{Icon, IconId};
 use stylist::{yew::styled_component, Style};
 use crate::components::api::ipfs_request::ipfs_call;
+use crate::components::api::select_ipfs_provider::DEFAULT_IPFS_PROVIDER;
 
 const STYLE_FILE: &str = include_str!("fileupload.css");
 #[styled_component(FileUpload)]
@@ -20,8 +21,8 @@ pub fn file_upload() -> Html {
             filelistvalue.push(file.clone().unwrap());
             clone_filelist.set(filelistvalue);
             wasm_bindgen_futures::spawn_local(async move {
-              let response = ipfs_call(file.unwrap(), "ipfs".to_owned()).await;
-              log!(response.Hash);
+              let response = ipfs_call(DEFAULT_IPFS_PROVIDER, file.unwrap(), "ipfs".to_owned()).await;
+              log!(response);
             });
         })
     };

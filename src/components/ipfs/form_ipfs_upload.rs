@@ -6,6 +6,8 @@ use web_sys::Blob;
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 use crate::components::api::ipfs_request::ipfs_call_json_string;
+use crate::components::api::select_ipfs_provider::DEFAULT_IPFS_PROVIDER;
+
 
 
 #[function_component(FormIpfsUpload)]
@@ -65,8 +67,8 @@ pub fn form_ipfs_upload() -> Html {
             // let json_blob = json_blob_result.unwrap();
 
             wasm_bindgen_futures::spawn_local(async move {
-                let response = ipfs_call_json_string(&json_string, "ipfs".to_owned()).await;
-                log!(response.Hash);
+                let response = ipfs_call_json_string(DEFAULT_IPFS_PROVIDER, &json_string, "ipfs".to_owned()).await;
+                log!(response);
               });
 
 
