@@ -16,23 +16,32 @@ const STYLE_FILE: &str = include_str!("upload_video.css");
 pub fn file_upload(props: &Props) -> Html {
     let stylesheet = Style::new(STYLE_FILE).unwrap();
     let handle_onchange_cid = props.handle_onchange_cid.clone();
+    let handle_onchange_cid_onchange = props.handle_onchange_cid.clone();
 
-    let filelist: UseStateHandle<Vec<File>> = use_state(|| vec![]);
-    let clone_filelist = filelist.clone();
+    let spinner_state = use_state(|| false);
+    let spinner_sate_ondrop = spinner_state.clone();
+    let spinner_sate_onchange = spinner_state.clone();
+
+    // let filelist: UseStateHandle<Vec<File>> = use_state(|| vec![]);
+    // let clone_filelist = filelist.clone();
     let ondrop = {
         Callback::from(move |event: DragEvent| {
             event.prevent_default();
+            let spinner_state_clone = spinner_sate_ondrop.clone();
+            spinner_state_clone.set(true);
             let handle_onchange_cid_clone = handle_onchange_cid.clone();
             let file = event.data_transfer().unwrap().files().unwrap().get(0);
             log!(file.clone().unwrap());
-            let mut filelistvalue: Vec<_> = clone_filelist.to_vec();
-            filelistvalue.push(file.clone().unwrap());
-            clone_filelist.set(filelistvalue);
+            // let mut filelistvalue: Vec<_> = clone_filelist.to_vec();
+            // filelistvalue.push(file.clone().unwrap());
+            // clone_filelist.set(filelistvalue);
+
             wasm_bindgen_futures::spawn_local(async move {
                 let ipfs_cid =
                     ipfs_call(DEFAULT_IPFS_PROVIDER, file.unwrap(), "ipfs".to_owned()).await;
                 log!(ipfs_cid.clone());
                 handle_onchange_cid_clone.emit(ipfs_cid);
+                spinner_state_clone.set(false);
             });
         })
     };
@@ -50,33 +59,62 @@ pub fn file_upload(props: &Props) -> Html {
     let onchange = {
         Callback::from(move |event: Event| {
             let input: HtmlInputElement = event.target_unchecked_into();
-            log!(input.files());
+            let spinner_state_clone = spinner_sate_onchange.clone();
+            spinner_state_clone.set(true);
+            // log!(input.files());
+            let file = input.files().unwrap().get(0);
+            let handle_onchange_cid_clone = handle_onchange_cid_onchange.clone();
+
+            wasm_bindgen_futures::spawn_local(async move {
+                let ipfs_cid =
+                    ipfs_call(DEFAULT_IPFS_PROVIDER, file.unwrap(), "ipfs".to_owned()).await;
+                log!(ipfs_cid.clone());
+                handle_onchange_cid_clone.emit(ipfs_cid);
+                spinner_state_clone.set(false);
+            });
         })
     };
+
     html! {
-        <div class={stylesheet}>
-            <div id="wrapper">
-                <p id="title">{"I am inside file upload"}</p>
-                <label for="file-upload">
-                    <div
-                        id="drop-container"
-                        ondrop={ondrop}
-                        ondragover={ondragover}
-                        ondragenter={ondragenter}
-                    >
-                    <Icon icon_id={IconId::BootstrapCloudUpload} />
-                    <p>{"Drop your images here or click to select"}</p>
+        <div class="container">
+            <div class={stylesheet}>
+                <div class="row">
+                    <div class="col-md-6 offset-md-3
+                    text-center">
+                        // <p id="title">{"I am inside file upload"}</p>
+                        <label for="file-upload">
+                            <div
+                                id="drop-container"
+                                ondrop={ondrop}
+                                ondragover={ondragover}
+                                ondragenter={ondragenter}
+                            >
+                            <Icon icon_id={IconId::BootstrapCloudUpload} />
+                            <p>{"Drop your images here or click to select"}</p>
+                            </div>
+                        </label>
+                        <input
+                            id="file-upload"
+                            type="file"
+                            accept="image/*, video/*"
+                            multiple={false}
+                            onchange={onchange}
+                        />
+                        </div>
+                        
+                    // <div>{format!("{:?}", filelist)}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 offset-md-3
+                    text-center">
+                    if *spinner_state {
+                        <img src="img/rolling.gif" alt="loading" width="40"/> 
+                    }
                     </div>
-                </label>
-                <input
-                    id="file-upload"
-                    type="file"
-                    accept="image/*, video/*"
-                    multiple={false}
-                    onchange={onchange}
-                />
-                <div>{format!("{:?}", filelist)}</div>
+                </div>
+            
             </div>
         </div>
+        
     }
 }

@@ -46,7 +46,7 @@ pub fn add_profile() -> Html {
 
     html! {
         <>
-        <div>
+        <div class="container">
          <form>
             <div class="mb-3">
                 <label for="name" class="form-label">{"Name"}</label>
@@ -66,12 +66,12 @@ pub fn add_profile() -> Html {
             <div>
 
             if video_cid_state.is_some() {
-                <p>
-                <video width="320" height="240" controls={true}>
-                <source src={format!("https://ipfs.io/ipfs/{}", video_cid_state.as_deref().unwrap_or_default())} type="video/mp4" />
-                {"Your browser does not support the video tag."}
-              </video>
-              </p>
+                <div class="col-md-6 offset-md-3 text-center">
+                    <video width="320" height="240" controls={true}>
+                    <source src={format!("https://ipfs.io/ipfs/{}", video_cid_state.as_deref().unwrap_or_default())} type="video/mp4" />
+                    {"Your browser does not support the video tag."}
+                    </video>
+                </div>
             }
 
             </div>
