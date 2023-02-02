@@ -4,8 +4,6 @@ input#file-upload {
   visibility: hidden;
 }
 
-
-
 #drop-container {
   padding: 4rem;
   display: flex;

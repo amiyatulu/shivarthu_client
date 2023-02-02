@@ -90,13 +90,13 @@ pub fn file_upload(props: &Props) -> Html {
                                 ondragenter={ondragenter}
                             >
                             <Icon icon_id={IconId::BootstrapCloudUpload} />
-                            <p>{"Drop your images here or click to select"}</p>
+                            <p>{"Drop your video here or click to select"}</p>
                             </div>
                         </label>
                         <input
                             id="file-upload"
                             type="file"
-                            accept="image/*, video/*"
+                            accept="video/*"
                             multiple={false}
                             onchange={onchange}
                         />
