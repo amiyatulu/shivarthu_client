@@ -31,18 +31,23 @@ pub fn file_upload(props: &Props) -> Html {
             spinner_state_clone.set(true);
             let handle_onchange_cid_clone = handle_onchange_cid.clone();
             let file = event.data_transfer().unwrap().files().unwrap().get(0);
-            log!(file.clone().unwrap());
+            // log!(file.clone().unwrap());
+            let file_type = file.clone().unwrap().type_();
+            // log!(file_type);
             // let mut filelistvalue: Vec<_> = clone_filelist.to_vec();
             // filelistvalue.push(file.clone().unwrap());
             // clone_filelist.set(filelistvalue);
-
-            wasm_bindgen_futures::spawn_local(async move {
-                let ipfs_cid =
-                    ipfs_call(DEFAULT_IPFS_PROVIDER, file.unwrap(), "ipfs".to_owned()).await;
-                log!(ipfs_cid.clone());
-                handle_onchange_cid_clone.emit(ipfs_cid);
-                spinner_state_clone.set(false);
-            });
+            if file_type == "video/mp4" {
+                wasm_bindgen_futures::spawn_local(async move {
+                    let ipfs_cid =
+                        ipfs_call(DEFAULT_IPFS_PROVIDER, file.unwrap(), "ipfs".to_owned()).await;
+                    log!(ipfs_cid.clone());
+                    handle_onchange_cid_clone.emit(ipfs_cid);
+                    spinner_state_clone.set(false);
+                });
+            } else {
+                panic!("Upload mp4 video file");
+            }
         })
     };
     let ondragover = {
@@ -65,13 +70,20 @@ pub fn file_upload(props: &Props) -> Html {
             let file = input.files().unwrap().get(0);
             let handle_onchange_cid_clone = handle_onchange_cid_onchange.clone();
 
-            wasm_bindgen_futures::spawn_local(async move {
-                let ipfs_cid =
-                    ipfs_call(DEFAULT_IPFS_PROVIDER, file.unwrap(), "ipfs".to_owned()).await;
-                log!(ipfs_cid.clone());
-                handle_onchange_cid_clone.emit(ipfs_cid);
-                spinner_state_clone.set(false);
-            });
+            let file_type = file.clone().unwrap().type_();
+
+
+            if file_type == "video/mp4" {
+                wasm_bindgen_futures::spawn_local(async move {
+                    let ipfs_cid =
+                        ipfs_call(DEFAULT_IPFS_PROVIDER, file.unwrap(), "ipfs".to_owned()).await;
+                    log!(ipfs_cid.clone());
+                    handle_onchange_cid_clone.emit(ipfs_cid);
+                    spinner_state_clone.set(false);
+                });
+            } else {
+                panic!("Upload mp4 video file");
+            }
         })
     };
 
@@ -90,31 +102,31 @@ pub fn file_upload(props: &Props) -> Html {
                                 ondragenter={ondragenter}
                             >
                             <Icon icon_id={IconId::BootstrapCloudUpload} />
-                            <p>{"Drop your video here or click to select"}</p>
+                            <p>{"Drop your mp4 video here or click to select"}</p>
                             </div>
                         </label>
                         <input
                             id="file-upload"
                             type="file"
-                            accept="video/*"
+                            accept="video/mp4"
                             multiple={false}
                             onchange={onchange}
                         />
                         </div>
-                        
+
                     // <div>{format!("{:?}", filelist)}</div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 offset-md-3
                     text-center">
                     if *spinner_state {
-                        <img src="img/rolling.gif" alt="loading" width="40"/> 
+                        <img src="img/rolling.gif" alt="loading" width="40"/>
                     }
                     </div>
                 </div>
-            
+
             </div>
         </div>
-        
+
     }
 }
