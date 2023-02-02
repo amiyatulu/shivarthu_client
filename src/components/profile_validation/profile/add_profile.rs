@@ -2,17 +2,13 @@ use crate::components::input::text_input::TextInput;
 use crate::components::ipfs::upload_video::UploadVideo;
 use crate::components::markdown::markdown_field::MarkdownField;
 use gloo::console::log;
-use serde::{Deserialize, Serialize};
-use wasm_bindgen::JsCast;
-use web_sys::HtmlInputElement;
+use json::object;
+// use wasm_bindgen::JsCast;
+// use web_sys::HtmlInputElement;
 use yew::prelude::*;
+use crate::components::api::ipfs_request::ipfs_call_json_string;
+use crate::components::api::select_ipfs_provider::DEFAULT_IPFS_PROVIDER;
 
-#[derive(Default, Clone, Serialize, Deserialize, Debug)]
-struct FormData {
-    pub name: String,
-    pub error_msg: String,
-    pub required: bool,
-}
 
 #[function_component(AddProfile)]
 pub fn add_profile() -> Html {
@@ -20,7 +16,9 @@ pub fn add_profile() -> Html {
     let markdown_state: UseStateHandle<Option<String>> = use_state(|| None);
     let video_cid_state: UseStateHandle<Option<String>> = use_state(|| None);
     let name_state_clone = name_state.clone();
+    let name_state_onsubmit = name_state.clone();
     let markdown_state_clone = markdown_state.clone();
+    let markdown_state_onsubmit = markdown_state.clone();
     let video_cid_state_clone = video_cid_state.clone();
     let video_cid_state_onsubmit = video_cid_state.clone();
     let video_error_state: UseStateHandle<Option<()>> = use_state(|| None);
@@ -63,8 +61,35 @@ pub fn add_profile() -> Html {
         } else {
             video_error_state_clone.set(None);
         }
-    });
 
+        if video_cid_state_onsubmit.is_some()
+            && markdown_state_onsubmit.is_some()
+            && name_state_onsubmit.is_some()
+        {
+            let name = format!("{}", name_state_onsubmit.as_deref().unwrap_or_default());
+            let details = format!("{}", markdown_state_onsubmit.as_deref().unwrap_or_default());
+            let profile_video_cid = format!(
+                "{}",
+                video_cid_state_onsubmit.as_deref().unwrap_or_default()
+            );
+
+            let data = object! {
+                  version: "1.0",
+                  name: name,
+                  details: details,
+                  profile_video_cid: profile_video_cid,
+            };
+            let json_string = json::stringify(data);
+
+            wasm_bindgen_futures::spawn_local(async move {
+                let response =
+                    ipfs_call_json_string(DEFAULT_IPFS_PROVIDER, &json_string, "ipfs".to_owned())
+                        .await;
+                log!(response);
+            });
+        }
+    });
+    
     html! {
         <>
         <div class="container">
