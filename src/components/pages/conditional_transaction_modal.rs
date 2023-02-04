@@ -21,6 +21,4 @@ pub fn conditional_transaction() -> Html {
         </>
        }
     }
-
-
 }
