@@ -1,3 +1,4 @@
 /target
 /dist
 /src/constants/auth.rs
+/node_modules

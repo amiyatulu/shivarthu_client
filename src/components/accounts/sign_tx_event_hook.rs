@@ -1,14 +1,18 @@
 use crate::components::accounts::account_store::PhraseStore;
-use crate::components::accounts::functions::get_from_seed_sr;
 use gloo::console::log;
+use crate::components::accounts::functions::get_from_seed_sr;
 use std::ops::Deref;
-use subxt::tx::PairSigner;
-use subxt::PolkadotConfig;
+use subxt::{tx::PairSigner, PolkadotConfig};
 use yew::prelude::*;
 use yewdux::prelude::*;
+use subxt::blocks::ExtrinsicEvents;
+use subxt::config::WithExtrinsicParams;
+use subxt::tx::BaseExtrinsicParams;
+use subxt::tx::PlainTip;
+use subxt::SubstrateConfig;
 
 #[hook]
-pub fn use_sign_tx<T>(tx: T) -> String
+pub fn use_sign_tx_event<T>(tx: T) -> std::option::Option<&'static ExtrinsicEvents<WithExtrinsicParams<SubstrateConfig, BaseExtrinsicParams<SubstrateConfig, PlainTip>>>>
 where
     T: subxt::tx::TxPayload + 'static,
 {
@@ -16,9 +20,10 @@ where
     let first_load = use_state(|| true);
     let store_clone = store.clone();
 
-    let hash_state = use_state(|| "".to_owned());
+    let hash_state:UseStateHandle<Option<_>> = use_state(|| None);
 
     let hash_state_clone = hash_state.clone();
+    let hash_state_return = hash_state.clone();
     use_effect_with_deps(
         move |_| {
             if *first_load {
@@ -32,19 +37,18 @@ where
                     if let Some(seed) = phrase_option {
                         let pair = get_from_seed_sr(&seed);
                         let signer = PairSigner::new(pair);
-                        let result = client.tx().sign_and_submit_default(&tx, &signer).await;
-                        match result {
-                            Ok(hash) => {
-                                hash_state_clone.set(format!("{:?}", hash.clone()));
-                                log!(format!("{:?}", hash));
-                            }
-                            Err(err) => {
-                                hash_state_clone.set(format!("{:?}", err));
-                                log!(format!("{:?}", err));
-                            }
-                        }
+                        let result = client
+                            .tx()
+                            .sign_and_submit_then_watch_default(&tx, &signer)
+                            .await
+                            .unwrap()
+                            .wait_for_finalized()
+                            .await
+                            .unwrap();
+                        let events = result.fetch_events().await.unwrap();
+                        hash_state_clone.set(Some(events))
                     } else {
-                        log!(format!("Seed doesnot exists"));
+                        hash_state_clone.set(None)
                     }
                 });
 
@@ -53,5 +57,5 @@ where
         },
         store,
     );
-    hash_state.deref().clone()
+    hash_state_return.deref()
 }

@@ -1,9 +1,12 @@
 use crate::components::accounts::account_store::AccountPubStore;
 use crate::constants::constant::NODE_URL;
 use gloo::console::log;
-use sp_core::crypto::AccountId32;
-use sp_core::crypto::Ss58Codec;
-use subxt::config::PolkadotConfig;
+use subxt::utils::AccountId32;
+use std::str::FromStr;
+use subxt::{
+    OnlineClient,
+    PolkadotConfig,
+};
 use wasm_bindgen_futures;
 use yew::prelude::*;
 use yewdux::prelude::*;
@@ -22,7 +25,7 @@ pub fn balance() -> Html {
 
     let free_balance = use_state(|| 0);
     let free_balance_clone = free_balance.clone();
-    let account_id32 = AccountId32::from_string(&account_id).unwrap();
+    let account_id32 = AccountId32::from_str(&account_id).unwrap();
     let account_id32_clone = account_id32.clone();
     use_effect_with_deps(
         move |_| {
@@ -33,7 +36,10 @@ pub fn balance() -> Html {
                 let balance_storage = polkadot::storage().system().account(account_id32_clone);
                 let balance_details = client
                     .storage()
-                    .fetch(&balance_storage, None)
+                    .at_latest()
+                    .await
+                    .unwrap()
+                    .fetch(&balance_storage)
                     .await
                     .unwrap();
 

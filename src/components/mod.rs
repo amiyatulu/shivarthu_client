@@ -7,3 +7,4 @@ pub mod balance;
 pub mod profile_validation;
 pub mod markdown;
 pub mod ipfs;
+pub mod jstests;

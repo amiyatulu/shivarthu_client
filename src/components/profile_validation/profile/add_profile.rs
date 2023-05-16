@@ -1,13 +1,15 @@
 use crate::components::input::text_input::TextInput;
 use crate::components::ipfs::upload_video::UploadVideo;
 use crate::components::markdown::markdown_field::MarkdownField;
+use crate::components::navigation::nav::Nav;
 use gloo::console::log;
 use json::object;
+use subxt::tx::DynamicTxPayload;
 // use wasm_bindgen::JsCast;
 // use web_sys::HtmlInputElement;
 use yew::prelude::*;
 use yewdux::prelude::*;
-use crate::components::accounts::sign_tx_hook::use_sign_tx;
+use crate::components::accounts::hooks::sign_tx_handle::{use_sign_tx_handle} ;
 use crate::components::accounts::account_store::PhaseExists;
 use crate::components::accounts::set_phrase_from_pass::SetPhraseFromPass;
 use crate::components::api::ipfs_request::ipfs_call_json_string;
@@ -100,6 +102,7 @@ pub fn add_profile() -> Html {
     if ipfs_response.is_none() {
         html! {
             <>
+            <Nav />
             <div class="container">
              <form onsubmit={onsubmit}>
                 <div class="mb-3">
@@ -161,18 +164,41 @@ pub struct Props {
     pub ipfs_response: String,
 }
 
+
+
 #[function_component(Transaction)]
 pub fn transaction(props: &Props) -> Html {
     let ipfs_response = props.ipfs_response.clone();
     let profile_data = ipfs_response.as_bytes().to_vec();
-    let tx = polkadot::tx().template_module().add_citizen(profile_data);
 
-    let hash = use_sign_tx(tx);
+    
+    let handler = use_sign_tx_handle();
+    let first_load = use_state(|| true);
+
+    use_effect( move || {
+        
+
+        if *first_load {
+            wasm_bindgen_futures::spawn_local(async move {
+                let tx = polkadot::tx().profile_validation().add_citizen(profile_data);
+                let data = (handler.api_call)(tx).await;
+                // log!(data.unwrap());
+            });
+            
+
+            first_load.set(false);
+        }
+        || {}
+
+    });
 
     html! {
         <>
-            <h1>{"Transaction details"}</h1>
-            <p>{hash}</p>
+        <Nav />
+            <div class="container">
+                <h1>{"Transaction details"}</h1>
+                // <p>{hash}</p>
+            </div>
         </>
 
     }

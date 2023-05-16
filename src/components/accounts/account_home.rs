@@ -14,7 +14,10 @@ pub fn account_home() -> Html {
 
     let sign_in_button = {
         let navigator = navigation.clone();
-        let onclick = Callback::from(move |_| navigator.push(&Route::AddAccounts));
+        let onclick = Callback::from(move |_| 
+            // navigator.push(&Route::AddAccounts)
+            todo!()
+        );
         html! {
             <button type="button" class="btn btn-warning" {onclick}>{"Sign In"}</button>
         }

@@ -1,4 +1,4 @@
-use sp_core::{ed25519, sr25519, Pair};
+use sp_core::{ed25519, sr25519};
 
 
 pub (super) fn get_from_seed_sr_result(seed: &str) -> Result<sr25519::Pair, String> {

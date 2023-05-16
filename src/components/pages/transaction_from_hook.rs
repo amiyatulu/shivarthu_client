@@ -1,7 +1,3 @@
-use gloo::console::log;
-use sp_keyring::AccountKeyring;
-use subxt::{tx::PairSigner, PolkadotConfig};
-use wasm_bindgen_futures;
 use yew::prelude::*;
 
 use crate::components::accounts::sign_tx_hook::use_sign_tx;

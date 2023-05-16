@@ -3,7 +3,7 @@ use crate::components::navigation::nav::Nav;
 use crate::components::accounts::multistep_account_creation::info_warning::InfoWarning;
 use crate::components::accounts::multistep_account_creation::mnemonic::Mnemonic;
 use crate::components::accounts::multistep_account_creation::check_mnemonic::CheckMnemonic;
-use crate::components::pages::transaction_from_hook::TransactionFromHooks;
+// use crate::components::pages::transaction_from_hook::TransactionFromHooks;
 use stylist::{yew::styled_component, Style};
 use yew::{prelude::*, virtual_dom::VNode};
 use yewdux::prelude::*;
@@ -82,7 +82,7 @@ pub fn create_account() -> Html {
     let step_three = {
         html! {
             <>
-            <TransactionFromHooks/>
+            // <TransactionFromHooks/>
             </>
         }
     };

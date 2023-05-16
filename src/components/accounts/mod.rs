@@ -1,11 +1,14 @@
-pub mod add_accounts;
-pub mod functions;
+// pub mod add_accounts;
+// pub mod functions;
 pub mod account_store;
 pub mod create_account;
 pub mod account_home;
 pub mod multistep_account_creation;
-pub mod sign_tx_hook;
+// pub mod sign_tx_hook;
+// pub mod sign_tx_event_hook;
 pub mod set_phrase_from_pass;
 pub mod account_address_view;
 pub mod clear_local_storage;
 pub mod signout_view;
+// pub mod sign_tx_async;
+pub mod hooks;
