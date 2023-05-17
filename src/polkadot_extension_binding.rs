@@ -6,5 +6,8 @@ extern "C" {
     #[wasm_bindgen]
     pub fn helloworld();
 
+    #[wasm_bindgen]
+    pub fn get_account_address_from_seed(mnemonic: String) -> String;
+
 
 }

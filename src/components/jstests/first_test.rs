@@ -12,6 +12,8 @@ pub fn storage() -> Html {
         let timeout = Timeout::new(1_000, move || {
             wasm_bindgen_futures::spawn_local(async move {
                 polkadot_extension_binding::helloworld();
+                let data = polkadot_extension_binding::get_account_address_from_seed("//Alice".to_owned());
+                log!(data);
             });
         });
         timeout.forget();
