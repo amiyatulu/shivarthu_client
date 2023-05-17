@@ -12,7 +12,7 @@ use crate::components::accounts::set_phrase_from_pass::SetPhraseFromPass;
 // use crate::components::pages::conditional_transaction_modal::ConditionalTransactionModal;
 use crate::components::accounts::clear_local_storage::ClearLocalStorage;
 use crate::components::markdown::markdown_component::MarkdownComponent;
-// use crate::components::profile_validation::profile::add_profile::AddProfile;
+use crate::components::profile_validation::profile::add_profile::AddProfile;
 use crate::components::ipfs::form_ipfs_upload::FormIpfsUpload;
 use crate::components::jstests::first_test::FirstTest;
 
@@ -43,8 +43,8 @@ pub enum Route {
     ClearLocalStorage,
     #[at("/markdown")]
     MarkdownComponent,
-    // #[at("/add-profile")]
-    // AddProfile,
+    #[at("/add-profile")]
+    AddProfile,
     #[at("/ipfs-form")]
     FormIpfsUpload,  
 
@@ -66,7 +66,7 @@ pub fn switch(route: Route) -> Html {
         // Route::ConditionalTransactionModal => html!{<ConditionalTransactionModal/>},
         Route::ClearLocalStorage => html! {<ClearLocalStorage/>},
         Route::MarkdownComponent => html! {<MarkdownComponent/>},
-        // Route::AddProfile => html! {<AddProfile/>},
+        Route::AddProfile => html! {<AddProfile/>},
         Route::FormIpfsUpload => html! {<FormIpfsUpload/>},
         Route::FirstTest => html! {<FirstTest/>},
     }
