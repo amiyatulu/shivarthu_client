@@ -10,12 +10,12 @@ pub fn storage() -> Html {
     let first_load = use_state(|| true);
     let hookdata = transactions_hooks::use_balance_tranfer();
 
-    use_effect(move || {
+    use_effect_with_deps(move |_| {
         let timeout = Timeout::new(1_000, move || {
             wasm_bindgen_futures::spawn_local(async move {
-                polkadot_extension_binding::helloworld();
-                let data = polkadot_extension_binding::get_account_address_from_seed("//Alice".to_owned());
-                log!(data);
+                // polkadot_extension_binding::helloworld();
+                // let data = polkadot_extension_binding::get_account_address_from_seed("//Alice".to_owned());
+                // log!(data);
                 log!("hookdata", hookdata.value);
 
                
@@ -27,7 +27,7 @@ pub fn storage() -> Html {
             first_load.set(false);
         }
         || {}
-    });
+    }, ());
 
     html! {
         <h1>{"Storage"}</h1>
