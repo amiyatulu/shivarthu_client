@@ -1,7 +1,6 @@
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { Keyring } from '@polkadot/keyring';
 
-
 export async function get_api(wsprovider) {
     const wsProvider = new WsProvider(wsprovider);
     const api = await ApiPromise.create({ provider: wsProvider });

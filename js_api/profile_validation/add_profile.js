@@ -1,15 +1,31 @@
 import { Keyring } from '@polkadot/keyring';
-import { waitReady } from "@polkadot/wasm-crypto";
-import { get_api } from './../api';
+import { ApiPromise, WsProvider } from '@polkadot/api';
 
-export async function add_profile(wsprovider, mnemonic, credit_user, value) {
-    await waitReady();
+
+
+export async function add_profile(wsprovider, mnemonic, ipfs_string) {
+     console.log(wsprovider);
     return new Promise((resolve, reject) => {
-        const apiPromise = get_api(wsprovider);
+        const wsProvider = new WsProvider(wsprovider);
+        const apiPromise = ApiPromise.create({
+            provider: wsProvider,
+            types: {
+                Content: {
+                    _enum: {
+                        None: 'Null',
+                        Other: 'Bytes',
+                        IPFS: 'Bytes'
+                    }
+                }
+            }
+        });
+
+    
         const keyring = new Keyring({ type: 'sr25519' });
         const pair = keyring.createFromUri(mnemonic);
-         apiPromise.then((api) => {
-            api.tx.balances.transfer(credit_user, value)
+        apiPromise.then((api) => {
+            const content = api.createType('Content', {'IPFS': ipfs_string})
+            api.tx.profileValidation.addCitizen(content)
                 .signAndSend(pair, ({ status, dispatchError }) => {
                     if (dispatchError) {
                         if (dispatchError.isModule) {
