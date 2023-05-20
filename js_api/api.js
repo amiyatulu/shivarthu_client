@@ -1,6 +1,5 @@
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { Keyring } from '@polkadot/keyring';
-import { waitReady } from "@polkadot/wasm-crypto";
 
 
 export async function get_api(wsprovider) {
