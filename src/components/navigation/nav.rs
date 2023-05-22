@@ -41,7 +41,7 @@ pub fn nav() -> Html {
                         <span class="nav-link active" aria-current="page" ><AccountAddressView/></span>
                         </li>
                         <li class="nav-item">
-                        <span class="nav-link active" aria-current="page" >{"Balance: "} <Balance/></span>
+                        // <span class="nav-link active" aria-current="page" >{"Balance: "} <Balance/></span>
                         </li>
                     </ul>
                     // <form class="d-flex mt-3 mt-lg-0" role="search">

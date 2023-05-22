@@ -4,17 +4,12 @@ use yewdux::prelude::*;
 use crate::components::navigation::nav::Nav;
 use crate::components::accounts::account_store::PhaseExists;
 use crate::components::accounts::set_phrase_from_pass::SetPhraseFromPass;
-
-use crate::components::jstests::first_test::FirstTest;
-
-
+use crate::components::accounts::hooks::add_profile_hooks;
+use crate::components::accounts::hooks::commons::TransactionReturnKind;
 
 
-#[subxt::subxt(
-    runtime_metadata_path = "./artifacts/metadata.scale",
-    derive_for_all_types = "Clone, Debug, Eq, PartialEq"
-)]
-pub mod polkadot {}
+
+
 
 #[derive(Properties, PartialEq)]
 pub struct Props {
@@ -26,36 +21,23 @@ pub struct Props {
 #[function_component(Transaction)]
 pub fn transaction(props: &Props) -> Html {
     let ipfs_response = props.ipfs_response.clone();
-    let profile_data = ipfs_response.as_bytes().to_vec();
-
-    
-    // let handler = use_sign_tx_handle();
-    let first_load = use_state(|| true);
-
-    use_effect( move || {
-        
-
-        if *first_load {
-            wasm_bindgen_futures::spawn_local(async move {
-                let tx = polkadot::tx().profile_validation().add_citizen(profile_data);
-                // let data = (handler.api_call)(tx).await;
-                // log!(data.unwrap());
-            });
-            
-
-            first_load.set(false);
-        }
-        || {}
-
-    });
+    let hookdata = add_profile_hooks::use_add_profile(ipfs_response);
 
     html! {
         <>
         <Nav />
             <div class="container">
                 <h1>{"Transaction details"}</h1>
-                // <p>{hash}</p>
-                <FirstTest/>
+                <p>
+                {
+                    match hookdata.kind {
+                        TransactionReturnKind::Finalized => {hookdata.value}
+                        TransactionReturnKind::Error => {hookdata.value}
+                        TransactionReturnKind::InBlock => {hookdata.value}
+                        TransactionReturnKind::Processing => {hookdata.value}
+                    }
+                }
+                </p>
             </div>
         </>
 

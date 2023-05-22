@@ -7,10 +7,8 @@ use wasm_bindgen_futures::JsFuture;
 use yew::prelude::*;
 use yewdux::prelude::*;
 
-
-
 #[hook]
-pub fn use_balance_tranfer(credit_user: String, token: u32) -> TransactionReturn {
+pub fn use_add_profile(ipfs_string: String) -> TransactionReturn {
     let (store, _) = use_store::<PhraseStore>();
 
     let store_clone = store.clone();
@@ -28,11 +26,10 @@ pub fn use_balance_tranfer(credit_user: String, token: u32) -> TransactionReturn
                 // 5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y
                 let seed = seed.clone();
                 wasm_bindgen_futures::spawn_local(async move {
-                    let promise = polkadot_extension_binding::transfer_balance(
+                    let promise = polkadot_extension_binding::add_profile(
                         NODE_URL.to_owned(),
                         format!("{}", seed),
-                        credit_user,
-                        token,
+                        ipfs_string,
                     );
 
                     let js_result = JsFuture::from(promise).await;
@@ -67,8 +64,8 @@ pub fn use_balance_tranfer(credit_user: String, token: u32) -> TransactionReturn
         }
     } else {
         TransactionReturn {
-            kind: TransactionReturnKind::Error,
-            value: "Error".to_owned(),
+            kind: TransactionReturnKind::Processing,
+            value: "Processing".to_owned(),
         }
     }
 }
