@@ -67,8 +67,8 @@ pub fn use_balance_tranfer(credit_user: String, token: u32) -> TransactionReturn
         }
     } else {
         TransactionReturn {
-            kind: TransactionReturnKind::Error,
-            value: "Error".to_owned(),
+            kind: TransactionReturnKind::Processing,
+            value: "Processing".to_owned(),
         }
     }
 }

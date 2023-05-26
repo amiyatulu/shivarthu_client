@@ -1,2 +1,3 @@
 pub mod add_profile;
-mod add_profile_transaction_condition;
+pub mod add_profile_transaction_condition;
+pub mod view_profile;

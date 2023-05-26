@@ -15,6 +15,7 @@ use crate::components::markdown::markdown_component::MarkdownComponent;
 use crate::components::profile_validation::profile::add_profile::AddProfile;
 use crate::components::ipfs::form_ipfs_upload::FormIpfsUpload;
 use crate::components::jstests::first_test::FirstTest;
+use crate::components::profile_validation::profile::view_profile::ViewProfile;
 
 
 #[derive(Debug, Clone, PartialEq, Routable)]
@@ -50,6 +51,8 @@ pub enum Route {
 
     #[at("/first-test")]
     FirstTest,
+    #[at("/view-profile")]
+    ViewProfile,
 }
 
 pub fn switch(route: Route) -> Html {
@@ -69,5 +72,6 @@ pub fn switch(route: Route) -> Html {
         Route::AddProfile => html! {<AddProfile/>},
         Route::FormIpfsUpload => html! {<FormIpfsUpload/>},
         Route::FirstTest => html! {<FirstTest/>},
+        Route::ViewProfile => html! {<ViewProfile/>}, 
     }
 }
