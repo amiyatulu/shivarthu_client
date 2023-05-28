@@ -1,9 +1,9 @@
 use pulldown_cmark::{html::push_html, Options, Parser};
 
-pub fn markdown_to_html(markdown_text: String) -> String {
-    let text = parse_text_to_html(&markdown_text);
-    text
-}
+// pub fn markdown_to_html(markdown_text: String) -> String {
+//     let text = parse_text_to_html(&markdown_text);
+//     text
+// }
 
 pub fn parse_text_to_html(value: &str) -> String {
     let mut options = Options::empty();

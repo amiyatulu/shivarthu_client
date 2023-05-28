@@ -1,5 +1,7 @@
 use crate::components::accounts::account_store::AccountPubStore;
 use crate::components::navigation::nav::Nav;
+use crate::components::profile_validation::profile::fetch_ipfs_profile::ipfs_fetch;
+use crate::constants::constant::DEFAULT_IPFS_FETCH_PROVIDER;
 use gloo::console::log;
 use subxt::{OnlineClient, PolkadotConfig};
 use yew::prelude::*;
@@ -65,6 +67,9 @@ pub fn view_profile() -> Html {
                         if let Content::IPFS(ipfsdata) = content {
                             let ipfs_hash = String::from_utf8(ipfsdata).unwrap();
                             log!("ipfs_hash", ipfs_hash.clone());
+
+                            ipfs_fetch(&ipfs_hash,DEFAULT_IPFS_FETCH_PROVIDER).await;
+
                             profile_hash_clone.set(Some(ipfs_hash.clone()));
                         }
                     }
