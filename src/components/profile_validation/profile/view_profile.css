@@ -1,0 +1,13 @@
+.data {
+    font-family: "Overpass", Arial, sans-serif;
+    line-height: 1.8;
+    font-weight: 300;
+    color: gray;
+}
+
+.heading {
+    line-height: 1.4;
+    color: #000;
+    font-family: "Dosis", Arial, sans-serif;
+    font-weight: 400;
+}
