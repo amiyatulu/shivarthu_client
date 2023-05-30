@@ -99,20 +99,26 @@ pub fn view_profile() -> Html {
         <Nav />
         <div class={classes!("container", stylesheet)}>
         if let Some(error) = &*error_message {
-            <h2 class="heading">{"Error"} </h2>
-            <p class="data">{format!("{}", error)}</p>
+            <div class="mb-3">
+                <h2 class="heading">{"Error"} </h2>
+                <p class="data">{format!("{}", error)}</p>
+            </div>
         }
         if let Some(name) = &*name_state {
-            <h2 class="heading">{"Name"} </h2>
-            <p class="data">{format!("{}", name)}</p>
+            <div class="mb-3">
+                <h2 class="heading">{"Name"} </h2>
+                <p class="data">{format!("{}", name)}</p>
+            </div>
         }
         if let Some(details) = &*details_state {
-            <h2 class="heading">{"Details"} </h2>
-            <div class="data">{Html::from_html_unchecked(AttrValue::from(parse_text_to_html(&format!("{}", details))))}</div>
+            <div class="mb-3">
+                <h2 class="heading">{"Details"} </h2>
+                <div class="data">{Html::from_html_unchecked(AttrValue::from(parse_text_to_html(&format!("{}", details))))}</div>
+            </div>
         }
 
         if profile_video_hash.is_some() {
-            <div class="col-md-6 offset-md-3 text-center">
+            <div class="mb-3">
                 <video width="320" height="240" controls={true}>
                 <source src={format!("https://ipfs.io/ipfs/{}", profile_video_hash.as_deref().unwrap_or_default())} type="video/mp4" />
                 {"Your browser does not support the video tag."}

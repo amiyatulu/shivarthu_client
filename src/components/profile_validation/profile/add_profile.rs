@@ -23,6 +23,7 @@ pub fn add_profile() -> Html {
     let video_cid_state: UseStateHandle<Option<String>> = use_state(|| None);
     let video_error_state: UseStateHandle<Option<()>> = use_state(|| None);
     let ipfs_response: UseStateHandle<Option<String>> = use_state(|| None);
+    let spinner_state: UseStateHandle<Option<bool>> = use_state(|| None);
 
     let name_state_clone = name_state.clone();
     let name_state_onsubmit = name_state.clone();
@@ -33,6 +34,7 @@ pub fn add_profile() -> Html {
     let video_error_state_clone = video_error_state.clone();
     let video_error_state_cid_changed_clone = video_error_state.clone();
     let ipfs_response_onsubmit = ipfs_response.clone();
+    let spinner_clone = spinner_state.clone();
 
     let name_onchanged = Callback::from(move |name: String| {
         let name_value: Option<String> = if name.is_empty() { None } else { Some(name) };
@@ -63,6 +65,7 @@ pub fn add_profile() -> Html {
 
     let onsubmit = Callback::from(move |event: SubmitEvent| {
         event.prevent_default();
+        spinner_clone.set(Some(true));
         let ipfs_response_onsubmit = ipfs_response_onsubmit.clone();
 
         if video_cid_state_onsubmit.is_none() {
@@ -89,15 +92,17 @@ pub fn add_profile() -> Html {
                   profile_video_cid: profile_video_cid,
             };
             let json_string = json::stringify(data);
-
+            let spinner_clone = spinner_clone.clone();
             wasm_bindgen_futures::spawn_local(async move {
                 let response =
                     ipfs_call_json_string(DEFAULT_IPFS_PROVIDER, &json_string, "ipfs".to_owned())
                         .await;
                 ipfs_response_onsubmit.set(Some(response));
+                spinner_clone.set(Some(false));
                 // log!(response);
             });
         }
+       
     });
     if ipfs_response.is_none() {
         html! {
@@ -136,8 +141,14 @@ pub fn add_profile() -> Html {
                 }
     
                 </div>
-    
-                <input type="submit" value="Submit" />
+                
+               
+                if let Some(value) = *spinner_state {
+                    <input type="submit" value="Submit" disabled={true} />
+                    <img src="img/rolling.gif" alt="loading" width="40"/>
+                } else {
+                    <input type="submit" value="Submit" />
+                }
              </form>
             </div>
             </>
