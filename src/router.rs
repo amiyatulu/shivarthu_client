@@ -16,6 +16,7 @@ use crate::components::profile_validation::profile::add_profile::AddProfile;
 use crate::components::ipfs::form_ipfs_upload::FormIpfsUpload;
 use crate::components::jstests::first_test::FirstTest;
 use crate::components::profile_validation::profile::view_profile::ViewProfile;
+use crate::components::profile_validation::challenge_profile::challenger_evidence::ChallengerEvidence;
 
 
 #[derive(Debug, Clone, PartialEq, Routable)]
@@ -53,6 +54,9 @@ pub enum Route {
     FirstTest,
     #[at("/view-profile")]
     ViewProfile,
+    #[at("/challenger-evidence")]
+    ChallengerEvidence,
+
 }
 
 pub fn switch(route: Route) -> Html {
@@ -72,6 +76,7 @@ pub fn switch(route: Route) -> Html {
         Route::AddProfile => html! {<AddProfile/>},
         Route::FormIpfsUpload => html! {<FormIpfsUpload/>},
         Route::FirstTest => html! {<FirstTest/>},
-        Route::ViewProfile => html! {<ViewProfile/>}, 
+        Route::ViewProfile => html! {<ViewProfile/>},
+        Route::ChallengerEvidence => html! {<ChallengerEvidence/>},
     }
 }

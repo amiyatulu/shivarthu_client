@@ -1,8 +1,8 @@
 use crate::components::accounts::account_store::AccountPubStore;
+use crate::components::markdown::markdown_to_html::parse_text_to_html;
 use crate::components::navigation::nav::Nav;
 use crate::components::profile_validation::profile::fetch_ipfs_profile::ipfs_fetch;
 use crate::constants::constant::DEFAULT_IPFS_FETCH_PROVIDER;
-use crate::components::markdown::markdown_to_html::parse_text_to_html;
 
 use gloo::console::log;
 use stylist::{yew::styled_component, Style};
@@ -120,7 +120,7 @@ pub fn view_profile() -> Html {
         if profile_video_hash.is_some() {
             <div class="mb-3">
                 <video width="320" height="240" controls={true}>
-                <source src={format!("https://ipfs.io/ipfs/{}", profile_video_hash.as_deref().unwrap_or_default())} type="video/mp4" />
+                <source src={format!("{}{}", DEFAULT_IPFS_FETCH_PROVIDER.address, profile_video_hash.as_deref().unwrap_or_default())} type="video/mp4" />
                 {"Your browser does not support the video tag."}
                 </video>
             </div>

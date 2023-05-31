@@ -14,7 +14,7 @@ use yewdux::prelude::*;
 
 use crate::components::api::ipfs_request::ipfs_call_json_string;
 use crate::components::api::select_ipfs_provider::DEFAULT_IPFS_PROVIDER;
-
+use crate::constants::constant::DEFAULT_IPFS_FETCH_PROVIDER;
 
 #[function_component(AddProfile)]
 pub fn add_profile() -> Html {
@@ -102,7 +102,6 @@ pub fn add_profile() -> Html {
                 // log!(response);
             });
         }
-       
     });
     if ipfs_response.is_none() {
         html! {
@@ -113,37 +112,37 @@ pub fn add_profile() -> Html {
                 <div class="mb-3">
                     <label for="name" class="form-label">{"Name"}</label>
                     <TextInput name={"name"} class={"form-control"} required={true} handle_onchange={name_onchanged}/>
-    
+
                 </div>
-    
+
                 <div class="mb-3">
                     <label for="details" class="form-label">{"Details"}</label>
                     <MarkdownField name={"details"} class={"form-control"} required={true} handle_onchange={markdown_changed}/>
                 </div>
-    
+
                 <div class="mb-3">
                     <label for="profile-video" class="form-label">{"Video Upload"}</label>
                     <UploadVideo handle_onchange_cid={video_cid_changed} />
                     if video_error_state.is_some(){
                         <p class="alert alert-danger">{"Profile video is required"}</p>
                     }
-    
+
                 </div>
-    
+
                 <div>
                 if video_cid_state.is_some() {
                     <div class="col-md-6 offset-md-3 text-center">
                         <video width="320" height="240" controls={true}>
-                        <source src={format!("https://ipfs.io/ipfs/{}", video_cid_state.as_deref().unwrap_or_default())} type="video/mp4" />
+                        <source src={format!("{}{}",DEFAULT_IPFS_FETCH_PROVIDER.address, video_cid_state.as_deref().unwrap_or_default())} type="video/mp4" />
                         {"Your browser does not support the video tag."}
                         </video>
                     </div>
                 }
-    
+
                 </div>
-                
-               
-                if let Some(value) = *spinner_state {
+
+
+                if let Some(_value) = *spinner_state {
                     <input type="submit" value="Submit" disabled={true} />
                     <img src="img/rolling.gif" alt="loading" width="40"/>
                 } else {
@@ -154,13 +153,9 @@ pub fn add_profile() -> Html {
             </>
         }
     } else {
-        let ipfs_string =  format!("{}", ipfs_response.as_deref().unwrap_or_default());
-        html!{
+        let ipfs_string = format!("{}", ipfs_response.as_deref().unwrap_or_default());
+        html! {
            <ConditionalTransactionModal ipfs_response={ipfs_string} />
         }
     }
-    
 }
-
-
-
