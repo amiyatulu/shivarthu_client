@@ -1,7 +1,7 @@
 
 pub const CRUST_TOKEN: &str = "Basic token";
 
-// 
+// https://web3.storage/
 pub const WEB3_STORAGE_TOKEN: &str = "Bearer token";
 
 // Huggingface access token
