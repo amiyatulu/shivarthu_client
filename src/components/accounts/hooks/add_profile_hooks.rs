@@ -1,7 +1,7 @@
 use crate::components::accounts::account_store::PhraseStore;
 use crate::components::accounts::hooks::commons::{TransactionReturn, TransactionReturnKind};
 use crate::constants::constant::NODE_URL;
-use crate::polkadot_extension_binding;
+use crate::js_extension_binding;
 use wasm_bindgen_futures;
 use wasm_bindgen_futures::JsFuture;
 use yew::prelude::*;
@@ -26,7 +26,7 @@ pub fn use_add_profile(ipfs_string: String) -> TransactionReturn {
                 // 5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y
                 let seed = seed.clone();
                 wasm_bindgen_futures::spawn_local(async move {
-                    let promise = polkadot_extension_binding::add_profile(
+                    let promise = js_extension_binding::add_profile(
                         NODE_URL.to_owned(),
                         format!("{}", seed),
                         ipfs_string,

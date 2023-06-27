@@ -119,6 +119,18 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.17.19.tgz#8cfaf2ff603e9aabb910e9c0558c26cf32744061"
   integrity sha512-lAhycmKnVOuRYNtRtatQR1LPQf2oYCkRGkSFnseDAKPl8lu5SOsK/e1sXe5a0Pc5kHIHe6P2I/ilntNv2xf3cA==
 
+"@huggingface/hub@^0.8.3":
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/@huggingface/hub/-/hub-0.8.3.tgz#5e879245dab5db829de306dd5b6d97cdb91db840"
+  integrity sha512-tysAE1afXqEHsuu1oCR3mKu5+/KVkHFWsaLBB3e67Llo0m2ZL+7SE0pQPq8SopO8zxmYH8QIm5m8OhlNn+QJHA==
+  dependencies:
+    hash-wasm "^4.9.0"
+
+"@huggingface/inference@^2.5.2":
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/@huggingface/inference/-/inference-2.5.2.tgz#3fbe8c8b3a623e500f2c65d49a8ef8f01615eff3"
+  integrity sha512-v2f4mRgumisTOkelYPCZQRBzh5K0l2vexH8b88CevWv+KgzeC0oPeQhDiSNisCpE6hK+UC6KQ/FxF265kcd6FA==
+
 "@jridgewell/resolve-uri@^3.0.3":
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/@jridgewell/resolve-uri/-/resolve-uri-3.1.1.tgz#c08679063f279615a3326583ba3a90d1d82cc721"
@@ -727,6 +739,11 @@ handlebars@^4.7.7:
     wordwrap "^1.0.0"
   optionalDependencies:
     uglify-js "^3.1.4"
+
+hash-wasm@^4.9.0:
+  version "4.9.0"
+  resolved "https://registry.yarnpkg.com/hash-wasm/-/hash-wasm-4.9.0.tgz#7e9dcc9f7d6bd0cc802f2a58f24edce999744206"
+  integrity sha512-7SW7ejyfnRxuOc7ptQHSf4LDoZaWOivfzqw+5rpcQku0nHfmicPKE51ra9BiRLAmT8+gGLestr1XroUkqdjL6w==
 
 is-fullwidth-code-point@^3.0.0:
   version "3.0.0"

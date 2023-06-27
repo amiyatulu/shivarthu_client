@@ -6,7 +6,7 @@ use yew_router::prelude::*;
 mod components;
 mod constants;
 mod router;
-mod polkadot_extension_binding;
+mod js_extension_binding;
 use serde::{self, Serialize, Deserialize};
 use components::navigation::nav::Nav;
 

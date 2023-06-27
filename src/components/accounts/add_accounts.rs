@@ -3,7 +3,7 @@ use crate::components::accounts::account_store::AccountStore;
 use crate::components::input::custom_button::CustomButton;
 use crate::components::navigation::nav::Nav;
 // use crate::components::accounts::functions::get_from_seed_sr_result;
-use crate::polkadot_extension_binding;
+use crate::js_extension_binding;
 use gloo::console::log;
 use magic_crypt::{new_magic_crypt, MagicCryptTrait};
 // use sp_core::Pair;
@@ -62,7 +62,7 @@ pub fn add_accounts() -> Html {
         if cloned_seed_state2.is_some() && cloned_password_state2.is_some() {
             let seed_string = cloned_seed_state2.as_ref().unwrap();
             let account =
-                polkadot_extension_binding::get_account_address_from_seed((*seed_string.clone()).to_owned());
+                js_extension_binding::get_account_address_from_seed((*seed_string.clone()).to_owned());
             let mc = new_magic_crypt!(cloned_password_state2.as_ref().unwrap(), 256);
             let base64 = mc.encrypt_str_to_base64(seed_string);
             store.hash = Some(base64);
