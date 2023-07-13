@@ -1,2 +1,2 @@
 pub mod profile;
-pub mod challenge_profile;
+pub mod profile_validation_schelling_game;

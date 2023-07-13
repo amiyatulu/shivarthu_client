@@ -16,7 +16,7 @@ use crate::components::profile_validation::profile::add_profile::AddProfile;
 use crate::components::ipfs::form_ipfs_upload::FormIpfsUpload;
 use crate::components::jstests::first_test::FirstTest;
 use crate::components::profile_validation::profile::view_profile::ViewProfile;
-use crate::components::profile_validation::challenge_profile::challenger_evidence::ChallengerEvidence;
+use crate::components::profile_validation::profile_validation_schelling_game::challenger_evidence::ChallengerEvidence;
 use crate::components::ai::chat_huggingface::ChatHuggingFace;
 
 

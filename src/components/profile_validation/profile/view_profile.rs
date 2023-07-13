@@ -40,7 +40,7 @@ pub fn view_profile() -> Html {
     let details_state: UseStateHandle<Option<String>> = use_state(|| None);
     let details_state_clone = details_state.clone();
 
-    let error_message_clone1 = error_message.clone();
+    // let error_message_clone1 = error_message.clone();
 
     use_effect_with_deps(
         move |_| {
@@ -48,46 +48,29 @@ pub fn view_profile() -> Html {
                 let client = subxt::client::OnlineClient::<PolkadotConfig>::from_url(NODE_URL)
                     .await
                     .unwrap();
-                let citizen_id_storage = polkadot::storage()
+                let citizen_profile_storage = polkadot::storage()
                     .profile_validation()
-                    .get_citizen_id(account_id32_clone);
-                let citizen_id_option = client
+                    .citizen_profile(account_id32_clone);
+           
+                let citizen_details = client
                     .storage()
                     .at_latest()
                     .await
                     .unwrap()
-                    .fetch(&citizen_id_storage)
+                    .fetch(&citizen_profile_storage)
                     .await
+                    .unwrap()
                     .unwrap();
-                match citizen_id_option {
-                    Some(citizen_id) => {
-                        let citizen_details_storage = polkadot::storage()
-                            .profile_validation()
-                            .citizen_profile(citizen_id);
-                        let citizen_details = client
-                            .storage()
-                            .at_latest()
-                            .await
-                            .unwrap()
-                            .fetch(&citizen_details_storage)
-                            .await
-                            .unwrap()
-                            .unwrap();
-                        let content = citizen_details.content;
-                        if let Content::IPFS(ipfsdata) = content {
-                            let ipfs_hash = String::from_utf8(ipfsdata).unwrap();
-                            log!("ipfs_hash", ipfs_hash.clone());
+                let content = citizen_details.content;
+                if let Content::IPFS(ipfsdata) = content {
+                    let ipfs_hash = String::from_utf8(ipfsdata).unwrap();
+                    log!("ipfs_hash", ipfs_hash.clone());
 
-                            let resp = ipfs_fetch(&ipfs_hash, DEFAULT_IPFS_FETCH_PROVIDER).await;
+                    let resp = ipfs_fetch(&ipfs_hash, DEFAULT_IPFS_FETCH_PROVIDER).await;
 
-                            profile_video_hash_clone.set(Some(resp.profile_video_cid.clone()));
-                            name_state_clone.set(Some(resp.name.clone()));
-                            details_state_clone.set(Some(resp.details.clone()));
-                        }
-                    }
-                    None => {
-                        error_message_clone1.set(Some("Citizen details not available.".to_owned()));
-                    }
+                    profile_video_hash_clone.set(Some(resp.profile_video_cid.clone()));
+                    name_state_clone.set(Some(resp.name.clone()));
+                    details_state_clone.set(Some(resp.details.clone()));
                 }
             })
         },
