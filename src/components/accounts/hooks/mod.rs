@@ -5,3 +5,4 @@
 pub mod balance_transfer_hook;
 pub mod add_profile_hooks;
 pub mod commons;
+pub mod profile_validation;
