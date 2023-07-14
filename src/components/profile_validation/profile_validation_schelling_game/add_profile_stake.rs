@@ -3,7 +3,7 @@ use wasm_bindgen::JsCast;
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 use crate::components::profile_validation::profile_validation_schelling_game::add_profile_stake_transaction_condition::ConditionalTransactionModal;
-
+use crate::components::profile_validation::profile_validation_schelling_game::get_total_fund_for_profile_collected::TotalFundProfileCollected;
 #[derive(Properties, PartialEq)]
 pub struct ProfileStakeProps {
     pub profile_user_account: String,
@@ -49,6 +49,7 @@ pub fn add_profile_stake(props: &ProfileStakeProps) -> Html {
             <>
             <Nav/>
             <div class="container">
+            <TotalFundProfileCollected profile_user_account={profile_user_account}/>
                 <form onsubmit={onsubmit}>
                 <div class="mb-3">
                 <label for="profile-stake" class="form-label">{"Profile Stake"}</label>

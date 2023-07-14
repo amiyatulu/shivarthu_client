@@ -44,8 +44,8 @@ pub fn use_profile_stake(profile_user_account: String, amount_to_fund: u32) -> T
                                     .set(Some("Unexpected result type".to_owned()));
                             }
                         }
-                        Err(_e) => {
-                            transaction_error_clone_second.set(Some("api error".to_owned()));
+                        Err(e) => {
+                            transaction_error_clone_second.set(e.as_string());
                         }
                     }
                 });

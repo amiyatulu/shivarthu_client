@@ -18,6 +18,7 @@ use crate::components::jstests::first_test::FirstTest;
 use crate::components::profile_validation::profile::view_profile::ViewProfile;
 use crate::components::profile_validation::profile_validation_schelling_game::challenger_evidence::ChallengerEvidence;
 use crate::components::ai::chat_huggingface::ChatHuggingFace;
+use crate::components::profile_validation::profile_validation_schelling_game::add_profile_stake::AddProfileStake;
 
 
 #[derive(Debug, Clone, PartialEq, Routable)]
@@ -58,6 +59,8 @@ pub enum Route {
     ViewProfile,
     #[at("/challenger-evidence")]
     ChallengerEvidence,
+    #[at("/add-profile-stake/:profile_user_account")]
+    AddProfileStake { profile_user_account: String}
 
 }
 
@@ -81,5 +84,6 @@ pub fn switch(route: Route) -> Html {
         Route::ViewProfile => html! {<ViewProfile/>},
         Route::ChallengerEvidence => html! {<ChallengerEvidence/>},
         Route::ChatHuggingFace => html!{<ChatHuggingFace/>},
+        Route::AddProfileStake { profile_user_account } => html!{<AddProfileStake profile_user_account={profile_user_account}/>}
     }
 }
