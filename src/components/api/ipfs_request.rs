@@ -4,9 +4,9 @@ use crate::constants::auth::{CRUST_TOKEN, WEB3_STORAGE_TOKEN};
 
 
 use gloo::console::log;
-use gloo_net::http::{FormData, Headers, Request};
+use gloo_net::http::{ Headers, Request};
 use serde::{Deserialize, Serialize};
-use web_sys::{Blob, File};
+use web_sys::{Blob, File, FormData};
 use wasm_bindgen::JsValue;
 #[derive(Serialize, Deserialize)]
 pub struct IPFSResponse {
@@ -40,13 +40,14 @@ pub async fn ipfs_call_json_string(
 
 pub async fn ipfs_call_crust(file: File, name: String) -> String {
     let formdata = FormData::new().unwrap();
-    formdata.append_with_blob(&name, &file);
+    let _ = formdata.append_with_blob(&name, &file);
     let headers = Headers::new();
     headers.append(&"Authorization", CRUST_TOKEN);
 
     let data = Request::post(&format!("{CRUST_GATEWAY}/api/v0/add?pin=true"))
         .headers(headers)
         .body(formdata)
+        .unwrap()
         .send()
         .await
         .unwrap();
@@ -58,13 +59,14 @@ pub async fn ipfs_call_crust(file: File, name: String) -> String {
 
 pub async fn ipfs_call_json_string_crust(data: &str, name: String) -> String {
     let formdata = FormData::new().unwrap();
-    formdata.append_with_str(&name, &data);
+    let _ = formdata.append_with_str(&name, &data);
     let headers = Headers::new();
     headers.append(&"Authorization", CRUST_TOKEN);
 
     let data = Request::post(&format!("{CRUST_GATEWAY}/api/v0/add?pin=true"))
         .headers(headers)
         .body(formdata)
+        .unwrap()
         .send()
         .await
         .unwrap();
@@ -82,6 +84,7 @@ pub async fn ipfs_call_web3storage(file: File, _name: String) -> String {
     let data = Request::post(WEB3_STORAGE_API_UPLOAD)
         .headers(headers)
         .body(file)
+        .unwrap()
         .send()
         .await
         .unwrap();
@@ -103,6 +106,7 @@ pub async fn ipfs_call_json_string_web3storage(data: &str, _name: String) -> Str
     let data = Request::post(WEB3_STORAGE_API_UPLOAD)
         .headers(headers)
         .body(json_blob)
+        .unwrap()
         .send()
         .await
         .unwrap();
