@@ -1,6 +1,6 @@
+use gloo::console::log;
 use subxt::{OnlineClient, PolkadotConfig};
 use yew::prelude::*;
-use yewdux::prelude::*;
 
 use crate::constants::constant::NODE_URL;
 use std::str::FromStr;
@@ -43,32 +43,37 @@ pub fn total_profile_collected(props: &Props) -> Html {
                     .profile_validation()
                     .profile_total_fund_collected(account_id32_clone);
 
-                let fund_collected = client
+                let fund_collected_value = client
                     .storage()
                     .at_latest()
                     .await
                     .unwrap()
-                    .fetch(&total_profile_fund_collected)
+                    .fetch_or_default(&total_profile_fund_collected)
                     .await
-                    .unwrap()
                     .unwrap();
-                fund_collected_clone.set(Some(fund_collected));
+                fund_collected_clone.set(Some(fund_collected_value));
 
                 let registration_fee_storage = polkadot::storage()
                     .profile_validation()
                     .registration_challenge_fee();
-                let registration_fee = client
+                let registration_fee_value = client
                     .storage()
                     .at_latest()
                     .await
                     .unwrap()
-                    .fetch(&registration_fee_storage)
+                    .fetch_or_default(&registration_fee_storage)
                     .await
-                    .unwrap()
                     .unwrap();
-                registration_fee_clone.set(Some(registration_fee));
 
-                let fund_needed = registration_fee.checked_sub(fund_collected);
+                // match registration_fee_result {
+                //     Ok(value) => log!(value),
+                //     Err(value) => log!(format!("{}",value))
+                // }
+
+                // // log!(registration_fee);
+                registration_fee_clone.set(Some(registration_fee_value));
+
+                let fund_needed = registration_fee_value.checked_sub(fund_collected_value);
                 fund_needed_clone.set(fund_needed);
             });
         },
@@ -82,11 +87,11 @@ pub fn total_profile_collected(props: &Props) -> Html {
         }
         <br/>
         if registration_fee.is_some() {
-            {"Registration fee"}{(*registration_fee).unwrap()}
+            {"Registration fee: "}{(*registration_fee).unwrap()}
         }
         <br/>
         if fund_needed.is_some() {
-            {"Fund needed"}{(*fund_needed).unwrap()}
+            {"Fund Needed: "}{(*fund_needed).unwrap()}
         }
         </>
     }

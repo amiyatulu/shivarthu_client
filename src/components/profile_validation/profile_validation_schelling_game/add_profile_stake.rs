@@ -4,6 +4,7 @@ use web_sys::HtmlInputElement;
 use yew::prelude::*;
 use crate::components::profile_validation::profile_validation_schelling_game::add_profile_stake_transaction_condition::ConditionalTransactionModal;
 use crate::components::profile_validation::profile_validation_schelling_game::get_total_fund_for_profile_collected::TotalFundProfileCollected;
+use crate::components::profile_validation::profile_validation_schelling_game::profile_validation_storage_call::get_period::GetPeriod;
 #[derive(Properties, PartialEq)]
 pub struct ProfileStakeProps {
     pub profile_user_account: String,
@@ -49,6 +50,7 @@ pub fn add_profile_stake(props: &ProfileStakeProps) -> Html {
             <>
             <Nav/>
             <div class="container">
+            // <GetPeriod profile_user_account={profile_user_account.clone()}/>
             <TotalFundProfileCollected profile_user_account={profile_user_account}/>
                 <form onsubmit={onsubmit}>
                 <div class="mb-3">
