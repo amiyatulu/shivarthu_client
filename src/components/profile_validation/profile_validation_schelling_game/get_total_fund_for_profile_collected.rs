@@ -25,9 +25,13 @@ pub fn total_profile_collected(props: &Props) -> Html {
     let account_id32 = AccountId32::from_str(&profile_user_account).unwrap();
     let account_id32_clone = account_id32.clone();
 
+    let fund_collected: UseStateHandle<Option<u128>> = use_state(|| None);
+    let fund_collected_clone = fund_collected.clone();
+    let registration_fee: UseStateHandle<Option<u128>> = use_state(|| None);
+    let registration_fee_clone = registration_fee.clone();
+
     let fund_needed: UseStateHandle<Option<u128>> = use_state(|| None);
     let fund_needed_clone = fund_needed.clone();
-
 
     use_effect_with_deps(
         move |_| {
@@ -39,9 +43,33 @@ pub fn total_profile_collected(props: &Props) -> Html {
                     .profile_validation()
                     .profile_total_fund_collected(account_id32_clone);
 
-                let balance = client.storage().at_latest().await.unwrap().fetch(&total_profile_fund_collected).await.unwrap().unwrap();
-                fund_needed_clone.set(Some(balance));
+                let fund_collected = client
+                    .storage()
+                    .at_latest()
+                    .await
+                    .unwrap()
+                    .fetch(&total_profile_fund_collected)
+                    .await
+                    .unwrap()
+                    .unwrap();
+                fund_collected_clone.set(Some(fund_collected));
 
+                let registration_fee_storage = polkadot::storage()
+                    .profile_validation()
+                    .registration_challenge_fee();
+                let registration_fee = client
+                    .storage()
+                    .at_latest()
+                    .await
+                    .unwrap()
+                    .fetch(&registration_fee_storage)
+                    .await
+                    .unwrap()
+                    .unwrap();
+                registration_fee_clone.set(Some(registration_fee));
+
+                let fund_needed = registration_fee.checked_sub(fund_collected);
+                fund_needed_clone.set(fund_needed);
             });
         },
         (),
@@ -49,8 +77,16 @@ pub fn total_profile_collected(props: &Props) -> Html {
 
     html! {
         <>
+        if fund_collected.is_some() {
+            {"Total fund collected: "}{(*fund_collected).unwrap()}
+        }
+        <br/>
+        if registration_fee.is_some() {
+            {"Registration fee"}{(*registration_fee).unwrap()}
+        }
+        <br/>
         if fund_needed.is_some() {
-            {"Total fund collected: "}{(*fund_needed).unwrap()}
+            {"Fund needed"}{(*fund_needed).unwrap()}
         }
         </>
     }
