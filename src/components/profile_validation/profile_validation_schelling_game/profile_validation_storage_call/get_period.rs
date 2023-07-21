@@ -49,26 +49,30 @@ pub fn get_period(props: &Props) -> Html {
                     .unwrap()
                     .fetch(&profile_validation_block_storage)
                     .await
-                    .unwrap()
                     .unwrap();
-                block_number_clone.set(Some(profile_validation_block));
+                block_number_clone.set(profile_validation_block);
 
-                let key = SumTreeName::ProfileValidation {
-                    citizen_address: account_id32_clone2,
-                    block_number: profile_validation_block,
+                if profile_validation_block.is_some() {
+
+                    let key = SumTreeName::ProfileValidation {
+                        citizen_address: account_id32_clone2,
+                        block_number: profile_validation_block.unwrap(),
+                    };
+    
+                    let period_storage = polkadot::storage().schelling_game_shared().period_name(key);
+                    let period = client
+                        .storage()
+                        .at_latest()
+                        .await
+                        .unwrap()
+                        .fetch(&period_storage)
+                        .await
+                        .unwrap();
+                    period_name_clone.set(period);
+
                 };
 
-                let period_storage = polkadot::storage().schelling_game_shared().period_name(key);
-                let period = client
-                    .storage()
-                    .at_latest()
-                    .await
-                    .unwrap()
-                    .fetch(&period_storage)
-                    .await
-                    .unwrap()
-                    .unwrap();
-                period_name_clone.set(Some(period));
+                
             });
         },
         (),
@@ -77,7 +81,7 @@ pub fn get_period(props: &Props) -> Html {
     html! {
         <>
         if period_name.is_some() {
-            {"Period Name "}{format!("{:?}", period_name.as_ref().unwrap())}
+            {"Period Name: "}{format!("{:?}", period_name.as_ref().unwrap())}
         }
         <br/>
 

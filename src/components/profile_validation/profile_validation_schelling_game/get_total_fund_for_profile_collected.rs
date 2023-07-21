@@ -55,7 +55,7 @@ pub fn total_profile_collected(props: &Props) -> Html {
 
                 let registration_fee_storage = polkadot::storage()
                     .profile_validation()
-                    .registration_challenge_fee();
+                    .registration_fee();
                 let registration_fee_value = client
                     .storage()
                     .at_latest()

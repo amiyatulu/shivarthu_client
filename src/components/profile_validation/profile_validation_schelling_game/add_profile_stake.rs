@@ -50,11 +50,11 @@ pub fn add_profile_stake(props: &ProfileStakeProps) -> Html {
             <>
             <Nav/>
             <div class="container">
-            // <GetPeriod profile_user_account={profile_user_account.clone()}/>
+            <GetPeriod profile_user_account={profile_user_account.clone()}/>
             <TotalFundProfileCollected profile_user_account={profile_user_account}/>
                 <form onsubmit={onsubmit}>
                 <div class="mb-3">
-                <label for="profile-stake" class="form-label">{"Profile Stake"}</label>
+                <label for="profile-stake" class="form-label">{"Profile Stake:"}</label>
                 <input name={"profile-stake"} type="number" class={"form-control"} required={true} onchange={profile_stake_onchanged}/>
                 </div>
                 if let Some(_value) = *spinner_state {
