@@ -20,6 +20,9 @@ extern "C" {
 
     #[wasm_bindgen]
     pub fn chat_text(token: String, prompt: String, model: String) -> Promise;
+
+    #[wasm_bindgen]
+    pub fn challege_profile(wsprovider: String, mnemonic: String, profile_user_account: String, ipfs_string: String) -> Promise;
    
     // bafykbzacecb53zxvj6q6q63rintnpcuhufbojz56q3zg4xxpzmzgmi2pplnmi
     
