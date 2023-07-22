@@ -6,4 +6,4 @@ pub mod balance_transfer_hook;
 pub mod add_profile_hooks;
 pub mod commons;
 pub mod profile_validation;
-pub mod hook_extrinsics_macro;
+pub mod custom_extrinsics_hook;
