@@ -9,9 +9,8 @@ edition = "2021"
 
 yew = { version = "0.20.0", features = ["csr"] }
 rand = "0.8.5"
-gloo = "0.8.0"
+gloo = "0.9.0"
 gloo-storage = "0.2.2"
-gloo-net = { version = "0.3.0", feature = ["http"]}
 gloo-timers = "0.2.4"
 serde = "1.0.144"
 serde_json = "1.0.85"
@@ -26,11 +25,12 @@ futures = "0.3.13"
 hex = "0.4.3"
 tracing-subscriber = "0.3.11"
 wasm-bindgen-futures = "0.4.32"
-jsonrpsee-wasm-client = "0.18.2"
-jsonrpsee-core = "0.18.2"
+jsonrpsee-wasm-client = "0.19.0"
+jsonrpsee-core = "0.19.0"
 codec = { package = "parity-scale-codec", version = "3.0.0", default-features = false, features = ["derive", "full", "bit-vec"] }
 # getrandom = { version = "0.2.7", features = ["js"] }
-subxt = { version="0.29.0", default-features = false, features = ["jsonrpsee-web"] }
+subxt = { version="0.30.0", default-features = false, features = ["jsonrpsee", "web"]}
+subxt-signer = { version="0.30.0", default-features = false, features = ["web", "sr25519", "ecdsa", "subxt"] }
 # sp-core = { version = "20.0.0", features = ["full_crypto"] }
 magic-crypt = "3.1.12"
 yew_icons = { version = "0.7.2", features = ["BootstrapCloudUpload", "FontAwesomeSolidSpinner"]}

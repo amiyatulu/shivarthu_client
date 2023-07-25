@@ -7,3 +7,4 @@ pub mod add_profile_hooks;
 pub mod commons;
 pub mod profile_validation;
 pub mod custom_extrinsics_hook;
+pub mod custom_extrinsics_subxt_hook;

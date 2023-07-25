@@ -7,8 +7,12 @@ use yewdux::prelude::*;
 use crate::components::navigation::nav::Nav;
 use crate::components::accounts::account_store::PhaseExists;
 use crate::components::accounts::set_phrase_from_pass::SetPhraseFromPass;
-use crate::components::accounts::hooks::profile_validation::add_profile_stake_hooks;
+// use crate::components::accounts::hooks::profile_validation::add_profile_stake_hooks;
 use crate::components::accounts::hooks::commons::TransactionReturnKind;
+use crate::js_extension_binding;
+use crate::components::accounts::hooks::custom_extrinsics_hook::use_custom_extrinsic;
+
+
 
 
 
@@ -23,9 +27,19 @@ pub struct Props {
 pub fn transaction(props: &Props) -> Html {
     let profile_user_account = props.profile_user_account.clone();
     let amount_to_fund = props.amount_to_fund.clone();
-    // let hookdata = custom_extrinsics_hook!(use_profile_stake(profile_user_account, amount_to_fund), add_profile_stake);
 
-    let hookdata = add_profile_stake_hooks::use_profile_stake(profile_user_account, amount_to_fund);
+    let promise_creator = move |node_url: &String, seed: &String| {
+            js_extension_binding::add_profile_stake(
+                node_url.to_owned(),
+                seed.to_owned(),
+                profile_user_account,
+                amount_to_fund,
+            )
+    };
+
+    let hookdata = use_custom_extrinsic(promise_creator);
+
+    // let hookdata = add_profile_stake_hooks::use_profile_stake(profile_user_account, amount_to_fund);
 
     html! {
         <>

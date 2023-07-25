@@ -1,11 +1,11 @@
 use crate::components::accounts::account_store::PhraseStore;
-use crate::components::accounts::functions::get_from_seed_sr;
+use crate::components::accounts::functions::get_from_seed;
 use gloo::console::log;
 use std::ops::Deref;
-use subxt::tx::PairSigner;
-use subxt::PolkadotConfig;
+use subxt::{OnlineClient, PolkadotConfig};
 use yew::prelude::*;
 use yewdux::prelude::*;
+use subxt_signer::sr25519::dev;
 
 #[hook]
 pub fn use_sign_tx<T>(tx: T) -> String
@@ -23,26 +23,24 @@ where
         move |_| {
             if *first_load {
                 wasm_bindgen_futures::spawn_local(async move {
-                    let client = subxt::client::OnlineClient::<PolkadotConfig>::from_url(
+                    let client = OnlineClient::<PolkadotConfig>::from_url(
                         "ws://127.0.0.1:9944",
                     )
-                    .await
-                    .unwrap();
+                    .await.unwrap();
                     let phrase_option = &store_clone.mnemonic_phrase;
                     if let Some(seed) = phrase_option {
-                        let pair = get_from_seed_sr(&seed);
-                        let signer = PairSigner::new(pair);
-                        let result = client.tx().sign_and_submit_default(&tx, &signer).await;
-                        match result {
-                            Ok(hash) => {
-                                hash_state_clone.set(format!("{:?}", hash.clone()));
-                                log!(format!("{:?}", hash));
-                            }
-                            Err(err) => {
-                                hash_state_clone.set(format!("{:?}", err));
-                                log!(format!("{:?}", err));
-                            }
-                        }
+                        let from = get_from_seed(&seed);
+                        let result = client.tx().sign_and_submit_then_watch_default(&tx, &from).await.unwrap();
+                        // match result {
+                        //     Ok(hash) => {
+                        //         hash_state_clone.set(format!("{:?}", hash.clone()));
+                        //         log!(format!("{:?}", hash));
+                        //     }
+                        //     Err(err) => {
+                        //         hash_state_clone.set(format!("{:?}", err));
+                        //         log!(format!("{:?}", err));
+                        //     }
+                        // }
                     } else {
                         log!(format!("Seed doesnot exists"));
                     }

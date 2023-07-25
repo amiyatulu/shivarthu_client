@@ -2,16 +2,16 @@ use crate::components::api::ipfs_request::ipfs_call_json_string;
 use crate::components::api::select_ipfs_provider::DEFAULT_IPFS_PROVIDER;
 use crate::components::markdown::markdown_field::MarkdownField;
 use crate::components::navigation::nav::Nav;
+use gloo::console::log;
 use json::object;
 use yew::prelude::*;
-use gloo::console::log;
-
 
 #[function_component(ChallengerEvidence)]
 pub fn challenger_evidence() -> Html {
     let evidence_markdown_state: UseStateHandle<Option<String>> = use_state(|| None);
     let spinner_state: UseStateHandle<Option<bool>> = use_state(|| None);
     let ipfs_response: UseStateHandle<Option<String>> = use_state(|| None);
+    let ipfs_response_clone = ipfs_response.clone();
 
     let evidence_markdown_state_clone = evidence_markdown_state.clone();
     let evidence_markdown_state_clone_onsubmit = evidence_markdown_state.clone();
@@ -57,23 +57,31 @@ pub fn challenger_evidence() -> Html {
         }
     });
 
-    html! {
-        <>
-            <Nav/>
-            <div class="container">
-                <form onsubmit={onsubmit}>
-                    <div class="mb-3">
-                        <label for="details" class="form-label">{"Details"}</label>
-                        <MarkdownField name={"details"} class={"form-control"} required={true} handle_onchange={markdown_changed}/>
-                    </div>
-                    if let Some(_value) = *spinner_state {
-                        <input type="submit" value="Submit" disabled={true} />
-                        <img src="img/rolling.gif" alt="loading" width="40"/>
-                    } else {
-                        <input type="submit" value="Submit" />
-                    }
-                </form>
-            </div>
-        </>
+    if ipfs_response_clone.is_none() {
+        html! {
+            <>
+                <Nav/>
+                <div class="container">
+                    <form onsubmit={onsubmit}>
+                        <div class="mb-3">
+                            <label for="details" class="form-label">{"Details"}</label>
+                            <MarkdownField name={"details"} class={"form-control"} required={true} handle_onchange={markdown_changed}/>
+                        </div>
+                        if let Some(_value) = *spinner_state {
+                            <input type="submit" value="Submit" disabled={true} />
+                            <img src="img/rolling.gif" alt="loading" width="40"/>
+                        } else {
+                            <input type="submit" value="Submit" />
+                        }
+                    </form>
+                </div>
+            </>
+        }
+    } else {
+        let ipfs_string = format!("{}", ipfs_response_clone.as_deref().unwrap_or_default());
+        html! {
+            <>
+            </>
+        }
     }
 }

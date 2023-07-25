@@ -1,5 +1,5 @@
 pub mod add_accounts;
-// pub mod functions;
+pub mod functions;
 pub mod account_store;
 pub mod create_account;
 pub mod account_home;

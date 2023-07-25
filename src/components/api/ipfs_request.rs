@@ -4,7 +4,7 @@ use crate::constants::auth::{CRUST_TOKEN, WEB3_STORAGE_TOKEN};
 
 
 use gloo::console::log;
-use gloo_net::http::{ Headers, Request};
+use gloo::net::http::{ Headers, Request};
 use serde::{Deserialize, Serialize};
 use web_sys::{Blob, File, FormData};
 use wasm_bindgen::JsValue;
