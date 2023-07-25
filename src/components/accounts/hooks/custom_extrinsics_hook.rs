@@ -7,6 +7,21 @@ use yew::prelude::*;
 use yewdux::prelude::*;
 use js_sys::Promise;
 
+// Calling the hook example:
+
+/* 
+let promise_creator = move |node_url: &String, seed: &String| {
+    let ipfs_response_clone = ipfs_response.clone();
+    js_extension_binding::add_profile(
+        node_url.to_owned(),
+        seed.to_owned(),
+        ipfs_response_clone.clone(),
+    )
+};
+
+let hookdata = use_custom_extrinsic(promise_creator);
+*/
+
 #[hook]
 pub fn use_custom_extrinsic(
     promise_creator: impl FnOnce(&String, &String) -> Promise + 'static,

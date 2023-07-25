@@ -6,6 +6,33 @@ use subxt::{tx::TxStatus, OnlineClient, PolkadotConfig};
 use yew::prelude::*;
 use yewdux::prelude::*;
 
+// Calling the hook example:
+
+/* 
+use crate::components::accounts::hooks::custom_extrinsics_subxt_hook::use_sign_tx;
+
+#[subxt::subxt(
+    runtime_metadata_path = "./artifacts/metadata.scale",
+    derive_for_all_types = "Clone, Debug, Eq, PartialEq"
+)]
+
+pub mod polkadot {}
+
+use polkadot::runtime_types::pallet_support::Content;
+
+*/
+
+
+// With in functional component
+
+/* 
+let content: Content = Content::IPFS(ipfs_response_for_content_clone.as_bytes().to_vec());
+
+let add_profile_tx = polkadot::tx().profile_validation().add_citizen(content);
+
+let hookdata = use_sign_tx(add_profile_tx);
+*/
+
 #[hook]
 pub fn use_sign_tx<T>(tx: T) -> TransactionReturn
 where
