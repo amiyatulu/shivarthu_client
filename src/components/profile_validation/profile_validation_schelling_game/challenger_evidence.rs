@@ -2,12 +2,20 @@ use crate::components::api::ipfs_request::ipfs_call_json_string;
 use crate::components::api::select_ipfs_provider::DEFAULT_IPFS_PROVIDER;
 use crate::components::markdown::markdown_field::MarkdownField;
 use crate::components::navigation::nav::Nav;
+use crate::components::profile_validation::profile_validation_schelling_game::challenger_evidence_transaction_condition::ConditionalTransactionModal;
+
 use gloo::console::log;
 use json::object;
 use yew::prelude::*;
 
+#[derive(Properties, PartialEq)]
+pub struct Props {
+    pub profile_user_account: String,
+}
+
 #[function_component(ChallengerEvidence)]
-pub fn challenger_evidence() -> Html {
+pub fn challenger_evidence(props: &Props) -> Html {
+    let profile_user_account = props.profile_user_account.clone();
     let evidence_markdown_state: UseStateHandle<Option<String>> = use_state(|| None);
     let spinner_state: UseStateHandle<Option<bool>> = use_state(|| None);
     let ipfs_response: UseStateHandle<Option<String>> = use_state(|| None);
@@ -78,9 +86,10 @@ pub fn challenger_evidence() -> Html {
             </>
         }
     } else {
-        let ipfs_string = format!("{}", ipfs_response_clone.as_deref().unwrap_or_default());
+        let ipfs_response = format!("{}", ipfs_response_clone.as_deref().unwrap_or_default());
         html! {
             <>
+            <ConditionalTransactionModal ipfs_response={ipfs_response} profile_user_account={profile_user_account}/>
             </>
         }
     }

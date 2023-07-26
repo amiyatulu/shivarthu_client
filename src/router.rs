@@ -58,13 +58,12 @@ pub enum Route {
     FirstTest,
     #[at("/view-profile")]
     ViewProfile,
-    #[at("/challenger-evidence")]
-    ChallengerEvidence,
+    #[at("/challenger-evidence/:profile_user_account")]
+    ChallengerEvidence { profile_user_account: String},
     #[at("/add-profile-stake/:profile_user_account")]
     AddProfileStake { profile_user_account: String},
     #[at("/staking-end-period")]
     StakingPeriodEndBlock,
-
 }
 
 pub fn switch(route: Route) -> Html {
@@ -85,7 +84,7 @@ pub fn switch(route: Route) -> Html {
         Route::FormIpfsUpload => html! {<FormIpfsUpload/>},
         Route::FirstTest => html! {<FirstTest/>},
         Route::ViewProfile => html! {<ViewProfile/>},
-        Route::ChallengerEvidence => html! {<ChallengerEvidence/>},
+        Route::ChallengerEvidence{ profile_user_account } => html! {<ChallengerEvidence profile_user_account={profile_user_account}/>},
         Route::ChatHuggingFace => html!{<ChatHuggingFace/>},
         Route::AddProfileStake { profile_user_account } => html!{<AddProfileStake profile_user_account={profile_user_account}/>},
         Route::StakingPeriodEndBlock => html!{<StakingPeriodEndBlock/>},

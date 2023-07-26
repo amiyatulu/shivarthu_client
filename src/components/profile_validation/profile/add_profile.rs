@@ -9,7 +9,7 @@ use json::object;
 // use wasm_bindgen::JsCast;
 // use web_sys::HtmlInputElement;
 use yew::prelude::*;
-use yewdux::prelude::*;
+// use yewdux::prelude::*;
 // use crate::components::accounts::hooks::sign_tx_handle::{use_sign_tx_handle} ;
 
 use crate::components::api::ipfs_request::ipfs_call_json_string;
@@ -153,9 +153,9 @@ pub fn add_profile() -> Html {
             </>
         }
     } else {
-        let ipfs_string = format!("{}", ipfs_response.as_deref().unwrap_or_default());
+        let ipfs_response = format!("{}", ipfs_response.as_deref().unwrap_or_default());
         html! {
-           <ConditionalTransactionModal ipfs_response={ipfs_string} />
+           <ConditionalTransactionModal ipfs_response={ipfs_response} />
         }
     }
 }
