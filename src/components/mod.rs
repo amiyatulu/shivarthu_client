@@ -9,3 +9,4 @@ pub mod markdown;
 pub mod ipfs;
 pub mod ai;
 pub mod jstests;
+pub mod common_component;

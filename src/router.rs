@@ -20,6 +20,7 @@ use crate::components::profile_validation::profile_validation_schelling_game::ch
 use crate::components::ai::chat_huggingface::ChatHuggingFace;
 use crate::components::profile_validation::profile_validation_schelling_game::add_profile_stake::AddProfileStake;
 use crate::components::profile_validation::profile_validation_schelling_game::profile_validation_rpc::staking_period_end_block::StakingPeriodEndBlock;
+use crate::components::profile_validation::profile_validation_schelling_game::change_period::ChangePeriod;
 
 
 #[derive(Debug, Clone, PartialEq, Routable)]
@@ -64,6 +65,8 @@ pub enum Route {
     AddProfileStake { profile_user_account: String},
     #[at("/staking-end-period")]
     StakingPeriodEndBlock,
+    #[at("/change-period/:profile_user_account")]
+    ChangePeriod {profile_user_account: String},
 }
 
 pub fn switch(route: Route) -> Html {
@@ -88,5 +91,6 @@ pub fn switch(route: Route) -> Html {
         Route::ChatHuggingFace => html!{<ChatHuggingFace/>},
         Route::AddProfileStake { profile_user_account } => html!{<AddProfileStake profile_user_account={profile_user_account}/>},
         Route::StakingPeriodEndBlock => html!{<StakingPeriodEndBlock/>},
+        Route::ChangePeriod {profile_user_account} => html!{<ChangePeriod profile_user_account={profile_user_account}/>},
     }
 }

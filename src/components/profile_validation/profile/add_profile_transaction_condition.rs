@@ -9,6 +9,7 @@ use crate::components::accounts::hooks::commons::TransactionReturnKind;
 // use crate::components::accounts::hooks::custom_extrinsics_hook::use_custom_extrinsic;
 // use crate::js_extension_binding;
 use crate::components::accounts::hooks::custom_extrinsics_subxt_hook::use_sign_tx;
+use crate::components::common_component::common_transaction_return::CommonTransactionReturn;
 
 #[subxt::subxt(
     runtime_metadata_path = "./artifacts/metadata.scale",
@@ -51,20 +52,7 @@ pub fn transaction(props: &Props) -> Html {
 
     html! {
         <>
-        <Nav />
-            <div class="container">
-                <h1>{"Transaction details"}</h1>
-                <p>
-                {
-                    match hookdata.kind {
-                        TransactionReturnKind::Finalized => {hookdata.value}
-                        TransactionReturnKind::Error => {hookdata.value}
-                        TransactionReturnKind::InBlock => {hookdata.value}
-                        TransactionReturnKind::Processing => {hookdata.value}
-                    }
-                }
-                </p>
-            </div>
+        <CommonTransactionReturn hookdata={hookdata} />
         </>
 
     }
