@@ -7,3 +7,5 @@ pub mod profile_validation_rpc;
 pub mod profile_validation_storage_call;
 pub mod change_period;
 pub mod change_period_transaction_condition;
+pub mod add_apply_jurors;
+pub mod add_profile_jurors_transaction_condition;

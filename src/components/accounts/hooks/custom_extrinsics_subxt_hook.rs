@@ -1,6 +1,6 @@
 use crate::components::accounts::account_store::PhraseStore;
-use crate::components::accounts::hooks::commons::{TransactionReturn, TransactionReturnKind};
 use crate::components::accounts::functions::get_from_seed;
+use crate::components::accounts::hooks::commons::{TransactionReturn, TransactionReturnKind};
 use futures::StreamExt;
 use subxt::{tx::TxStatus, OnlineClient, PolkadotConfig};
 use yew::prelude::*;
@@ -8,7 +8,7 @@ use yewdux::prelude::*;
 
 // Calling the hook example:
 
-/* 
+/*
 use crate::components::accounts::hooks::custom_extrinsics_subxt_hook::use_sign_tx;
 
 #[subxt::subxt(
@@ -22,10 +22,9 @@ use polkadot::runtime_types::pallet_support::Content;
 
 */
 
-
 // With in functional component
 
-/* 
+/*
 let content: Content = Content::IPFS(ipfs_response_for_content_clone.as_bytes().to_vec());
 
 let add_profile_tx = polkadot::tx().profile_validation().add_citizen(content);
@@ -53,26 +52,39 @@ where
         move |_| {
             if *first_load {
                 wasm_bindgen_futures::spawn_local(async move {
-                    let client = OnlineClient::<PolkadotConfig>::from_url(
-                        "ws://127.0.0.1:9944",
-                    )
-                    .await.unwrap();
+                    let client = OnlineClient::<PolkadotConfig>::from_url("ws://127.0.0.1:9944")
+                        .await
+                        .unwrap();
                     let phrase_option = &store_clone.mnemonic_phrase;
                     if let Some(seed) = phrase_option {
                         let from = get_from_seed(&seed);
-                        let mut result = client.tx().sign_and_submit_then_watch_default(&tx, &from).await.unwrap();
-                       while let Some(status) = result.next().await {
+                        let mut result = client
+                            .tx()
+                            .sign_and_submit_then_watch_default(&tx, &from)
+                            .await
+                            .unwrap();
+                        while let Some(status) = result.next().await {
                             match status.unwrap() {
                                 TxStatus::Finalized(in_block) => {
-                                    transaction_hash_clone.set(Some(format!("Transaction {:?} is finalized in block {:?}",
-                                    in_block.extrinsic_hash(),
-                                    in_block.block_hash())));
+                                    transaction_hash_clone.set(Some(format!(
+                                        "Transaction {:?} is finalized in block {:?}",
+                                        in_block.extrinsic_hash(),
+                                        in_block.block_hash()
+                                    )));
+
+                                    let events = in_block.wait_for_success().await;
+                                    match events {
+                                        Ok(e) => {}
+                                        Err(e) => {
+                                            gloo::console::log!(e.to_string())
+                                        }
+                                    }
                                 }
-                                other => {
-                                    transaction_error_clone_first.set(Some(format!("Status: {other:?}")))
-                                }
+
+                                other => transaction_error_clone_first
+                                    .set(Some(format!("Status: {other:?}"))),
                             }
-                       }
+                        }
                     } else {
                         transaction_error_clone_second.set(Some(format!("Seed doesnot exists")));
                     }
@@ -100,5 +112,4 @@ where
             value: "Processing".to_owned(),
         }
     }
-   
 }
