@@ -4,7 +4,6 @@ use yewdux::prelude::*;
 
 
 
-use crate::components::navigation::nav::Nav;
 use crate::components::accounts::account_store::PhaseExists;
 use crate::components::accounts::set_phrase_from_pass::SetPhraseFromPass;
 // use crate::components::accounts::hooks::profile_validation::add_profile_stake_hooks;
