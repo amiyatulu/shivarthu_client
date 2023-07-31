@@ -29,8 +29,8 @@ jsonrpsee-wasm-client = "0.19.0"
 jsonrpsee-core = "0.19.0"
 codec = { package = "parity-scale-codec", version = "3.0.0", default-features = false, features = ["derive", "full", "bit-vec"] }
 # getrandom = { version = "0.2.7", features = ["js"] }
-subxt = { version="0.30.0", default-features = false, features = ["jsonrpsee", "web"]}
-subxt-signer = { version="0.30.0", default-features = false, features = ["web", "sr25519", "ecdsa", "subxt"] }
+subxt = { version="0.30.1", default-features = false, features = ["jsonrpsee", "web"]}
+subxt-signer = { version="0.30.1", default-features = false, features = ["web", "sr25519", "ecdsa", "subxt"] }
 # sp-core = { version = "20.0.0", features = ["full_crypto"] }
 magic-crypt = "3.1.12"
 yew_icons = { version = "0.7.2", features = ["BootstrapCloudUpload", "FontAwesomeSolidSpinner"]}

@@ -9,3 +9,5 @@ pub mod change_period;
 pub mod change_period_transaction_condition;
 pub mod add_apply_jurors;
 pub mod add_profile_jurors_transaction_condition;
+pub mod draw_jurors;
+pub mod draw_jurors_transaction_condition;
