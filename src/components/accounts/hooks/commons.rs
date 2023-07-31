@@ -10,4 +10,5 @@ pub enum TransactionReturnKind {
 pub struct TransactionReturn {
     pub kind: TransactionReturnKind,
     pub value: String,
+    pub dispatch_error: Option<String>,
 }

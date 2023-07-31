@@ -2,6 +2,8 @@ use crate::components::accounts::account_store::PhraseStore;
 use crate::components::accounts::functions::get_from_seed;
 use crate::components::accounts::hooks::commons::{TransactionReturn, TransactionReturnKind};
 use futures::StreamExt;
+use std::ops::Deref;
+use subxt::error::{DispatchError, Error};
 use subxt::{tx::TxStatus, OnlineClient, PolkadotConfig};
 use yew::prelude::*;
 use yewdux::prelude::*;
@@ -44,9 +46,12 @@ where
     let transaction_hash: UseStateHandle<Option<String>> = use_state(|| None);
     let transaction_hash_clone = transaction_hash.clone();
     let transaction_error: UseStateHandle<Option<String>> = use_state(|| None);
+    let dispatch_error: UseStateHandle<Option<String>> = use_state(|| None);
 
     let transaction_error_clone_first = transaction_error.clone();
     let transaction_error_clone_second = transaction_error.clone();
+    let dispatch_error_clone = dispatch_error.clone();
+    let dispatch_error_clone2 = dispatch_error.clone();
 
     use_effect_with_deps(
         move |_| {
@@ -74,15 +79,23 @@ where
 
                                     let events = in_block.wait_for_success().await;
                                     match events {
-                                        Ok(e) => {}
-                                        Err(e) => {
-                                            gloo::console::log!(e.to_string())
+                                        Ok(_e) => {}
+                                        Err(Error::Runtime(DispatchError::Module(err))) => {
+                                            let details = err.details().unwrap();
+                                            dispatch_error_clone.set(Some(format!(
+                                                "{}:{}",
+                                                details.pallet.name(),
+                                                &details.variant.name
+                                            )))
                                         }
+                                        _ => {}
                                     }
                                 }
 
-                                other => transaction_error_clone_first
-                                    .set(Some(format!("Status: {other:?}"))),
+                                _other => {
+                                    // transaction_error_clone_first
+                                    // .set(Some(format!("Status: {other:?}")))
+                                }
                             }
                         }
                     } else {
@@ -100,16 +113,19 @@ where
         TransactionReturn {
             kind: TransactionReturnKind::Finalized,
             value: format!("{}", result),
+            dispatch_error: dispatch_error_clone2.deref().clone(),
         }
     } else if let Some(error) = &*transaction_error {
         TransactionReturn {
             kind: TransactionReturnKind::Error,
             value: format!("{}", error),
+            dispatch_error: None,
         }
     } else {
         TransactionReturn {
             kind: TransactionReturnKind::Processing,
             value: "Processing".to_owned(),
+            dispatch_error: None,
         }
     }
 }

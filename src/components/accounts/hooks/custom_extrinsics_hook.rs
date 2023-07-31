@@ -69,16 +69,22 @@ pub fn use_custom_extrinsic(
         TransactionReturn {
             kind: TransactionReturnKind::Finalized,
             value: format!("{}", result),
+            dispatch_error: None,
+
         }
     } else if let Some(error) = &*transaction_error {
         TransactionReturn {
             kind: TransactionReturnKind::Error,
             value: format!("{}", error),
+            dispatch_error: None,
+
         }
     } else {
         TransactionReturn {
             kind: TransactionReturnKind::Processing,
             value: "Processing".to_owned(),
+            dispatch_error: None,
+
         }
     }
 }
