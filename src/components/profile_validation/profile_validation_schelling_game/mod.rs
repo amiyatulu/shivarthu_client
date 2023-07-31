@@ -11,3 +11,5 @@ pub mod add_apply_jurors;
 pub mod add_profile_jurors_transaction_condition;
 pub mod draw_jurors;
 pub mod draw_jurors_transaction_condition;
+pub mod unstaking;
+pub mod unstaking_transaction_condition;

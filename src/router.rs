@@ -20,6 +20,7 @@ use crate::components::profile_validation::profile_validation_schelling_game::ch
 use crate::components::ai::chat_huggingface::ChatHuggingFace;
 use crate::components::profile_validation::profile_validation_schelling_game::add_profile_stake::AddProfileStake;
 use crate::components::profile_validation::profile_validation_schelling_game::draw_jurors::DrawJurors;
+use crate::components::profile_validation::profile_validation_schelling_game::unstaking::Unstaking;
 use crate::components::profile_validation::profile_validation_schelling_game::profile_validation_rpc::staking_period_end_block::StakingPeriodEndBlock;
 use crate::components::profile_validation::profile_validation_schelling_game::change_period::ChangePeriod;
 
@@ -70,6 +71,8 @@ pub enum Route {
     ChangePeriod {profile_user_account: String},
     #[at("/draw-jurors/:profile_user_account")]
     DrawJurors {profile_user_account: String},
+    #[at("/unstaking/:profile_user_account")]
+    Unstaking {profile_user_account: String},
 }
 
 pub fn switch(route: Route) -> Html {
@@ -96,5 +99,6 @@ pub fn switch(route: Route) -> Html {
         Route::StakingPeriodEndBlock => html!{<StakingPeriodEndBlock/>},
         Route::ChangePeriod {profile_user_account} => html!{<ChangePeriod profile_user_account={profile_user_account}/>},
         Route::DrawJurors { profile_user_account } => html!{ <DrawJurors profile_user_account={profile_user_account} /> },
+        Route::Unstaking { profile_user_account } => html! {<Unstaking profile_user_account={profile_user_account} /> },
     }
 }
