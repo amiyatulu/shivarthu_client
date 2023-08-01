@@ -13,3 +13,5 @@ pub mod draw_jurors;
 pub mod draw_jurors_transaction_condition;
 pub mod unstaking;
 pub mod unstaking_transaction_condition;
+pub mod commit_vote;
+pub mod commit_vote_transaction_condition;
