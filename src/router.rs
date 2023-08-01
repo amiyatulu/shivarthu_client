@@ -22,6 +22,7 @@ use crate::components::profile_validation::profile_validation_schelling_game::ad
 use crate::components::profile_validation::profile_validation_schelling_game::draw_jurors::DrawJurors;
 use crate::components::profile_validation::profile_validation_schelling_game::unstaking::Unstaking;
 use crate::components::profile_validation::profile_validation_schelling_game::commit_vote::CommitVote;
+use crate::components::profile_validation::profile_validation_schelling_game::reveal_vote::RevealVote;
 use crate::components::profile_validation::profile_validation_schelling_game::profile_validation_rpc::staking_period_end_block::StakingPeriodEndBlock;
 use crate::components::profile_validation::profile_validation_schelling_game::change_period::ChangePeriod;
 
@@ -75,6 +76,8 @@ pub enum Route {
     Unstaking { profile_user_account: String },
     #[at("/commit-vote/:profile_user_account")]
     CommitVote { profile_user_account: String },
+    #[at("/reveal-vote/:profile_user_account")]
+    RevealVote { profile_user_account: String },
 }
 
 pub fn switch(route: Route) -> Html {
@@ -115,5 +118,8 @@ pub fn switch(route: Route) -> Html {
         Route::CommitVote {
             profile_user_account,
         } => html! {<CommitVote profile_user_account={profile_user_account} /> },
+        Route::RevealVote {
+            profile_user_account,
+        } => html! {<RevealVote profile_user_account={profile_user_account} /> },
     }
 }
