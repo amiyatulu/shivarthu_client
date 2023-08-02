@@ -17,3 +17,5 @@ pub mod commit_vote;
 pub mod commit_vote_transaction_condition;
 pub mod reveal_vote;
 pub mod reveal_vote_transaction_condition;
+pub mod get_incentives;
+pub mod get_incentives_transaction_condition;

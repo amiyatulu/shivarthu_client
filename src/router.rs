@@ -23,6 +23,7 @@ use crate::components::profile_validation::profile_validation_schelling_game::dr
 use crate::components::profile_validation::profile_validation_schelling_game::unstaking::Unstaking;
 use crate::components::profile_validation::profile_validation_schelling_game::commit_vote::CommitVote;
 use crate::components::profile_validation::profile_validation_schelling_game::reveal_vote::RevealVote;
+use crate::components::profile_validation::profile_validation_schelling_game::get_incentives::GetIncentives;
 use crate::components::profile_validation::profile_validation_schelling_game::profile_validation_rpc::staking_period_end_block::StakingPeriodEndBlock;
 use crate::components::profile_validation::profile_validation_schelling_game::change_period::ChangePeriod;
 
@@ -78,6 +79,8 @@ pub enum Route {
     CommitVote { profile_user_account: String },
     #[at("/reveal-vote/:profile_user_account")]
     RevealVote { profile_user_account: String },
+    #[at("/get-incentives/:profile_user_account")]
+    GetIncentives { profile_user_account: String },
 }
 
 pub fn switch(route: Route) -> Html {
@@ -121,5 +124,8 @@ pub fn switch(route: Route) -> Html {
         Route::RevealVote {
             profile_user_account,
         } => html! {<RevealVote profile_user_account={profile_user_account} /> },
+        Route::GetIncentives {
+            profile_user_account,
+        } => html! {<GetIncentives profile_user_account={profile_user_account} />},
     }
 }
