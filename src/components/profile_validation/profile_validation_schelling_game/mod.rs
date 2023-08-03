@@ -19,3 +19,5 @@ pub mod reveal_vote;
 pub mod reveal_vote_transaction_condition;
 pub mod get_incentives;
 pub mod get_incentives_transaction_condition;
+pub mod profile_validation_hook;
+pub mod schelling_game;
