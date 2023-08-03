@@ -26,6 +26,7 @@ use crate::components::profile_validation::profile_validation_schelling_game::re
 use crate::components::profile_validation::profile_validation_schelling_game::get_incentives::GetIncentives;
 use crate::components::profile_validation::profile_validation_schelling_game::profile_validation_rpc::staking_period_end_block::StakingPeriodEndBlock;
 use crate::components::profile_validation::profile_validation_schelling_game::change_period::ChangePeriod;
+use crate::components::profile_validation::profile_validation_schelling_game::schelling_game::SchellingGame;
 
 #[derive(Debug, Clone, PartialEq, Routable)]
 pub enum Route {
@@ -81,6 +82,8 @@ pub enum Route {
     RevealVote { profile_user_account: String },
     #[at("/get-incentives/:profile_user_account")]
     GetIncentives { profile_user_account: String },
+    #[at("/schelling-game/:profile_user_account")]
+    SchellingGame { profile_user_account: String},
 }
 
 pub fn switch(route: Route) -> Html {
@@ -127,5 +130,8 @@ pub fn switch(route: Route) -> Html {
         Route::GetIncentives {
             profile_user_account,
         } => html! {<GetIncentives profile_user_account={profile_user_account} />},
+        Route::SchellingGame { profile_user_account } => html!{
+            <SchellingGame profile_user_account={profile_user_account} />
+        }
     }
 }
