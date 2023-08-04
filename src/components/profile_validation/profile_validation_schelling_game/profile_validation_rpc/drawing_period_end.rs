@@ -3,6 +3,7 @@ use jsonrpsee_core::{client::ClientT, rpc_params};
 use jsonrpsee_wasm_client::WasmClientBuilder;
 use wasm_bindgen_futures;
 use yew::prelude::*;
+use std::ops::Deref;
 
 
 #[derive(Properties, PartialEq)]
@@ -10,12 +11,12 @@ pub struct Props {
     pub profile_user_account: String,
 }
 
-#[function_component(StakingPeriodEndBlock)]
-pub fn staking_period_end_block(props: &Props) -> Html {
+#[function_component(DrawingPeriodEnd)]
+pub fn drawing_period_end(props: &Props) -> Html {
    let profile_user_account = props.profile_user_account.clone();
-   let end_period: UseStateHandle<Option<u32>> = use_state(|| None);
-   let end_period_clone = end_period.clone();
-   let end_period_clone2 = end_period.clone();
+   let drawing_period_value: UseStateHandle<Option<(u64, u64, bool)>> = use_state(|| None);
+   let drawing_period_value_clone = drawing_period_value.clone();
+   let drawing_period_value_clone2 = drawing_period_value.clone();
 
 
 
@@ -26,9 +27,9 @@ pub fn staking_period_end_block(props: &Props) -> Html {
                     .build("ws://127.0.0.1:9944")
                     .await
                     .unwrap();
-                let result: Option<u32> = client
+                let result: (u64, u64, bool) = client
                     .request(
-                        "profilevalidation_stakingperiodendblock",
+                        "profilevalidation_drawingperiodend",
                         rpc_params![profile_user_account],
                     )
                     .await
@@ -36,7 +37,7 @@ pub fn staking_period_end_block(props: &Props) -> Html {
 
                 // log!(result);
 
-                end_period_clone.set(result);
+                drawing_period_value_clone.set(Some(result));
 
                 // log!(serde_json::to_string_pretty(&period).unwrap());
             });
@@ -47,8 +48,8 @@ pub fn staking_period_end_block(props: &Props) -> Html {
     html! {
         <>
         <h1>{"RPC"}</h1>
-        if end_period_clone2.is_some() {
-            {*end_period}
+        if drawing_period_value_clone2.is_some() {
+            {drawing_period_value.deref().unwrap().0}
         } else {
             {"None"}
         }

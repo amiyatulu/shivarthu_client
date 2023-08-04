@@ -68,8 +68,8 @@ pub enum Route {
     ChallengerEvidence { profile_user_account: String },
     #[at("/add-profile-stake/:profile_user_account")]
     AddProfileStake { profile_user_account: String },
-    #[at("/staking-end-period")]
-    StakingPeriodEndBlock,
+    #[at("/staking-end-period/:profile_user_account")]
+    StakingPeriodEndBlock {profile_user_account: String},
     #[at("/change-period/:profile_user_account")]
     ChangePeriod { profile_user_account: String },
     #[at("/draw-jurors/:profile_user_account")]
@@ -111,7 +111,9 @@ pub fn switch(route: Route) -> Html {
         Route::AddProfileStake {
             profile_user_account,
         } => html! {<AddProfileStake profile_user_account={profile_user_account}/>},
-        Route::StakingPeriodEndBlock => html! {<StakingPeriodEndBlock/>},
+        Route::StakingPeriodEndBlock {
+            profile_user_account
+        } => html! {<StakingPeriodEndBlock profile_user_account={profile_user_account}/>},
         Route::ChangePeriod {
             profile_user_account,
         } => html! {<ChangePeriod profile_user_account={profile_user_account}/>},

@@ -10,8 +10,8 @@ pub struct Props {
     pub profile_user_account: String,
 }
 
-#[function_component(StakingPeriodEndBlock)]
-pub fn staking_period_end_block(props: &Props) -> Html {
+#[function_component(VoteEndBlock)]
+pub fn vote_end_block(props: &Props) -> Html {
    let profile_user_account = props.profile_user_account.clone();
    let end_period: UseStateHandle<Option<u32>> = use_state(|| None);
    let end_period_clone = end_period.clone();
@@ -28,7 +28,7 @@ pub fn staking_period_end_block(props: &Props) -> Html {
                     .unwrap();
                 let result: Option<u32> = client
                     .request(
-                        "profilevalidation_stakingperiodendblock",
+                        "profilevalidation_voteendblock",
                         rpc_params![profile_user_account],
                     )
                     .await
