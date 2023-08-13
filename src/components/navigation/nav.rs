@@ -1,7 +1,9 @@
 use yew::prelude::*;
 use crate::components::accounts::account_address_view::AccountAddressView;
 use crate::components::accounts::signout_view::SignOutView;
-use crate::components::balance::balance::Balance;
+use crate::components::navigation::login_view::LoginView;
+use yew_router::prelude::*; 
+use crate::router::Route;
 
 #[function_component(Nav)]
 pub fn nav() -> Html {
@@ -21,8 +23,9 @@ pub fn nav() -> Html {
                     <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                         <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">{"Home"}</a>
+                            <Link<Route> to={Route::AccountHome} classes="nav-link active">{"Home"}</Link<Route>> 
                         </li>
+                        <LoginView/>
                         <SignOutView/>
                         <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
