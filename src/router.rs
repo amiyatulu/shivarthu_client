@@ -16,6 +16,7 @@ use crate::components::profile_validation::profile::add_profile::AddProfile;
 use crate::components::ipfs::form_ipfs_upload::FormIpfsUpload;
 use crate::components::jstests::first_test::FirstTest;
 use crate::components::profile_validation::profile::view_profile::ViewProfile;
+use crate::components::profile_validation::profile::view_profile_address::ViewProfileAddress;
 use crate::components::profile_validation::profile_validation_schelling_game::challenger_evidence::ChallengerEvidence;
 use crate::components::ai::chat_huggingface::ChatHuggingFace;
 use crate::components::profile_validation::profile_validation_schelling_game::add_profile_stake::AddProfileStake;
@@ -62,8 +63,10 @@ pub enum Route {
     ChatHuggingFace,
     #[at("/first-test")]
     FirstTest,
-    #[at("/view-profile")]
+    #[at("/view-profile-details")]
     ViewProfile,
+    #[at("/view-profile/:profile_user_account")]
+    ViewProfileAddress { profile_user_account: String },
     #[at("/challenger-evidence/:profile_user_account")]
     ChallengerEvidence { profile_user_account: String },
     #[at("/add-profile-stake/:profile_user_account")]
@@ -104,6 +107,9 @@ pub fn switch(route: Route) -> Html {
         Route::FormIpfsUpload => html! {<FormIpfsUpload/>},
         Route::FirstTest => html! {<FirstTest/>},
         Route::ViewProfile => html! {<ViewProfile/>},
+        Route::ViewProfileAddress {
+            profile_user_account,
+        } => html! {<ViewProfileAddress profile_user_account={profile_user_account}/>},
         Route::ChallengerEvidence {
             profile_user_account,
         } => html! {<ChallengerEvidence profile_user_account={profile_user_account}/>},

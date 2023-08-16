@@ -17,7 +17,7 @@ pub fn sign_out_view() -> Html {
         </li>
 
         <li class="nav-item">
-        <Link<Route> to={Route::ViewProfile} classes="nav-link">{"View Profile"}</Link<Route>>
+        <Link<Route> to={Route::ViewProfileAddress {profile_user_account: address.to_string()} } classes="nav-link">{"View Profile"}</Link<Route>>
         </li>
 
         <li class="nav-item">

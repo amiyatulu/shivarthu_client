@@ -64,7 +64,9 @@ pub fn schelling_game(props: &Props) -> Html {
     } else {
         html! {
             <>
-            <p>{"No period"}</p>
+            <div class="container">
+                <p>{"No period"}</p>
+            </div>
             </>
         }
     };
