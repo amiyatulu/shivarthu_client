@@ -3,6 +3,7 @@ use crate::components::api::select_ipfs_provider::DEFAULT_IPFS_PROVIDER;
 use crate::components::markdown::markdown_field::MarkdownField;
 use crate::components::navigation::nav::Nav;
 use crate::components::profile_validation::profile_validation_schelling_game::challenger_evidence_transaction_condition::ConditionalTransactionModal;
+use crate::components::profile_validation::profile_validation_schelling_game::profile_validation_storage_call::get_challenger_fees::GetChallengerFees;
 
 use gloo::console::log;
 use json::object;
@@ -70,6 +71,7 @@ pub fn challenger_evidence(props: &Props) -> Html {
             <>
                 <Nav/>
                 <div class="container">
+                <GetChallengerFees profile_user_account={profile_user_account.clone()}/>
                     <form onsubmit={onsubmit}>
                         <div class="mb-3">
                             <label for="details" class="form-label">{"Details"}</label>
