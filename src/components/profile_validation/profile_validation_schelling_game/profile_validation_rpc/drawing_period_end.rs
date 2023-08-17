@@ -47,12 +47,13 @@ pub fn drawing_period_end(props: &Props) -> Html {
 
     html! {
         <>
-        <h1>{"RPC"}</h1>
+        <p>
         if drawing_period_value_clone2.is_some() {
             {drawing_period_value.deref().unwrap().0}
         } else {
             {"None"}
         }
+        </p>
         </>
     }
 }

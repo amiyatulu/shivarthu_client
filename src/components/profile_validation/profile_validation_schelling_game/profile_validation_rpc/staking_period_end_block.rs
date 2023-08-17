@@ -3,6 +3,8 @@ use jsonrpsee_core::{client::ClientT, rpc_params};
 use jsonrpsee_wasm_client::WasmClientBuilder;
 use wasm_bindgen_futures;
 use yew::prelude::*;
+use yew_hooks::prelude::*;
+
 
 
 #[derive(Properties, PartialEq)]
@@ -19,8 +21,10 @@ pub fn staking_period_end_block(props: &Props) -> Html {
 
 
 
-    use_effect_with_deps(
-        move |_| {
+   use_interval(
+        move || {
+            let end_period_clone = end_period_clone.clone();
+            let profile_user_account = profile_user_account.clone();
             wasm_bindgen_futures::spawn_local(async move {
                 let client = WasmClientBuilder::default()
                     .build("ws://127.0.0.1:9944")
@@ -41,17 +45,18 @@ pub fn staking_period_end_block(props: &Props) -> Html {
                 // log!(serde_json::to_string_pretty(&period).unwrap());
             });
         },
-        (),
+        10000,
     );
 
     html! {
         <>
-        <h1>{"RPC"}</h1>
+       <p>
         if end_period_clone2.is_some() {
             {*end_period}
         } else {
             {"None"}
         }
+        </p>
         </>
     }
 }

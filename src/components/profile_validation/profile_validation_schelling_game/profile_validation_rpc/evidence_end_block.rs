@@ -12,8 +12,8 @@ pub struct Props {
     pub profile_user_account: String,
 }
 
-#[function_component(VoteEndBlock)]
-pub fn vote_end_block(props: &Props) -> Html {
+#[function_component(EvidenceEndBlock)]
+pub fn evidence_end_block(props: &Props) -> Html {
    let profile_user_account = props.profile_user_account.clone();
    let end_period: UseStateHandle<Option<u32>> = use_state(|| None);
    let end_period_clone = end_period.clone();
@@ -22,7 +22,7 @@ pub fn vote_end_block(props: &Props) -> Html {
 
 
    use_interval(
-        move || {
+        move | | {
             let end_period_clone = end_period_clone.clone();
             let profile_user_account = profile_user_account.clone();
             wasm_bindgen_futures::spawn_local(async move {
@@ -32,7 +32,7 @@ pub fn vote_end_block(props: &Props) -> Html {
                     .unwrap();
                 let result: Option<u32> = client
                     .request(
-                        "profilevalidation_voteendblock",
+                        "profilevalidation_evidenceperiodendblock",
                         rpc_params![profile_user_account],
                     )
                     .await
@@ -52,7 +52,7 @@ pub fn vote_end_block(props: &Props) -> Html {
         <>
         <p>
         if end_period_clone2.is_some() {
-            {*end_period}
+           {"Evidence Period ends: "} {*end_period}
         } else {
             {"None"}
         }
