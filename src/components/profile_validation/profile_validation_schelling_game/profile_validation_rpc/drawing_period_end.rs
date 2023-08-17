@@ -49,9 +49,9 @@ pub fn drawing_period_end(props: &Props) -> Html {
         <>
         <p>
         if drawing_period_value_clone2.is_some() {
-            {drawing_period_value.deref().unwrap().0}
+            {"Drawing Period ends: "} {drawing_period_value.deref().unwrap().2}
         } else {
-            {"None"}
+            {"Drawing Period ends: "} {"None"}
         }
         </p>
         </>

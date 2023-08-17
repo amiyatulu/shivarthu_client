@@ -12,8 +12,8 @@ pub struct Props {
     pub profile_user_account: String,
 }
 
-#[function_component(StakingPeriodEndBlock)]
-pub fn staking_period_end_block(props: &Props) -> Html {
+#[function_component(StakingEndBlock)]
+pub fn staking_end_block(props: &Props) -> Html {
    let profile_user_account = props.profile_user_account.clone();
    let end_period: UseStateHandle<Option<u32>> = use_state(|| None);
    let end_period_clone = end_period.clone();
@@ -52,9 +52,9 @@ pub fn staking_period_end_block(props: &Props) -> Html {
         <>
        <p>
         if end_period_clone2.is_some() {
-            {*end_period}
+            {"Staking Period ends: "}{*end_period}
         } else {
-            {"None"}
+            {"Staking Period ends: "}{"None"}
         }
         </p>
         </>

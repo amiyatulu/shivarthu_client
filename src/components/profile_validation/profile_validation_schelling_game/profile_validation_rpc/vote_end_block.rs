@@ -52,9 +52,9 @@ pub fn vote_end_block(props: &Props) -> Html {
         <>
         <p>
         if end_period_clone2.is_some() {
-            {*end_period}
+            {"Vote Period ends: "} {*end_period}
         } else {
-            {"None"}
+            {"Vote Period ends: "} {"None"}
         }
         </p>
         </>

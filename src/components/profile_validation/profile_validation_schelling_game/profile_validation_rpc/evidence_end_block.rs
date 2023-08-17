@@ -54,7 +54,7 @@ pub fn evidence_end_block(props: &Props) -> Html {
         if end_period_clone2.is_some() {
            {"Evidence Period ends: "} {*end_period}
         } else {
-            {"None"}
+            {"Evidence Period ends: "} {"None"}
         }
         </p>
         </>

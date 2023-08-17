@@ -16,7 +16,7 @@ use crate::components::profile_validation::profile_validation_schelling_game::pr
 
 use crate::components::profile_validation::profile_validation_schelling_game::profile_validation_hook::period_hook::use_get_period;
 use crate::components::profile_validation::profile_validation_schelling_game::challenger_evidence::ChallengerEvidence;
-use crate::components::profile_validation::profile_validation_schelling_game::add_profile_stake::AddProfileStake;
+use crate::components::profile_validation::profile_validation_schelling_game::add_apply_jurors::AddApplyJurors;
 use crate::components::profile_validation::profile_validation_schelling_game::draw_jurors::DrawJurors;
 use crate::components::profile_validation::profile_validation_schelling_game::commit_vote::CommitVote;
 use crate::components::profile_validation::profile_validation_schelling_game::reveal_vote::RevealVote;
@@ -34,7 +34,7 @@ pub fn schelling_game(props: &Props) -> Html {
                 </>
             },
             Period::Staking => {
-                html! {<AddProfileStake profile_user_account={profile_user_account.clone()}/>}
+                html! {<AddApplyJurors profile_user_account={profile_user_account.clone()}/>}
             }
             Period::Drawing => html! {
                 <>

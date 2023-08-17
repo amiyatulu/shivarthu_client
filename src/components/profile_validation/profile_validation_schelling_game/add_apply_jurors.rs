@@ -4,13 +4,16 @@ use web_sys::HtmlInputElement;
 use yew::prelude::*;
 use crate::components::profile_validation::profile_validation_schelling_game::profile_validation_storage_call::get_period::GetPeriod;
 use crate::components::profile_validation::profile_validation_schelling_game::add_profile_jurors_transaction_condition::ConditionalTransactionModal;
+use crate::components::profile_validation::profile_validation_schelling_game::profile_validation_rpc::staking_end_block::StakingEndBlock;
+
+
 #[derive(Properties, PartialEq)]
 pub struct Props {
     pub profile_user_account: String,
 }
 
 #[function_component(AddApplyJurors)]
-pub fn add_profile_stake(props: &Props) -> Html {
+pub fn add_apply_jurors(props: &Props) -> Html {
     let profile_user_account = props.profile_user_account.clone();
     let spinner_state: UseStateHandle<Option<bool>> = use_state(|| None);
     let add_juror_stake_state: UseStateHandle<Option<u32>> = use_state(|| None);
@@ -50,10 +53,11 @@ pub fn add_profile_stake(props: &Props) -> Html {
             <Nav/>
             <div class="container">
             <GetPeriod profile_user_account={profile_user_account.clone()}/>
+            <StakingEndBlock profile_user_account={profile_user_account.clone()}/>
                 <form onsubmit={onsubmit}>
                 <div class="mb-3">
-                <label for="profile-stake" class="form-label">{"Profile Stake:"}</label>
-                <input name={"profile-stake"} type="number" class={"form-control"} required={true} onchange={juror_stake_onchanged}/>
+                <label for="juror-stake" class="form-label">{"Juror Stake:"}</label>
+                <input name={"juror-stake"} type="number" class={"form-control"} required={true} onchange={juror_stake_onchanged}/>
                 </div>
                 if let Some(_value) = *spinner_state {
                     <input type="submit" value="Submit" disabled={true} />

@@ -51,9 +51,9 @@ pub fn commit_end_block(props: &Props) -> Html {
         <>
         <p>
         if end_period_clone2.is_some() {
-            {*end_period}
+            {"Commit Period ends: "}{*end_period}
         } else {
-            {"None"}
+            {"Commit Period ends: "}{"None"}
         }
         </p>
         </>
