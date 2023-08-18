@@ -1,7 +1,7 @@
-use crate::components::navigation::nav::Nav;
 use yew::prelude::*;
-use crate::components::profile_validation::profile_validation_schelling_game::profile_validation_storage_call::get_period::GetPeriod;
 use crate::components::profile_validation::profile_validation_schelling_game::change_period_transaction_condition::ConditionalTransactionModal;
+
+
 #[derive(Properties, PartialEq)]
 pub struct Props {
     pub profile_user_account: String,
@@ -24,9 +24,6 @@ pub fn change_period(props: &Props) -> Html {
     if *submit_done_clone == false {
         html! {
             <>
-            <Nav/>
-            <div class="container">
-            <GetPeriod profile_user_account={profile_user_account.clone()}/>
             <form onsubmit={onsubmit}>
             if let Some(_value) = *spinner_state {
                 <input type="submit" value="Change Period" disabled={true} />
@@ -35,7 +32,6 @@ pub fn change_period(props: &Props) -> Html {
                 <input type="submit" value="Change Period" />
             }
             </form>
-            </div>
             </>
         }
     } else {

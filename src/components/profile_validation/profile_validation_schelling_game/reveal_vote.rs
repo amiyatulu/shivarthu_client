@@ -4,6 +4,9 @@ use web_sys::HtmlInputElement;
 use yew::prelude::*;
 use std::ops::Deref;
 use crate::components::profile_validation::profile_validation_schelling_game::reveal_vote_transaction_condition::ConditionalTransactionModal;
+use crate::components::profile_validation::profile_validation_schelling_game::profile_validation_rpc::vote_end_block::VoteEndBlock;
+use crate::components::profile_validation::profile_validation_schelling_game::change_period::ChangePeriod;
+
 #[derive(Properties, PartialEq)]
 pub struct Props {
     pub profile_user_account: String,
@@ -61,6 +64,8 @@ pub fn reveal_vote(props: &Props) -> Html {
             <>
             <Nav/>
             <div class="container">
+                <VoteEndBlock profile_user_account={profile_user_account.clone()} />
+                <ChangePeriod profile_user_account={profile_user_account.clone()} />
                 <form onsubmit={onsubmit}>
                 <div class="mb-3">
                 <label for="Choice" class="form-label">{"Choice:"}</label>

@@ -77,6 +77,12 @@ where
                                         in_block.block_hash()
                                     )));
 
+                                    gloo::console::log!(format!(
+                                        "Transaction {:?} is finalized in block {:?}",
+                                        in_block.extrinsic_hash(),
+                                        in_block.block_hash()
+                                    ));
+
                                     let events = in_block.wait_for_success().await;
                                     match events {
                                         Ok(_e) => {}
@@ -92,7 +98,8 @@ where
                                     }
                                 }
 
-                                _other => {
+                                other => {
+                                    gloo::console::log!(format!("Status: {other:?}"));
                                     // transaction_error_clone_first
                                     // .set(Some(format!("Status: {other:?}")))
                                 }

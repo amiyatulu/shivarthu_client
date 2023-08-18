@@ -4,6 +4,9 @@ use web_sys::HtmlInputElement;
 use yew::prelude::*;
 use crate::components::profile_validation::profile_validation_schelling_game::profile_validation_storage_call::get_period::GetPeriod;
 use crate::components::profile_validation::profile_validation_schelling_game::draw_jurors_transaction_condition::ConditionalTransactionModal;
+use crate::components::profile_validation::profile_validation_schelling_game::profile_validation_rpc::drawing_period_end::DrawingPeriodEnd;
+use crate::components::profile_validation::profile_validation_schelling_game::change_period::ChangePeriod;
+
 #[derive(Properties, PartialEq)]
 pub struct Props {
     pub profile_user_account: String,
@@ -50,6 +53,9 @@ pub fn draw_jurors(props: &Props) -> Html {
             <Nav/>
             <div class="container">
             <GetPeriod profile_user_account={profile_user_account.clone()}/>
+            <DrawingPeriodEnd profile_user_account={profile_user_account.clone()}/>
+            <ChangePeriod profile_user_account={profile_user_account.clone()} />
+
                 <form onsubmit={onsubmit}>
                 <div class="mb-3">
                 <label for="Draw Jurors" class="form-label">{"Draw Jurors:"}</label>

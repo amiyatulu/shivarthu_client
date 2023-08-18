@@ -5,6 +5,7 @@ use yew::prelude::*;
 use crate::components::profile_validation::profile_validation_schelling_game::profile_validation_storage_call::get_period::GetPeriod;
 use crate::components::profile_validation::profile_validation_schelling_game::add_profile_jurors_transaction_condition::ConditionalTransactionModal;
 use crate::components::profile_validation::profile_validation_schelling_game::profile_validation_rpc::staking_end_block::StakingEndBlock;
+use crate::components::profile_validation::profile_validation_schelling_game::change_period::ChangePeriod;
 
 
 #[derive(Properties, PartialEq)]
@@ -54,6 +55,7 @@ pub fn add_apply_jurors(props: &Props) -> Html {
             <div class="container">
             <GetPeriod profile_user_account={profile_user_account.clone()}/>
             <StakingEndBlock profile_user_account={profile_user_account.clone()}/>
+            <ChangePeriod profile_user_account={profile_user_account.clone()} />
                 <form onsubmit={onsubmit}>
                 <div class="mb-3">
                 <label for="juror-stake" class="form-label">{"Juror Stake:"}</label>
