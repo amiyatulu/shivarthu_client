@@ -8,20 +8,17 @@ pub struct Props {
     pub hookdata: TransactionReturn,
 }
 
-#[function_component(CommonTransactionReturn)]
-pub fn common_transaction_return(props: &Props) -> Html {
+#[function_component(CommonTransactionReturnClean)]
+pub fn common_transaction_return_clean(props: &Props) -> Html {
     let hookdata = props.hookdata.clone();
 
     let value = use_common_transaction_return(hookdata);
     html! {
         <>
-        <Nav />
-            <div class="container">
-                <h1>{"Transaction details"}</h1>
-                <p>
+            <h1>{"Transaction details"}</h1>
+            <p>
                 {value}
-                </p>
-            </div>
+            </p>
         </>
     }
 }

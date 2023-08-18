@@ -7,7 +7,7 @@ use yewdux::prelude::*;
 use crate::components::accounts::account_store::PhaseExists;
 use crate::components::accounts::set_phrase_from_pass::SetPhraseFromPass;
 // use crate::components::accounts::hooks::profile_validation::add_profile_stake_hooks;
-use crate::components::common_component::common_transaction_return::CommonTransactionReturn;
+use crate::components::common_component::common_transaction_return_clean::CommonTransactionReturnClean;
 
 use crate::components::accounts::hooks::custom_extrinsics_subxt_hook::use_sign_tx;
 use std::str::FromStr;
@@ -42,7 +42,7 @@ pub fn transaction(props: &Props) -> Html {
 
     html! {
         <>
-        <CommonTransactionReturn hookdata={hookdata} />
+        <CommonTransactionReturnClean hookdata={hookdata} />
 
         </>
 
