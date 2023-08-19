@@ -28,9 +28,12 @@ use crate::components::profile_validation::profile_validation_schelling_game::ge
 use crate::components::profile_validation::profile_validation_schelling_game::profile_validation_rpc::staking_end_block::StakingEndBlock;
 use crate::components::profile_validation::profile_validation_schelling_game::change_period::ChangePeriod;
 use crate::components::profile_validation::profile_validation_schelling_game::schelling_game::SchellingGame;
+use crate::components::balance::transfer_balance::TransferBalance;
 
 #[derive(Debug, Clone, PartialEq, Routable)]
 pub enum Route {
+    #[at("/transfer-balance")]
+    TransferBalance,
     #[at("/storage")]
     Storage,
     #[at("/rpc")]
@@ -91,6 +94,7 @@ pub enum Route {
 
 pub fn switch(route: Route) -> Html {
     match route {
+        Route::TransferBalance => html! { <TransferBalance />},
         Route::Storage => html! { <Storage />},
         Route::Rpc => html! {<Rpc/>},
         // Route::Transaction => html! {<Transaction/>},

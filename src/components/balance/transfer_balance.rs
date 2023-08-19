@@ -1,10 +1,9 @@
+use crate::components::navigation::nav::Nav;
 use wasm_bindgen::JsCast;
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
-use crate::components::navigation::nav::Nav;
 use yew_icons::{Icon, IconId};
-
-
+use crate::components::balance::transfer_balance_transaction_condition::ConditionalTransactionModal;
 
 #[function_component(TransferBalance)]
 pub fn transfer_balance() -> Html {
@@ -76,8 +75,13 @@ pub fn transfer_balance() -> Html {
             </>
         }
     } else {
+        let dest_account = format!("{}", dest_account.as_deref().unwrap_or_default());
+        let tranfer_balance = (*tranfer_balance).unwrap();
+
         html! {
             <>
+            <ConditionalTransactionModal dest_account={dest_account} tranfer_balance={tranfer_balance}/>
+
             </>
         }
     }
