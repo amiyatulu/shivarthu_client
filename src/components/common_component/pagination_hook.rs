@@ -1,4 +1,3 @@
-use std::rc::Rc;
 use yew::prelude::*;
 
 pub const DOTS: &str = "...";
@@ -13,7 +12,8 @@ fn range(start: u64, end: u64) -> Vec<PageRange> {
     (start..=end).map(|x| PageRange::Value(x)).collect()
 }
 
-pub struct PaginationProps {
+#[derive(Clone)]
+pub struct PaginationHookProps {
     pub total_count: u64,
     pub page_size: u64,
     pub sibling_count: u64,
@@ -21,8 +21,8 @@ pub struct PaginationProps {
 }
 
 #[hook]
-pub fn use_pagination(props: Rc<PaginationProps>) -> Vec<PageRange> {
-    let props_clone = Rc::clone(&props);
+pub fn use_pagination(props: PaginationHookProps) -> Vec<PageRange> {
+    let props_clone = props.clone();
 
     let pagination_range = use_memo(move |_| {
         let total_page_count = (props_clone.total_count + props_clone.page_size - 1) / props_clone.page_size;
