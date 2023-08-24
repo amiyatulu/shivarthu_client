@@ -31,18 +31,35 @@ pub fn pagination(props: &PaginationProps) -> Html {
         current_page,
     });
 
+    let on_next = {
+        let current_page = current_page.clone();
+        let on_page_change = on_page_change.clone();
+        move || {
+            let value = current_page + 1;
+            on_page_change.emit(value);
+        }
+    };
+
+    let on_previous = {
+        let current_page = current_page.clone();
+        let on_page_change = on_page_change.clone();
+        move || {
+            let value = current_page - 1;
+            on_page_change.emit(value);
+        }
+    };
+
+    let last_page = pagination_range.get(pagination_range.len() - 1).unwrap();
+
     if current_page == 0 || pagination_range.len() < 2 {
         html! {
             <>
             </>
         }
-      } else {
+    } else {
         html! {
             <>
             </>
         }
-      }
-    
-
-    
+    }
 }
