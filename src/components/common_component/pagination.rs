@@ -1,8 +1,6 @@
 use crate::components::common_component::pagination_hook::{
     use_pagination, PageRange, PaginationHookProps, DOTS,
 };
-use wasm_bindgen::JsCast;
-use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]
@@ -34,7 +32,7 @@ pub fn pagination(props: &PaginationProps) -> Html {
     let on_next = {
         let current_page = current_page.clone();
         let on_page_change = on_page_change.clone();
-        move || {
+        move |_| {
             let value = current_page + 1;
             on_page_change.emit(value);
         }
@@ -43,13 +41,31 @@ pub fn pagination(props: &PaginationProps) -> Html {
     let on_previous = {
         let current_page = current_page.clone();
         let on_page_change = on_page_change.clone();
-        move || {
+        move |_| {
             let value = current_page - 1;
             on_page_change.emit(value);
         }
     };
 
-    let last_page = pagination_range.get(pagination_range.len() - 1).unwrap();
+    let last_page_range = pagination_range.get(pagination_range.len() - 1).unwrap();
+
+    let pagination_values = pagination_range
+        .iter()
+        .map(|value| {
+            html! {
+                if *value == PageRange::DOTS {
+                    <li class="page-item"><button>{"&#8230;"}</button></li>
+                } else if let PageRange::Value(page) = *value {
+                    <li class="page-item"><button onclick={
+                        let on_page_change = on_page_change.clone();
+                        move |_| {
+                            on_page_change.emit(page);
+                    }}>{page}</button></li>
+                }
+
+            }
+        })
+        .collect::<Html>();
 
     if current_page == 0 || pagination_range.len() < 2 {
         html! {
@@ -59,6 +75,13 @@ pub fn pagination(props: &PaginationProps) -> Html {
     } else {
         html! {
             <>
+                 <ul class="pagination">
+                    <li class="page-item"><button disabled={current_page == 1}  onclick={on_previous}>{"Previous"}</button></li>
+                    {pagination_values}
+                    if let PageRange::Value(last_page) = last_page_range {
+                        <li class="page-item"><button disabled={current_page == *last_page} onclick={on_next}>{"Next"}</button></li>
+                    }
+                </ul>
             </>
         }
     }

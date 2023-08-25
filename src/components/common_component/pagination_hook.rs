@@ -2,7 +2,7 @@ use yew::prelude::*;
 
 pub const DOTS: &str = "...";
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 pub enum PageRange {
     Value(u64),
     DOTS
