@@ -16,15 +16,15 @@ serde = "1.0.180"
 serde_json = "1.0.104"
 stylist = { version = "0.12.1", features = ["yew", "parser"] }
 yewdux = "0.9"
-wasm-bindgen = "0.2.82"
-web-sys = {version = "0.3.59", features=["HtmlInputElement", "DragEvent", "File", "DataTransfer"]}
-js-sys = "0.3"
+wasm-bindgen = "0.2.87"
+web-sys = {version = "0.3.64", features=["HtmlInputElement", "DragEvent", "File", "DataTransfer"]}
+js-sys = "0.3.64"
 yew-router = "0.17.0"
 # sp-keyring = { version = "21.0.0", default-features = false }
-futures = "0.3.13"
+futures = "0.3.28"
 hex = "0.4.3"
-tracing-subscriber = "0.3.11"
-wasm-bindgen-futures = "0.4.32"
+tracing-subscriber = "0.3.17"
+wasm-bindgen-futures = "0.4.37"
 jsonrpsee-wasm-client = "0.20.0"
 jsonrpsee-core = "0.20.0"
 codec = { package = "parity-scale-codec", version = "3.0.0", default-features = false, features = ["derive", "full", "bit-vec"] }
@@ -45,15 +45,5 @@ yew-hooks="0.2.0"
 
 
 [profile.release]
-# less code to include into binary
-panic = 'abort'
-# optimization over all codebase ( better optimization, slower build )
-codegen-units = 1
-# optimization for size ( more aggressive )
-opt-level = 'z'
-# optimization for size
-# opt-level = 's'
-# link time optimization using using whole-program analysis
-lto = true
-
+debug = true
 
