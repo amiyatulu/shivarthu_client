@@ -54,7 +54,7 @@ pub fn pagination(props: &PaginationProps) -> Html {
         .map(|value| {
             html! {
                 if *value == PageRange::DOTS {
-                    <li class="page-item"><button class="page-link">{"&#8230;"}</button></li>
+                    <li class="page-item"><button class="page-link">{DOTS}</button></li>
                 } else if let PageRange::Value(page) = *value {
                     <li class="page-item"><button class="page-link" onclick={
                         let on_page_change = on_page_change.clone();

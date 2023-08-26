@@ -33,7 +33,7 @@ pub fn view_profiles() -> Html {
     html! {
         <>
         <div class="container">
-        <Pagination on_page_change={on_page_change} total_count=15 sibling_count=1 current_page={*current_page_state_clone2} page_size={page_size} class_name={Some("hello")} />
+        <Pagination on_page_change={on_page_change} total_count=100 sibling_count=1 current_page={*current_page_state_clone2} page_size={page_size} class_name={Some("hello")} />
         </div>
         </>
     }

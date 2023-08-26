@@ -26,8 +26,11 @@ pub fn use_pagination(props: PaginationHookProps) -> Vec<PageRange> {
 
     let pagination_range = use_memo(move |_| {
         let total_page_count = (props_clone.total_count + props_clone.page_size - 1) / props_clone.page_size;
+        // gloo::console::log!(total_page_count);
 
         let total_page_numbers = props_clone.sibling_count + 5;
+
+        // gloo::console::log!(total_page_numbers);
 
         if total_page_numbers >= total_page_count {
             return range(1, total_page_count);
