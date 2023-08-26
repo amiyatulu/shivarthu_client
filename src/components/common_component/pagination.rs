@@ -54,9 +54,9 @@ pub fn pagination(props: &PaginationProps) -> Html {
         .map(|value| {
             html! {
                 if *value == PageRange::DOTS {
-                    <li class="page-item"><button>{"&#8230;"}</button></li>
+                    <li class="page-item"><button class="page-link">{"&#8230;"}</button></li>
                 } else if let PageRange::Value(page) = *value {
-                    <li class="page-item"><button onclick={
+                    <li class="page-item"><button class="page-link" onclick={
                         let on_page_change = on_page_change.clone();
                         move |_| {
                             on_page_change.emit(page);
@@ -75,13 +75,15 @@ pub fn pagination(props: &PaginationProps) -> Html {
     } else {
         html! {
             <>
+                <nav>
                  <ul class="pagination">
-                    <li class="page-item"><button disabled={current_page == 1}  onclick={on_previous}>{"Previous"}</button></li>
+                    <li class="page-item"><button class="page-link" disabled={current_page == 1}  onclick={on_previous}>{"Previous"}</button></li>
                     {pagination_values}
                     if let PageRange::Value(last_page) = last_page_range {
-                        <li class="page-item"><button disabled={current_page == *last_page} onclick={on_next}>{"Next"}</button></li>
+                        <li class="page-item"><button class="page-link" disabled={current_page == *last_page} onclick={on_next}>{"Next"}</button></li>
                     }
                 </ul>
+                </nav>
             </>
         }
     }

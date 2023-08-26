@@ -29,6 +29,7 @@ use crate::components::profile_validation::profile_validation_schelling_game::pr
 use crate::components::profile_validation::profile_validation_schelling_game::change_period::ChangePeriod;
 use crate::components::profile_validation::profile_validation_schelling_game::schelling_game::SchellingGame;
 use crate::components::balance::transfer_balance::TransferBalance;
+use crate::components::profile_validation::profile::view_profiles::ViewProfiles;
 
 #[derive(Debug, Clone, PartialEq, Routable)]
 pub enum Route {
@@ -90,6 +91,8 @@ pub enum Route {
     GetIncentives { profile_user_account: String },
     #[at("/schelling-game/:profile_user_account")]
     SchellingGame { profile_user_account: String},
+    #[at("/view-all-profiles")]
+    ViewProfiles,
 }
 
 pub fn switch(route: Route) -> Html {
@@ -144,6 +147,9 @@ pub fn switch(route: Route) -> Html {
         } => html! {<GetIncentives profile_user_account={profile_user_account} />},
         Route::SchellingGame { profile_user_account } => html!{
             <SchellingGame profile_user_account={profile_user_account} />
+        },
+        Route::ViewProfiles => html!{
+            <ViewProfiles />
         }
     }
 }

@@ -7,6 +7,7 @@ use subxt::utils::AccountId32;
 use wasm_bindgen_futures;
 
 use crate::components::profile_validation::profile::last_citizen_id::use_last_citizen_id;
+use crate::components::common_component::pagination::Pagination;
 
 #[subxt::subxt(
     runtime_metadata_path = "./artifacts/metadata.scale",
@@ -15,43 +16,25 @@ use crate::components::profile_validation::profile::last_citizen_id::use_last_ci
 
 pub mod polkadot {}
 
-#[derive(Properties, PartialEq)]
-pub struct Props {
-    pub profile_user_account: String,
-}
 
 #[function_component(ViewProfiles)]
-pub fn view_profiles(props: &Props) -> Html {
-    let profile_user_account = props.profile_user_account.clone();
-    let account_id32 = AccountId32::from_str(&profile_user_account).unwrap();
-    let account_id32_clone = account_id32.clone();
-    let last_citizen_id = use_last_citizen_id().unwrap();
+pub fn view_profiles() -> Html {
 
-    use_effect_with_deps(
-        move |_| {
-            wasm_bindgen_futures::spawn_local(async move {
-                let client = subxt::client::OnlineClient::<PolkadotConfig>::from_url(NODE_URL)
-                    .await
-                    .unwrap();
+    let page_size = 10;
+    let current_page_state = use_state(||1);
+    let current_page_state_clone = current_page_state.clone();
+    let current_page_state_clone2 = current_page_state.clone();
 
-                let last_citizen_storage =
-                    polkadot::storage().profile_validation().next_citizen_id();
 
-                let last_citizen = client
-                    .storage()
-                    .at_latest()
-                    .await
-                    .unwrap()
-                    .fetch_or_default(&last_citizen_storage)
-                    .await
-                    .unwrap();
-            });
-        },
-        (),
-    );
-
+    let on_page_change = Callback::from(move |value: u64| {
+        gloo::console::log!(value);
+        current_page_state_clone.set(value);
+    });
     html! {
         <>
+        <div class="container">
+        <Pagination on_page_change={on_page_change} total_count=15 sibling_count=1 current_page={*current_page_state_clone2} page_size={page_size} class_name={Some("hello")} />
+        </div>
         </>
     }
 }
