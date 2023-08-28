@@ -5,6 +5,7 @@ use yew::prelude::*;
 use yew_router::prelude::*;
 mod components;
 mod constants;
+mod services;
 mod router;
 mod js_extension_binding;
 use serde::{self, Serialize, Deserialize};
@@ -17,17 +18,6 @@ pub struct Accounts {
 
 #[styled_component(App)]
 pub fn app() -> Html {
-    let first_load = use_state(|| true);
-
-    use_effect(move || {
-
-        if *first_load {
-            //code
-            first_load.set(false);
-        }
-        || {}
-    });
-
     html! (
         <>
             // <Nav/>    

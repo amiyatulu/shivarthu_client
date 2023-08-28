@@ -6,3 +6,4 @@ pub mod view_profile_address;
 pub mod view_profiles;
 pub mod last_citizen_id;
 pub mod profile_paginate;
+pub mod fetch_storage_profile;

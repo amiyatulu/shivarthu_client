@@ -2830,6 +2830,7 @@ dependencies = [
 name = "shivarthu-client"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "futures",
  "gloo 0.10.0",
  "gloo-storage 0.3.0",

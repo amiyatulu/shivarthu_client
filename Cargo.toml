@@ -40,6 +40,7 @@ json = "0.12.4"
 regex= "1.8.3"
 sp-core-hashing= "10.0.0"
 yew-hooks="0.2.0"
+anyhow ="1.0.75"
 
 
 

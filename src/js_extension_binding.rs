@@ -23,6 +23,12 @@ extern "C" {
 
     #[wasm_bindgen]
     pub fn challege_profile(wsprovider: String, mnemonic: String, profile_user_account: String, ipfs_string: String) -> Promise;
+
+    #[wasm_bindgen(js_name = getAccounts)]
+    pub fn js_get_accounts() -> Promise;
+    
+    #[wasm_bindgen(js_name = signPayload)]
+    pub fn js_sign_payload(payload: String, source: String, address: String) -> Promise;
    
     // bafykbzacecb53zxvj6q6q63rintnpcuhufbojz56q3zg4xxpzmzgmi2pplnmi
     
