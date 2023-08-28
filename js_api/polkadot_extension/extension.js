@@ -1,9 +1,13 @@
+import { web3Accounts, web3Enable, web3FromSource} from '@polkadot/extension-dapp';
+
 /**
  * The `@polkadot/extension-dapp` package can be dynamically imported.
  * Usually it is wise to use a package manager like npm or yarn to install it as a dependency.
  *
  * The `getPolkadotJsExtensionMod` closure returns the `@polkadot/extension-dapp` module on demand.
  */
+
+/*
 let getPolkadotJsExtensionMod = (() => {
     let mod = null;
 
@@ -22,16 +26,15 @@ let getPolkadotJsExtensionMod = (() => {
         return mod;
     };
 })();
-
+*/
 /**
  *  Queries wallets from browser extensions like Talisman and the Polkadot.js extension for user accounts.
  *
  *  @returns a json string that contains all the accounts that were found.
  */
 export async function getAccounts() {
-    const extensionMod = await getPolkadotJsExtensionMod();
-    await extensionMod.web3Enable("Subxt Example App");
-    const allAccounts = await extensionMod.web3Accounts();
+    await web3Enable("Subxt Example App");
+    const allAccounts = await web3Accounts();
     const accountObjects = allAccounts.map((account) => ({
         name: account.meta.name, // e.g. "Alice"
         source: account.meta.source, // e.g. "talisman", "polkadot-js"
@@ -76,8 +79,7 @@ export async function getAccounts() {
  */
 export async function signPayload(payloadAsStr, source, address) {
     let payload = JSON.parse(payloadAsStr);
-    const extensionMod = await getPolkadotJsExtensionMod();
-    const injector = await extensionMod.web3FromSource(source);
+    const injector = await web3FromSource(source);
     const signPayload = injector?.signer?.signPayload;
     if (!!signPayload) {
         const {signature} = await signPayload(payload);
