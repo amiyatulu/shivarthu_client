@@ -30,6 +30,7 @@ use crate::components::profile_validation::profile_validation_schelling_game::ch
 use crate::components::profile_validation::profile_validation_schelling_game::schelling_game::SchellingGame;
 use crate::components::balance::transfer_balance::TransferBalance;
 use crate::components::profile_validation::profile::view_profiles::ViewProfiles;
+use crate::components::common_component::get_accounts_extension::GetAccountsComponent;
 
 #[derive(Debug, Clone, PartialEq, Routable)]
 pub enum Route {
@@ -76,7 +77,7 @@ pub enum Route {
     #[at("/add-profile-stake/:profile_user_account")]
     AddProfileStake { profile_user_account: String },
     #[at("/staking-end-period/:profile_user_account")]
-    StakingEndBlock {profile_user_account: String},
+    StakingEndBlock { profile_user_account: String },
     #[at("/change-period/:profile_user_account")]
     ChangePeriod { profile_user_account: String },
     #[at("/draw-jurors/:profile_user_account")]
@@ -90,9 +91,11 @@ pub enum Route {
     #[at("/get-incentives/:profile_user_account")]
     GetIncentives { profile_user_account: String },
     #[at("/schelling-game/:profile_user_account")]
-    SchellingGame { profile_user_account: String},
+    SchellingGame { profile_user_account: String },
     #[at("/view-all-profiles")]
     ViewProfiles,
+    #[at("/get-accounts/")]
+    GetAccountsComponent,
 }
 
 pub fn switch(route: Route) -> Html {
@@ -125,7 +128,7 @@ pub fn switch(route: Route) -> Html {
             profile_user_account,
         } => html! {<AddProfileStake profile_user_account={profile_user_account}/>},
         Route::StakingEndBlock {
-            profile_user_account
+            profile_user_account,
         } => html! {<StakingEndBlock profile_user_account={profile_user_account}/>},
         Route::ChangePeriod {
             profile_user_account,
@@ -145,11 +148,16 @@ pub fn switch(route: Route) -> Html {
         Route::GetIncentives {
             profile_user_account,
         } => html! {<GetIncentives profile_user_account={profile_user_account} />},
-        Route::SchellingGame { profile_user_account } => html!{
+        Route::SchellingGame {
+            profile_user_account,
+        } => html! {
             <SchellingGame profile_user_account={profile_user_account} />
         },
-        Route::ViewProfiles => html!{
+        Route::ViewProfiles => html! {
             <ViewProfiles />
-        }
+        },
+        Route::GetAccountsComponent => html! {
+            <GetAccountsComponent/>
+        },
     }
 }

@@ -5,6 +5,6 @@ esbuild.build({
   bundle: true,
   outfile: 'src/package.js',
   format: 'esm',
-  sourcemap: 'inline',
+  // sourcemap: 'inline',
   minify: true,
 }).catch(() => process.exit(1));
