@@ -7,6 +7,7 @@ use subxt::error::{DispatchError, Error};
 use subxt::{tx::TxStatus, OnlineClient, PolkadotConfig};
 use yew::prelude::*;
 use yewdux::prelude::*;
+use crate::constants::constant::NODE_URL;
 
 // Calling the hook example:
 
@@ -57,7 +58,7 @@ where
         move |_| {
             if *first_load {
                 wasm_bindgen_futures::spawn_local(async move {
-                    let client = OnlineClient::<PolkadotConfig>::from_url("ws://127.0.0.1:9944")
+                    let client = OnlineClient::<PolkadotConfig>::from_url(NODE_URL)
                         .await
                         .unwrap();
                     let phrase_option = &store_clone.mnemonic_phrase;
