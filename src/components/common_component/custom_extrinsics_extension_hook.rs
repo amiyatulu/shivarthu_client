@@ -1,6 +1,7 @@
 use crate::constants::constant::NODE_URL;
-use crate::services::common_services::extension_signature_for_extrinsic;
-use crate::services::common_services::Account;
+use crate::services::common_services::{
+    extension_signature_for_extrinsic, polkadot, Account,
+};
 use anyhow::anyhow;
 use std::ops::Deref;
 use subxt::error::{DispatchError, Error};
@@ -10,13 +11,24 @@ use subxt::utils::{AccountId32, MultiSignature};
 use subxt::{tx::TxStatus, OnlineClient, PolkadotConfig};
 use yew::prelude::*;
 
+pub struct ExtensionReturn {
+    pub error: Option<String>,
+    pub extrinsic_success: Option<String>,
+    pub extrinsic_error: Option<String>,
+}
+
 #[hook]
-pub fn use_sign_tx_extension<T>(tx: T, account: &Account) -> ()
+pub fn use_sign_tx_extension<T>(tx: T, account: &Account) -> ExtensionReturn
 where
     T: subxt::tx::TxPayload + 'static,
 {
     let error_state: UseStateHandle<Option<anyhow::Error>> = use_state(|| None);
+    let extrinsic_success: UseStateHandle<Option<String>> = use_state(|| None);
+    let extrinsic_error: UseStateHandle<Option<String>> = use_state(|| None);
     let error_state_clone = error_state.clone();
+    let error_state_return_clone = error_state.clone();
+    let extrinsic_success_clone = extrinsic_success.clone();
+    let extrinsic_error_clone = extrinsic_error.clone();
     let account = account.clone();
     let account_address = account.address.clone();
     let account_source = account.source.clone();
@@ -107,10 +119,53 @@ where
                         .sign_with_address_and_signature(&account_id.into(), &multi_signature);
                     signed_extrinsic_option = Some(signed_extrinsic);
                 }
+
+                // if signed_extrinsic_option.is_some() {
+                //     let signed_extrinsic = signed_extrinsic_option.unwrap();
+                //     let dry_res = signed_extrinsic.validate().await;
+                //     web_sys::console::log_1(&format!("Validation Result: {:?}", dry_res).into());
+                // }
+                if signed_extrinsic_option.is_some() {
+                    let signed_extrinsic = signed_extrinsic_option.unwrap();
+
+                    match submit_wait_finalized_and_get_extrinsic_success_event(signed_extrinsic)
+                        .await
+                    {
+                        Ok(remark_event) => {
+                            extrinsic_success_clone.set(Some(format!("{:?}", remark_event)));
+                        }
+                        Err(err) => {
+                            extrinsic_error_clone.set(Some(err.to_string()));
+                        }
+                    }
+                }
             });
         },
         (),
     );
 
-    ()
+    ExtensionReturn {
+        error: error_state_return_clone.deref().as_ref().map(|err| err.to_string()),
+        extrinsic_success: extrinsic_success.deref().clone(),
+        extrinsic_error: extrinsic_error.deref().clone(),
+    }
+}
+
+async fn submit_wait_finalized_and_get_extrinsic_success_event(
+    extrinsic: SubmittableExtrinsic<PolkadotConfig, OnlineClient<PolkadotConfig>>,
+) -> Result<polkadot::system::events::ExtrinsicSuccess, anyhow::Error> {
+    let events = extrinsic
+        .submit_and_watch()
+        .await?
+        .wait_for_finalized_success()
+        .await?;
+
+    let events_str = format!("{:?}", &events);
+    web_sys::console::log_1(&events_str.into());
+    for event in events.find::<polkadot::system::events::ExtrinsicSuccess>() {
+        web_sys::console::log_1(&format!("{:?}", event).into());
+    }
+
+    let success = events.find_first::<polkadot::system::events::ExtrinsicSuccess>()?;
+    success.ok_or(anyhow!("ExtrinsicSuccess not found in events"))
 }
