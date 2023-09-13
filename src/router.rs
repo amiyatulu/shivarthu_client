@@ -94,8 +94,6 @@ pub enum Route {
     SchellingGame { profile_user_account: String },
     #[at("/view-all-profiles")]
     ViewProfiles,
-    #[at("/get-accounts/")]
-    GetAccountsComponent,
 }
 
 pub fn switch(route: Route) -> Html {
@@ -155,9 +153,6 @@ pub fn switch(route: Route) -> Html {
         },
         Route::ViewProfiles => html! {
             <ViewProfiles />
-        },
-        Route::GetAccountsComponent => html! {
-            <GetAccountsComponent/>
-        },
+        }
     }
 }

@@ -18,7 +18,7 @@ pub struct ExtensionReturn {
 }
 
 #[hook]
-pub fn use_sign_tx_extension<T>(tx: T, account: &Account) -> ExtensionReturn
+pub fn use_sign_tx_extension<T>(tx: T, account_address: String, account_source: String) -> ExtensionReturn
 where
     T: subxt::tx::TxPayload + 'static,
 {
@@ -29,9 +29,6 @@ where
     let error_state_return_clone = error_state.clone();
     let extrinsic_success_clone = extrinsic_success.clone();
     let extrinsic_error_clone = extrinsic_error.clone();
-    let account = account.clone();
-    let account_address = account.address.clone();
-    let account_source = account.source.clone();
     let account_id: AccountId32 = account_address.parse().unwrap();
 
     use_effect_with_deps(

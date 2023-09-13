@@ -2,11 +2,15 @@ use yew::prelude::*;
 use yewdux::prelude::*;
 
 use crate::components::accounts::account_store::PhaseExists;
-use crate::components::accounts::set_phrase_from_pass::SetPhraseFromPass;
-use crate::constants::local_storage::{LocalStore,SignInMethod};
 use crate::components::accounts::hooks::custom_extrinsics_subxt_hook::use_sign_tx;
+use crate::components::accounts::set_phrase_from_pass::SetPhraseFromPass;
 use crate::components::common_component::common_transaction_return::CommonTransactionReturn;
+use crate::components::common_component::custom_extrinsics_extension_hook::{
+    use_sign_tx_extension, ExtensionReturn,
+};
+use crate::constants::local_storage::{LocalStore, SignInMethod};
 use crate::services::common_services::polkadot;
+use crate::services::common_services::Account;
 use polkadot::runtime_types::pallet_support::Content;
 
 #[derive(Properties, PartialEq)]
@@ -14,7 +18,12 @@ pub struct Props {
     pub ipfs_response: String,
 }
 
-
+#[derive(Properties, PartialEq)]
+pub struct ExtensionProps {
+    pub ipfs_response: String,
+    pub account_address: String,
+    pub account_source: String,
+}
 
 #[function_component(Transaction)]
 pub fn transaction(props: &Props) -> Html {
@@ -36,6 +45,33 @@ pub fn transaction(props: &Props) -> Html {
     }
 }
 
+#[function_component(CommonTransactionExtensionReturn)]
+pub fn common_transaction_extension_return(props: &ExtensionProps) -> Html {
+    let ipfs_response = props.ipfs_response.clone();
+    let account_address = props.account_address.clone();
+    let account_source = props.account_source.clone();
+
+    let ipfs_response_for_content_clone = ipfs_response.clone();
+
+    let content: Content = Content::IPFS(ipfs_response_for_content_clone.as_bytes().to_vec());
+
+    let add_profile_tx = polkadot::tx().profile_validation().add_citizen(content);
+
+    let hookdata = use_sign_tx_extension(add_profile_tx, account_address, account_source);
+    html! {
+        <>
+        </>
+    }
+}
+
+#[function_component(ConditionalTransactionExtension)]
+pub fn conditiona_transaction_extension() -> Html {
+    html! {
+        <>
+        </>
+    }
+}
+
 #[function_component(ConditionalTransactionModal)]
 pub fn conditional_transaction(props: &Props) -> Html {
     let ipfs_response = props.ipfs_response.clone();
@@ -44,9 +80,8 @@ pub fn conditional_transaction(props: &Props) -> Html {
 
     let sign_in_method = local_storage.sign_in_method;
 
-    gloo::console::log!(format!("{:?}",sign_in_method));
-
-
+    // gloo::console::log!(format!("{:?}",sign_in_method));
+    if let SignInMethod::ExtensionSignIn = sign_in_method {}
 
     let (store, _) = use_store::<PhaseExists>();
 
