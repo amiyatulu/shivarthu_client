@@ -1,8 +1,5 @@
-use crate::services::common_services::{
-    extension_signature_for_extrinsic, get_accounts, polkadot, Account,
-};
+use crate::services::common_services::{get_accounts, Account};
 use std::ops::Deref;
-use web_sys::HtmlInputElement;
 use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]
