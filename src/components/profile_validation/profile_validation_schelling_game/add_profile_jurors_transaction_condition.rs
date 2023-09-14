@@ -3,14 +3,14 @@ use yewdux::prelude::*;
 use crate::components::accounts::account_store::PhaseExists;
 use crate::components::accounts::hooks::custom_extrinsics_subxt_hook::use_sign_tx;
 use crate::components::accounts::set_phrase_from_pass::SetPhraseFromPass;
-use crate::components::common_component::common_transaction_extension_return::CommonTransactionExtensionReturn;
 use crate::components::common_component::common_transaction_return::CommonTransactionReturn;
 use crate::components::common_component::custom_extrinsics_extension_hook::use_sign_tx_extension;
+use crate::components::common_component::common_transaction_extension_return::CommonTransactionExtensionReturn;
 use crate::constants::local_storage::{LocalStore, SignInMethod};
 use crate::components::common_component::get_accounts_extension::GetAccountsComponent;
+use std::ops::Deref;
 use std::str::FromStr;
 use subxt::utils::AccountId32;
-use std::ops::Deref;
 
 #[subxt::subxt(
     runtime_metadata_path = "./artifacts/metadata.scale",
