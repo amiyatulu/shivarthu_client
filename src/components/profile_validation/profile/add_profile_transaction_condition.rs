@@ -1,10 +1,10 @@
 use yew::prelude::*;
 use yewdux::prelude::*;
-
 use crate::components::accounts::account_store::PhaseExists;
 use crate::components::accounts::hooks::custom_extrinsics_subxt_hook::use_sign_tx;
 use crate::components::accounts::set_phrase_from_pass::SetPhraseFromPass;
 use crate::components::common_component::common_transaction_return::CommonTransactionReturn;
+use crate::components::common_component::common_transaction_extension_return::CommonTransactionExtensionReturn;
 use crate::components::common_component::custom_extrinsics_extension_hook::use_sign_tx_extension;
 use crate::components::common_component::get_accounts_extension::GetAccountsComponent;
 use crate::constants::local_storage::{LocalStore, SignInMethod};
@@ -44,8 +44,8 @@ pub fn transaction(props: &Props) -> Html {
     }
 }
 
-#[function_component(CommonTransactionExtensionReturn)]
-pub fn common_transaction_extension_return(props: &ExtensionProps) -> Html {
+#[function_component(TransactionExtension)]
+pub fn transaction_extension(props: &ExtensionProps) -> Html {
     let ipfs_response = props.ipfs_response.clone();
     let account_address = props.account_address.clone();
     let account_source = props.account_source.clone();
@@ -59,24 +59,13 @@ pub fn common_transaction_extension_return(props: &ExtensionProps) -> Html {
     let hookdata = use_sign_tx_extension(add_profile_tx, account_address, account_source);
     html! {
         <>
-        if hookdata.error.is_some() {
-            {hookdata.error.unwrap()}
-        } 
-        <br/>
-        if hookdata.extrinsic_success.is_some() {
-            {hookdata.extrinsic_success.unwrap()}
-        }
-        <br/>
-        if hookdata.extrinsic_error.is_some() {
-            {hookdata.extrinsic_error.unwrap()}
-        }
-
+           <CommonTransactionExtensionReturn hookdata={hookdata} /> 
         </>
     }
 }
 
 #[function_component(ConditionalTransactionExtension)]
-pub fn conditiona_transaction_extension(props: &Props) -> Html {
+pub fn conditional_transaction_extension(props: &Props) -> Html {
     let ipfs_response = props.ipfs_response.clone();
     let account_address: UseStateHandle<Option<String>> = use_state(|| None);
     let account_source: UseStateHandle<Option<String>> = use_state(|| None);
@@ -101,7 +90,7 @@ pub fn conditiona_transaction_extension(props: &Props) -> Html {
 
         html! {
             <>
-            <CommonTransactionExtensionReturn ipfs_response={ipfs_response} account_address={account_address} account_source={account_source} />
+            <TransactionExtension ipfs_response={ipfs_response} account_address={account_address} account_source={account_source} />
             </>
         }
     } else {
@@ -116,8 +105,9 @@ pub fn conditiona_transaction_extension(props: &Props) -> Html {
 pub fn conditional_transaction(props: &Props) -> Html {
     let ipfs_response = props.ipfs_response.clone();
 
-    let (local_storage, _) = use_store::<LocalStore>();
     let (store, _) = use_store::<PhaseExists>();
+
+    let (local_storage, _) = use_store::<LocalStore>();
 
     let sign_in_method = local_storage.sign_in_method;
 

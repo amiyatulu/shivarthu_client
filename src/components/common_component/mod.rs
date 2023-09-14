@@ -5,3 +5,4 @@ pub mod pagination_hook;
 pub mod pagination;
 pub mod get_accounts_extension;
 pub mod custom_extrinsics_extension_hook;
+pub mod common_transaction_extension_return;

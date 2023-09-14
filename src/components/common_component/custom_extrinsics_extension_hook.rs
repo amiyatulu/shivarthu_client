@@ -10,6 +10,7 @@ use subxt::utils::{AccountId32, MultiSignature};
 use subxt::{OnlineClient, PolkadotConfig};
 use yew::prelude::*;
 
+#[derive(PartialEq, Clone)]
 pub struct ExtensionReturn {
     pub error: Option<String>,
     pub extrinsic_success: Option<String>,
