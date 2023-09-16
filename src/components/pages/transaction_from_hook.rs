@@ -1,12 +1,8 @@
 use yew::prelude::*;
 
 use crate::components::accounts::sign_tx_hook::use_sign_tx;
+use crate::services::common_services::polkadot;
 
-#[subxt::subxt(
-    runtime_metadata_path = "./artifacts/metadata.scale",
-    derive_for_all_types = "Clone, Debug, Eq, PartialEq"
-)]
-pub mod polkadot {}
 
 #[function_component(TransactionFromHooks)]
 pub fn transaction() -> Html {

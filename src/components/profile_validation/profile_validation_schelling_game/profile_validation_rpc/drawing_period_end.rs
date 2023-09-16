@@ -4,6 +4,9 @@ use jsonrpsee_wasm_client::WasmClientBuilder;
 use wasm_bindgen_futures;
 use yew::prelude::*;
 use std::ops::Deref;
+use crate::constants::constant::NODE_URL;
+
+
 
 
 #[derive(Properties, PartialEq)]
@@ -24,7 +27,7 @@ pub fn drawing_period_end(props: &Props) -> Html {
         move |_| {
             wasm_bindgen_futures::spawn_local(async move {
                 let client = WasmClientBuilder::default()
-                    .build("ws://127.0.0.1:9944")
+                    .build(NODE_URL)
                     .await
                     .unwrap();
                 let result: (u64, u64, bool) = client

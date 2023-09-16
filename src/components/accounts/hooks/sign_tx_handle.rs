@@ -7,6 +7,7 @@ use subxt::config::{ SubstrateConfig, WithExtrinsicParams, polkadot::PolkadotExt
 use subxt::{tx::PairSigner, PolkadotConfig};
 use yew::prelude::*;
 use yewdux::prelude::*;
+use crate::constants::constant::NODE_URL;
 
 // pub type BoxFuture<'a, T> = Pin<Box<dyn Future<Output = T>  + 'a>>;
 
@@ -44,7 +45,7 @@ where
                 let tx = tx.clone();
                 let phrase_option = phrase_option.clone();
                 let client =
-                    subxt::client::OnlineClient::<PolkadotConfig>::from_url("ws://127.0.0.1:9944")
+                    subxt::client::OnlineClient::<PolkadotConfig>::from_url(NODE_URL)
                         .await
                         .unwrap();
                 if let Some(seed) = phrase_option {

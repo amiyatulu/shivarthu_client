@@ -2,12 +2,10 @@ use gloo::console::log;
 use wasm_bindgen_futures;
 use yew::{prelude::*};
 use subxt::config::PolkadotConfig;
+use crate::services::common_services::polkadot;
+use crate::constants::constant::NODE_URL;
 
-#[subxt::subxt(
-    runtime_metadata_path = "./artifacts/metadata.scale",
-    derive_for_all_types = "Clone, Debug, Eq, PartialEq"
-)]
-pub mod polkadot {}
+
 
 #[function_component(Storage)]
 pub fn storage() -> Html {
@@ -17,7 +15,7 @@ pub fn storage() -> Html {
         if *first_load {
             wasm_bindgen_futures::spawn_local(async move {
                 let client =
-                    subxt::client::OnlineClient::<PolkadotConfig>::from_url("ws://127.0.0.1:9944")
+                    subxt::client::OnlineClient::<PolkadotConfig>::from_url(NODE_URL)
                         .await
                         .unwrap();
                 // let key = polkadot::runtime_types::sortition_sum_game::types::SumTreeName::UniqueIdenfier1 {

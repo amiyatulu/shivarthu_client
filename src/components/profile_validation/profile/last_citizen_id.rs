@@ -3,13 +3,7 @@ use yew::prelude::*;
 
 use crate::constants::constant::NODE_URL;
 use wasm_bindgen_futures;
-
-#[subxt::subxt(
-    runtime_metadata_path = "./artifacts/metadata.scale",
-    derive_for_all_types = "Clone, Debug, Eq, PartialEq"
-)]
-
-pub mod polkadot {}
+use crate::services::common_services::polkadot;
 
 #[hook]
 pub fn use_last_citizen_id() -> Option<u64> {

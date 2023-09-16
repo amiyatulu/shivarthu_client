@@ -10,12 +10,8 @@ use subxt::{
 use wasm_bindgen_futures;
 use yew::prelude::*;
 use yewdux::prelude::*;
+use crate::services::common_services::polkadot;
 
-#[subxt::subxt(
-    runtime_metadata_path = "./artifacts/metadata.scale",
-    derive_for_all_types = "Clone, Debug, Eq, PartialEq"
-)]
-pub mod polkadot {}
 
 #[function_component(Balance)]
 pub fn balance() -> Html {

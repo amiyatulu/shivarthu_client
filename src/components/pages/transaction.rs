@@ -6,12 +6,8 @@ use subxt::{
     tx::PairSigner,
     PolkadotConfig,
 };
+use crate::services::common_services::polkadot;
 
-#[subxt::subxt(
-    runtime_metadata_path = "./artifacts/metadata.scale",
-    derive_for_all_types = "Clone, Debug, Eq, PartialEq"
-)]
-pub mod polkadot {}
 
 #[function_component(Transaction)]
 pub fn transaction() -> Html {

@@ -8,13 +8,7 @@ use wasm_bindgen_futures;
 
 use crate::components::common_component::pagination::Pagination;
 use crate::components::profile_validation::profile::last_citizen_id::use_last_citizen_id;
-
-#[subxt::subxt(
-    runtime_metadata_path = "./artifacts/metadata.scale",
-    derive_for_all_types = "Clone, Debug, Eq, PartialEq"
-)]
-
-pub mod polkadot {}
+use crate::services::common_services::polkadot;
 
 fn range(start: u64, end: u64) -> Vec<u64> {
     (start..=end).collect()

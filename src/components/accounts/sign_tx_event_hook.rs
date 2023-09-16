@@ -10,6 +10,9 @@ use subxt::config::WithExtrinsicParams;
 use subxt::tx::BaseExtrinsicParams;
 use subxt::tx::PlainTip;
 use subxt::SubstrateConfig;
+use crate::constants::constant::NODE_URL;
+
+
 
 #[hook]
 pub fn use_sign_tx_event<T>(tx: T) -> std::option::Option<&'static ExtrinsicEvents<WithExtrinsicParams<SubstrateConfig, BaseExtrinsicParams<SubstrateConfig, PlainTip>>>>
@@ -29,7 +32,7 @@ where
             if *first_load {
                 wasm_bindgen_futures::spawn_local(async move {
                     let client = subxt::client::OnlineClient::<PolkadotConfig>::from_url(
-                        "ws://127.0.0.1:9944",
+                        NODE_URL,
                     )
                     .await
                     .unwrap();

@@ -1,25 +1,16 @@
 use yew::prelude::*;
-
-#[derive(Properties, PartialEq)]
-pub struct Props {
-    pub profile_user_account: String,
-}
-
-#[subxt::subxt(
-    runtime_metadata_path = "./artifacts/metadata.scale",
-    derive_for_all_types = "Clone, Debug, Eq, PartialEq"
-)]
-
-pub mod polkadot {}
-
-use crate::components::profile_validation::profile_validation_schelling_game::profile_validation_hook::period_hook::polkadot::runtime_types::schelling_game_shared::types::Period;
-
+use crate::services::common_services::polkadot::runtime_types::schelling_game_shared::types::Period;
 use crate::components::profile_validation::profile_validation_schelling_game::profile_validation_hook::period_hook::use_get_period;
 use crate::components::profile_validation::profile_validation_schelling_game::challenger_evidence::ChallengerEvidence;
 use crate::components::profile_validation::profile_validation_schelling_game::add_apply_jurors::AddApplyJurors;
 use crate::components::profile_validation::profile_validation_schelling_game::draw_jurors::DrawJurors;
 use crate::components::profile_validation::profile_validation_schelling_game::commit_vote::CommitVote;
 use crate::components::profile_validation::profile_validation_schelling_game::reveal_vote::RevealVote;
+
+#[derive(Properties, PartialEq)]
+pub struct Props {
+    pub profile_user_account: String,
+}
 
 #[function_component(SchellingGame)]
 pub fn schelling_game(props: &Props) -> Html {

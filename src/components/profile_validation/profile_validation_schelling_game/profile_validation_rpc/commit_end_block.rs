@@ -4,6 +4,8 @@ use jsonrpsee_wasm_client::WasmClientBuilder;
 use wasm_bindgen_futures;
 use yew::prelude::*;
 use yew_hooks::prelude::*;
+use crate::constants::constant::NODE_URL;
+
 
 
 #[derive(Properties, PartialEq)]
@@ -26,7 +28,7 @@ pub fn commit_end_block(props: &Props) -> Html {
             let profile_user_account = profile_user_account.clone();
             wasm_bindgen_futures::spawn_local(async move {
                 let client = WasmClientBuilder::default()
-                    .build("ws://127.0.0.1:9944")
+                    .build(NODE_URL)
                     .await
                     .unwrap();
                 let result: Option<u32> = client

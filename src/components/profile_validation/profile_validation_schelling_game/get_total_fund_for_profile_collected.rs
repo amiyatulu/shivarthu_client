@@ -6,13 +6,7 @@ use crate::constants::constant::NODE_URL;
 use std::str::FromStr;
 use subxt::utils::AccountId32;
 use wasm_bindgen_futures;
-
-#[subxt::subxt(
-    runtime_metadata_path = "./artifacts/metadata.scale",
-    derive_for_all_types = "Clone, Debug, Eq, PartialEq"
-)]
-
-pub mod polkadot {}
+use crate::services::common_services::polkadot;
 
 #[derive(Properties, PartialEq)]
 pub struct Props {

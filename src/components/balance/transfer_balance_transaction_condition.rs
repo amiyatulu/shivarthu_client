@@ -10,16 +10,8 @@ use crate::components::common_component::common_transaction_return::CommonTransa
 use crate::components::accounts::hooks::custom_extrinsics_subxt_hook::use_sign_tx;
 use std::str::FromStr;
 use subxt::utils::AccountId32;
+use crate::services::common_services::polkadot;
 
-
-
-
-#[subxt::subxt(
-    runtime_metadata_path = "./artifacts/metadata.scale",
-    derive_for_all_types = "Clone, Debug, Eq, PartialEq"
-)]
-
-pub mod polkadot {}
 
 
 

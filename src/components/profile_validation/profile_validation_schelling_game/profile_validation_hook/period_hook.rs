@@ -6,14 +6,7 @@ use std::str::FromStr;
 use subxt::utils::AccountId32;
 use wasm_bindgen_futures;
 use std::ops::Deref;
-
-#[subxt::subxt(
-    runtime_metadata_path = "./artifacts/metadata.scale",
-    derive_for_all_types = "Clone, Debug, Eq, PartialEq"
-)]
-
-pub mod polkadot {}
-
+use crate::services::common_services::polkadot;
 use polkadot::runtime_types::schelling_game_shared::types::Period;
 use polkadot::runtime_types::sortition_sum_game::types::SumTreeName;
 

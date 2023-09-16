@@ -12,13 +12,7 @@ use crate::constants::local_storage::{LocalStore, SignInMethod};
 use std::ops::Deref;
 use std::str::FromStr;
 use subxt::utils::AccountId32;
-
-#[subxt::subxt(
-    runtime_metadata_path = "./artifacts/metadata.scale",
-    derive_for_all_types = "Clone, Debug, Eq, PartialEq"
-)]
-
-pub mod polkadot {}
+use crate::services::common_services::polkadot;
 
 #[derive(Properties, PartialEq)]
 pub struct Props {
