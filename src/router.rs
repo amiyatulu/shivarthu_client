@@ -31,9 +31,12 @@ use crate::components::profile_validation::profile_validation_schelling_game::sc
 use crate::components::balance::transfer_balance::TransferBalance;
 use crate::components::profile_validation::profile::view_profiles::ViewProfiles;
 use crate::components::common_component::get_accounts_extension::GetAccountsComponent;
+use crate::components::jstests::children_test::ContainerWithChildren;
 
 #[derive(Debug, Clone, PartialEq, Routable)]
 pub enum Route {
+    #[at("/children-test")]
+    ContainerWithChildren,
     #[at("/transfer-balance")]
     TransferBalance,
     #[at("/storage")]
@@ -94,10 +97,12 @@ pub enum Route {
     SchellingGame { profile_user_account: String },
     #[at("/view-all-profiles")]
     ViewProfiles,
+   
 }
 
 pub fn switch(route: Route) -> Html {
     match route {
+        Route::ContainerWithChildren => html! {<ContainerWithChildren/>},
         Route::TransferBalance => html! { <TransferBalance />},
         Route::Storage => html! { <Storage />},
         Route::Rpc => html! {<Rpc/>},
