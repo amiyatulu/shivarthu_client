@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::json;
 use subxt::ext::codec::{Compact, Encode};
 use subxt::{self, OnlineClient, PolkadotConfig};
+use subxt::utils::Era;
 use wasm_bindgen_futures::JsFuture;
 use crate::js_extension_binding::{js_get_accounts, js_sign_payload};
 
@@ -86,7 +87,7 @@ pub async fn extension_signature_for_extrinsic(
     // If you construct a mortal transaction, then this block hash needs to correspond
     // to the block number passed to `Era::mortal()`.
     let mortality_checkpoint = encode_then_hex(&api.genesis_hash());
-    let era = encode_then_hex(&subxt::config::extrinsic_params::Era::Immortal);
+    let era = encode_then_hex(&Era::Immortal);
     let method = to_hex(call_data);
     let signed_extensions: Vec<String> = api
         .metadata()

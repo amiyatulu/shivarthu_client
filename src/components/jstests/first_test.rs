@@ -14,7 +14,7 @@ pub fn storage() -> Html {
     let chat_text = use_state(|| "".to_owned());
     let chat_text_clone = chat_text.clone();
 
-    use_effect_with_deps(
+    use_effect_with((),
         move |_| {
             let timeout = Timeout::new(1_000, move || {
                 wasm_bindgen_futures::spawn_local(async move {
@@ -41,7 +41,6 @@ pub fn storage() -> Html {
 
             || {}
         },
-        (),
     );
 
     html! {

@@ -11,7 +11,7 @@ pub fn use_last_citizen_id() -> Option<u64> {
     let last_citizen_clone = last_citizen.clone();
     let last_citizen_return = last_citizen.clone();
 
-    use_effect_with_deps(
+    use_effect_with((),
         move |_| {
             wasm_bindgen_futures::spawn_local(async move {
                 let client = subxt::client::OnlineClient::<PolkadotConfig>::from_url(NODE_URL)
@@ -33,7 +33,6 @@ pub fn use_last_citizen_id() -> Option<u64> {
                 last_citizen_clone.set(Some(last_citizen))
             });
         },
-        (),
     );
 
     *last_citizen_return

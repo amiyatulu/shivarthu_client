@@ -24,7 +24,7 @@ pub fn get_challenger_fees(props: &Props) -> Html {
     let challenger_fee: UseStateHandle<Option<u128>> = use_state(|| None);
     let challenger_fee_clone = challenger_fee.clone();
 
-    use_effect_with_deps(
+    use_effect_with((),
         move |_| {
             wasm_bindgen_futures::spawn_local(async move {
                 let client = subxt::client::OnlineClient::<PolkadotConfig>::from_url(NODE_URL)
@@ -46,7 +46,6 @@ pub fn get_challenger_fees(props: &Props) -> Html {
 
             });
         },
-        (),
     );
 
     html! {

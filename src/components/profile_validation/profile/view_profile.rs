@@ -37,7 +37,7 @@ pub fn view_profile() -> Html {
 
     // let error_message_clone1 = error_message.clone();
 
-    use_effect_with_deps(
+    use_effect_with((),
         move |_| {
             wasm_bindgen_futures::spawn_local(async move {
                 let client = subxt::client::OnlineClient::<PolkadotConfig>::from_url(NODE_URL)
@@ -69,7 +69,6 @@ pub fn view_profile() -> Html {
                 }
             })
         },
-        (),
     );
 
     html! {

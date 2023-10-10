@@ -3,10 +3,10 @@ use subxt::{OnlineClient, PolkadotConfig};
 use yew::prelude::*;
 
 use crate::constants::constant::NODE_URL;
+use crate::services::common_services::polkadot;
 use std::str::FromStr;
 use subxt::utils::AccountId32;
 use wasm_bindgen_futures;
-use crate::services::common_services::polkadot;
 
 #[derive(Properties, PartialEq)]
 pub struct Props {
@@ -27,52 +27,48 @@ pub fn total_profile_collected(props: &Props) -> Html {
     let fund_needed: UseStateHandle<Option<u128>> = use_state(|| None);
     let fund_needed_clone = fund_needed.clone();
 
-    use_effect_with_deps(
-        move |_| {
-            wasm_bindgen_futures::spawn_local(async move {
-                let client = subxt::client::OnlineClient::<PolkadotConfig>::from_url(NODE_URL)
-                    .await
-                    .unwrap();
-                let total_profile_fund_collected = polkadot::storage()
-                    .profile_validation()
-                    .profile_total_fund_collected(account_id32_clone);
+    use_effect_with((), move |_| {
+        wasm_bindgen_futures::spawn_local(async move {
+            let client = subxt::client::OnlineClient::<PolkadotConfig>::from_url(NODE_URL)
+                .await
+                .unwrap();
+            let total_profile_fund_collected = polkadot::storage()
+                .profile_validation()
+                .profile_total_fund_collected(account_id32_clone);
 
-                let fund_collected_value = client
-                    .storage()
-                    .at_latest()
-                    .await
-                    .unwrap()
-                    .fetch_or_default(&total_profile_fund_collected)
-                    .await
-                    .unwrap();
-                fund_collected_clone.set(Some(fund_collected_value));
+            let fund_collected_value = client
+                .storage()
+                .at_latest()
+                .await
+                .unwrap()
+                .fetch_or_default(&total_profile_fund_collected)
+                .await
+                .unwrap();
+            fund_collected_clone.set(Some(fund_collected_value));
 
-                let registration_fee_storage = polkadot::storage()
-                    .profile_validation()
-                    .registration_fee();
-                let registration_fee_value = client
-                    .storage()
-                    .at_latest()
-                    .await
-                    .unwrap()
-                    .fetch_or_default(&registration_fee_storage)
-                    .await
-                    .unwrap();
+            let registration_fee_storage =
+                polkadot::storage().profile_validation().registration_fee();
+            let registration_fee_value = client
+                .storage()
+                .at_latest()
+                .await
+                .unwrap()
+                .fetch_or_default(&registration_fee_storage)
+                .await
+                .unwrap();
 
-                // match registration_fee_result {
-                //     Ok(value) => log!(value),
-                //     Err(value) => log!(format!("{}",value))
-                // }
+            // match registration_fee_result {
+            //     Ok(value) => log!(value),
+            //     Err(value) => log!(format!("{}",value))
+            // }
 
-                // // log!(registration_fee);
-                registration_fee_clone.set(Some(registration_fee_value));
+            // // log!(registration_fee);
+            registration_fee_clone.set(Some(registration_fee_value));
 
-                let fund_needed = registration_fee_value.checked_sub(fund_collected_value);
-                fund_needed_clone.set(fund_needed);
-            });
-        },
-        (),
-    );
+            let fund_needed = registration_fee_value.checked_sub(fund_collected_value);
+            fund_needed_clone.set(fund_needed);
+        });
+    });
 
     html! {
         <>

@@ -19,60 +19,54 @@ pub fn use_profile_stake(profile_user_account: String, amount_to_fund: u32) -> T
     let transaction_error_clone_first = transaction_error.clone();
     let transaction_error_clone_second = transaction_error.clone();
 
-    use_effect_with_deps(
-        move |_| {
-            let phrase_option = &store_clone.mnemonic_phrase;
-            if let Some(seed) = phrase_option {
-                // 5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y
-                let seed = seed.clone();
-                wasm_bindgen_futures::spawn_local(async move {
-                    let promise = js_extension_binding::add_profile_stake(
-                        NODE_URL.to_owned(),
-                        format!("{}", seed),
-                        profile_user_account,
-                        amount_to_fund,
-                    );
+    use_effect_with((), move |_| {
+        let phrase_option = &store_clone.mnemonic_phrase;
+        if let Some(seed) = phrase_option {
+            // 5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y
+            let seed = seed.clone();
+            wasm_bindgen_futures::spawn_local(async move {
+                let promise = js_extension_binding::add_profile_stake(
+                    NODE_URL.to_owned(),
+                    format!("{}", seed),
+                    profile_user_account,
+                    amount_to_fund,
+                );
 
-                    let js_result = JsFuture::from(promise).await;
+                let js_result = JsFuture::from(promise).await;
 
-                    match js_result {
-                        Ok(resultvalue) => {
-                            if let Some(result) = resultvalue.as_string() {
-                                transaction_hash_clone.set(Some(result));
-                            } else {
-                                transaction_error_clone_first
-                                    .set(Some("Unexpected result type".to_owned()));
-                            }
-                        }
-                        Err(e) => {
-                            transaction_error_clone_second.set(e.as_string());
+                match js_result {
+                    Ok(resultvalue) => {
+                        if let Some(result) = resultvalue.as_string() {
+                            transaction_hash_clone.set(Some(result));
+                        } else {
+                            transaction_error_clone_first
+                                .set(Some("Unexpected result type".to_owned()));
                         }
                     }
-                });
-            }
-        },
-        (),
-    );
+                    Err(e) => {
+                        transaction_error_clone_second.set(e.as_string());
+                    }
+                }
+            });
+        }
+    });
     if let Some(result) = &*transaction_hash {
         TransactionReturn {
             kind: TransactionReturnKind::Finalized,
             value: format!("{}", result),
             dispatch_error: None,
-
         }
     } else if let Some(error) = &*transaction_error {
         TransactionReturn {
             kind: TransactionReturnKind::Error,
             value: format!("{}", error),
             dispatch_error: None,
-
         }
     } else {
         TransactionReturn {
             kind: TransactionReturnKind::Processing,
             value: "Processing".to_owned(),
             dispatch_error: None,
-
         }
     }
 }

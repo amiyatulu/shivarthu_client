@@ -27,14 +27,11 @@ pub fn view_profiles() -> Html {
 
     // let profile_ids: UseStateHandle<Vec<u64>> = use_state(|| vec![]);
 
-    let profile_ids = use_memo(
-        move |_| {
-            let first_page_index = (*current_page_state_clone_deps2 - 1) * page_size;
-            let last_page_index = first_page_index + page_size;
-            range(first_page_index, last_page_index)
-        },
-        current_page_state_clone_deps,
-    );
+    let profile_ids = use_memo(current_page_state_clone_deps, move |_| {
+        let first_page_index = (*current_page_state_clone_deps2 - 1) * page_size;
+        let last_page_index = first_page_index + page_size;
+        range(first_page_index, last_page_index)
+    });
 
     let on_page_change = Callback::from(move |value: u64| {
         gloo::console::log!(value);

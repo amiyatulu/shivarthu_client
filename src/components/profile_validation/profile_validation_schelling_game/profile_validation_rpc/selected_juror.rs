@@ -22,7 +22,7 @@ pub fn selected_as_juror(props: &Props) -> Html {
 
 
 
-    use_effect_with_deps(
+   use_effect_with((),
         move |_| {
             wasm_bindgen_futures::spawn_local(async move {
                 let client = WasmClientBuilder::default()
@@ -44,7 +44,6 @@ pub fn selected_as_juror(props: &Props) -> Html {
                 // log!(serde_json::to_string_pretty(&period).unwrap());
             });
         },
-        (),
     );
 
     html! {

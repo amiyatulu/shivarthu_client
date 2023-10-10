@@ -29,7 +29,7 @@ pub fn transaction(props: &Props) -> Html {
 
     let account_id32 = AccountId32::from_str(&dest_account).unwrap();
 
-    let balance_transfer_tx = polkadot::tx().balances().transfer(subxt::utils::MultiAddress::Id(account_id32), tranfer_balance);
+    let balance_transfer_tx = polkadot::tx().balances().transfer_allow_death(subxt::utils::MultiAddress::Id(account_id32), tranfer_balance);
 
     let hookdata = use_sign_tx(balance_transfer_tx);
 

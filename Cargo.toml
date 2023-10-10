@@ -7,19 +7,19 @@ edition = "2021"
 
 [dependencies]
 
-yew = { version = "0.20.0", features = ["csr"] }
+yew = { version = "0.21.0", features = ["csr"] }
 rand = "0.8.5"
 gloo = "0.10.0"
 gloo-storage = "0.3.0"
 gloo-timers = "0.3.0"
 serde = "1.0.180"
 serde_json = "1.0.104"
-stylist = { version = "0.12.1", features = ["yew", "parser"] }
-yewdux = "0.9"
+stylist = { version = "0.13.0", features = ["yew", "parser"] }
+yewdux = "0.9.4"
 wasm-bindgen = "0.2.87"
 web-sys = {version = "0.3.64", features=["HtmlInputElement", "DragEvent", "File", "DataTransfer"]}
 js-sys = "0.3.64"
-yew-router = "0.17.0"
+yew-router = "0.18.0"
 # sp-keyring = { version = "21.0.0", default-features = false }
 futures = "0.3.28"
 hex = "0.4.3"
@@ -29,17 +29,17 @@ jsonrpsee-wasm-client = "0.20.0"
 jsonrpsee-core = "0.20.0"
 codec = { package = "parity-scale-codec", version = "3.0.0", default-features = false, features = ["derive", "full", "bit-vec"] }
 # getrandom = { version = "0.2.7", features = ["js"] }
-subxt = { version="0.31.0", default-features = false, features = ["jsonrpsee", "web"]}
-subxt-signer = { version="0.31.0", default-features = false, features = ["web", "sr25519", "ecdsa", "subxt"] }
+subxt = { version="0.32.0", default-features = false, features = ["jsonrpsee", "web"]}
+subxt-signer = { version="0.32.0", default-features = false, features = ["web", "sr25519", "ecdsa", "subxt"] }
 # sp-core = { version = "20.0.0", features = ["full_crypto"] }
 magic-crypt = "3.1.12"
-yew_icons = { version = "0.7.2", features = ["BootstrapCloudUpload", "FontAwesomeSolidSpinner"]}
+yew_icons = { version = "0.8.0", features = ["BootstrapCloudUpload", "FontAwesomeSolidSpinner"]}
 tiny-bip39 = "1.0.0"
 pulldown-cmark = "0.9.2"
 json = "0.12.4"
 regex= "1.8.3"
-sp-core-hashing= "10.0.0"
-yew-hooks="0.2.0"
+sp-core-hashing= "12.0.0"
+yew-hooks="0.3.0"
 anyhow ="1.0.75"
 
 

@@ -9,7 +9,7 @@ export async function transfer_balance(wsprovider, mnemonic, credit_user, value)
         const keyring = new Keyring({ type: 'sr25519' });
         const pair = keyring.createFromUri(mnemonic);
         apiPromise.then((api) => {
-            api.tx.balances.transfer(credit_user, value)
+            api.tx.balances.transfer_allow_death(credit_user, value)
                 .signAndSend(pair, ({ status, dispatchError }) => {
                     if (dispatchError) {
                         if (dispatchError.isModule) {

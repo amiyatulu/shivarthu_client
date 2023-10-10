@@ -21,7 +21,7 @@ pub fn use_get_period(profile_user_account: String) -> Option<Period> {
     let period_name: UseStateHandle<Option<Period>> = use_state(|| None);
     let period_name_clone = period_name.clone();
 
-    use_effect_with_deps(
+    use_effect_with((),
         move |_| {
             wasm_bindgen_futures::spawn_local(async move {
                 let client = subxt::client::OnlineClient::<PolkadotConfig>::from_url(NODE_URL)
@@ -64,7 +64,6 @@ pub fn use_get_period(profile_user_account: String) -> Option<Period> {
                 
             });
         },
-        (),
     );
 
     period_name.deref().clone()

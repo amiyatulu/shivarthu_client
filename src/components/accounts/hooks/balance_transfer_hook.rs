@@ -21,7 +21,7 @@ pub fn use_balance_tranfer(credit_user: String, token: u32) -> TransactionReturn
     let transaction_error_clone_first = transaction_error.clone();
     let transaction_error_clone_second = transaction_error.clone();
 
-    use_effect_with_deps(
+    use_effect_with((),
         move |_| {
             let phrase_option = &store_clone.mnemonic_phrase;
             if let Some(seed) = phrase_option {
@@ -53,7 +53,6 @@ pub fn use_balance_tranfer(credit_user: String, token: u32) -> TransactionReturn
                 });
             }
         },
-        (),
     );
     if let Some(result) = &*transaction_hash {
         TransactionReturn {
