@@ -9,7 +9,6 @@ mod services;
 mod router;
 mod js_extension_binding;
 use serde::{self, Serialize, Deserialize};
-use components::navigation::nav::Nav;
 
 #[derive(Serialize, Deserialize, Clone)]
 pub struct Accounts {

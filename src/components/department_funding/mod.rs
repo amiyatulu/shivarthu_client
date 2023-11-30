@@ -1,0 +1,1 @@
+pub mod create_department_required_fund;
