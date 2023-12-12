@@ -33,6 +33,7 @@ use crate::components::profile_validation::profile::view_profiles::ViewProfiles;
 use crate::components::common_component::get_accounts_extension::GetAccountsComponent;
 use crate::components::jstests::children_test::ContainerWithChildren;
 use crate::components::department_funding::create_department_required_fund::CreateDeparmentRequiredFund;
+use crate::components::department_funding::apply_staking_period::ApplyStakingPeriod;
 
 #[derive(Debug, Clone, PartialEq, Routable)]
 pub enum Route {
@@ -103,6 +104,8 @@ pub enum Route {
         department_id: u64,
         tipping_name: String,
     },
+    #[at("/apply-staking-period/:department_required_fund_id")]
+    ApplyStakingPeriod { department_required_fund_id: u64 },
 }
 
 pub fn switch(route: Route) -> Html {
@@ -169,6 +172,11 @@ pub fn switch(route: Route) -> Html {
             tipping_name,
         } => html! {
             <CreateDeparmentRequiredFund department_id={department_id} tipping_name={tipping_name} />
+        },
+        Route::ApplyStakingPeriod {
+            department_required_fund_id,
+        } => html! {
+            <ApplyStakingPeriod department_required_fund_id={department_required_fund_id} />
         },
     }
 }

@@ -20,9 +20,6 @@ pub fn create_department_required_fund(props: &Props) -> Html {
 
     let spinner_state: UseStateHandle<Option<bool>> = use_state(|| None);
     let funding_needed: UseStateHandle<Option<u128>> = use_state(|| None);
-    let tipping_name_error: UseStateHandle<Option<String>> = use_state(|| None);
-    let tipping_name_error_clone = tipping_name_error.clone();
-    let tipping_name_error_clone2 = tipping_name_error.clone();
 
     let fund_needed_clone = funding_needed.clone();
     let fund_needed_clone2 = funding_needed.clone();
