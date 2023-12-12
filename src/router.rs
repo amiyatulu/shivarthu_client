@@ -32,6 +32,7 @@ use crate::components::balance::transfer_balance::TransferBalance;
 use crate::components::profile_validation::profile::view_profiles::ViewProfiles;
 use crate::components::common_component::get_accounts_extension::GetAccountsComponent;
 use crate::components::jstests::children_test::ContainerWithChildren;
+use crate::components::department_funding::create_department_required_fund::CreateDeparmentRequiredFund;
 
 #[derive(Debug, Clone, PartialEq, Routable)]
 pub enum Route {
@@ -97,7 +98,11 @@ pub enum Route {
     SchellingGame { profile_user_account: String },
     #[at("/view-all-profiles")]
     ViewProfiles,
-   
+    #[at("/department-fund/:department_id/:tipping_name")]
+    CreateDeparmentRequiredFund {
+        department_id: u64,
+        tipping_name: String,
+    },
 }
 
 pub fn switch(route: Route) -> Html {
@@ -158,6 +163,12 @@ pub fn switch(route: Route) -> Html {
         },
         Route::ViewProfiles => html! {
             <ViewProfiles />
-        }
+        },
+        Route::CreateDeparmentRequiredFund {
+            department_id,
+            tipping_name,
+        } => html! {
+            <CreateDeparmentRequiredFund department_id={department_id} tipping_name={tipping_name} />
+        },
     }
 }
