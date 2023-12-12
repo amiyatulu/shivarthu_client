@@ -1,10 +1,10 @@
+use crate::components::department_funding::create_department_funding_transaction::ConditionalTransactionModal;
 use crate::components::navigation::nav::Nav;
 use crate::services::common_services::polkadot;
 use polkadot::runtime_types::department_funding::types::TippingName;
 use wasm_bindgen::JsCast;
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
-use crate::components::department_funding::create_department_funding_transaction::ConditionalTransactionModal;
 
 #[derive(Properties, PartialEq)]
 pub struct Props {
@@ -32,12 +32,14 @@ pub fn create_department_required_fund(props: &Props) -> Html {
     let submit_done_clone = submit_done.clone();
     let spinner_clone = spinner_state.clone();
 
-    // match tipping_name_option {
-    //     Some(_tipping_name) => {}
-    //     None => {
-    //         tipping_name_error_clone.set(Some("No tip is matched".to_string()));
-    //     }
-    // }
+    let error_node = match tipping_name_option {
+        Some(_tipping_name) => {
+            html! {<></>}
+        }
+        None => {
+            html! { <div>{"No tip is matched"}</div>}
+        }
+    };
 
     let onsubmit = Callback::from(move |event: SubmitEvent| {
         event.prevent_default();
@@ -65,9 +67,7 @@ pub fn create_department_required_fund(props: &Props) -> Html {
             <div class="container">
                 <form onsubmit={onsubmit}>
                     <div class="mb-3">
-                    // if tipping_name_error_clone2.is_some(){
-                    //     <div>{format!("{}", tipping_name_error_clone2.as_deref().unwrap_or_default())}</div>
-                    // }
+                    {error_node}
                     <label for="fund-needed" class="form-label">{"Fund Needed:"}</label>
                     <input name={"fund-needed"} type="number" class={"form-control"} required={true} onchange={fund_needed_onchanged}/>
                     </div>
@@ -86,7 +86,7 @@ pub fn create_department_required_fund(props: &Props) -> Html {
 
         html! {
             <>
-            // <ConditionalTransactionModal funding_needed={funding_needed} department_id={department_id} tipping_name={tipping_name_string}/>
+            <ConditionalTransactionModal funding_needed={funding_needed} department_id={department_id} tipping_name={tipping_name_string}/>
             </>
         }
     }
