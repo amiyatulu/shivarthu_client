@@ -7,12 +7,12 @@ use crate::components::project_tips::draw_jurors_transaction_condition::Conditio
 
 #[derive(Properties, PartialEq)]
 pub struct Props {
-    pub department_required_fund_id: u64,
+    pub project_id: u64,
 }
 
 #[function_component(DrawJurorsPositiveExternality)]
 pub fn draw_jurors_positive_externality(props: &Props) -> Html {
-    let department_required_fund_id = props.department_required_fund_id.clone();
+    let project_id = props.project_id.clone();
     let spinner_state: UseStateHandle<Option<bool>> = use_state(|| None);
     let add_iterations_state: UseStateHandle<Option<u64>> = use_state(|| None);
     let submit_done = use_state(|| false);
@@ -71,7 +71,7 @@ pub fn draw_jurors_positive_externality(props: &Props) -> Html {
 
         html! {
             <>
-            <ConditionalTransactionModal iterations={iterations} department_required_fund_id={department_required_fund_id}/>
+            <ConditionalTransactionModal iterations={iterations} project_id={project_id}/>
             </>
         }
     }

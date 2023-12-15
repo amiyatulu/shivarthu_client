@@ -8,12 +8,12 @@ use crate::components::project_tips::apply_jurors_transaction_conditions::Condit
 
 #[derive(Properties, PartialEq)]
 pub struct Props {
-    pub department_required_fund_id: u64,
+    pub project_id: u64,
 }
 
 #[function_component(AddApplyJurors)]
 pub fn add_apply_jurors(props: &Props) -> Html {
-    let department_required_fund_id = props.department_required_fund_id.clone();
+    let project_id = props.project_id.clone();
     let spinner_state: UseStateHandle<Option<bool>> = use_state(|| None);
     let add_juror_stake_state: UseStateHandle<Option<u128>> = use_state(|| None);
     let submit_done = use_state(|| false);
@@ -72,7 +72,7 @@ pub fn add_apply_jurors(props: &Props) -> Html {
 
         html! {
             <>
-            <ConditionalTransactionModal stake={stake} department_required_fund_id={department_required_fund_id}/>
+            <ConditionalTransactionModal stake={stake} project_id={project_id}/>
             </>
         }
     }

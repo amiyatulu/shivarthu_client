@@ -16,14 +16,14 @@ use crate::services::common_services::polkadot;
 
 #[derive(Properties, PartialEq)]
 pub struct Props {
-    pub department_required_fund_id: u64,
+    pub project_id: u64,
     pub choice: u128,
     pub salt_string: String,
 }
 
 #[derive(Properties, PartialEq)]
 pub struct ExtensionProps {
-    pub department_required_fund_id: u64,
+    pub project_id: u64,
     pub choice: u128,
     pub salt_string: String,
     pub account_address: String,
@@ -32,14 +32,14 @@ pub struct ExtensionProps {
 
 #[function_component(Transaction)]
 pub fn transaction(props: &Props) -> Html {
-    let department_required_fund_id = props.department_required_fund_id.clone();
+    let project_id = props.project_id.clone();
     let choice = props.choice.clone();
     let salt_string = props.salt_string.clone();
     let salt_vec = salt_string.as_bytes().to_vec();
 
     let payload = polkadot::tx()
     .project_tips()
-    .reveal_vote(department_required_fund_id, choice, salt_vec);
+    .reveal_vote(project_id, choice, salt_vec);
 
     let hookdata = use_sign_tx(payload);
 
@@ -57,14 +57,14 @@ pub fn transaction_extension(props: &ExtensionProps) -> Html {
     let account_address = props.account_address.clone();
     let account_source = props.account_source.clone();
 
-    let department_required_fund_id = props.department_required_fund_id.clone();
+    let project_id = props.project_id.clone();
     let choice = props.choice.clone();
     let salt_string = props.salt_string.clone();
     let salt_vec = salt_string.as_bytes().to_vec();
 
     let payload = polkadot::tx()
     .project_tips()
-    .reveal_vote(department_required_fund_id, choice, salt_vec);
+    .reveal_vote(project_id, choice, salt_vec);
 
     let hookdata = use_sign_tx_extension(payload, account_address, account_source);
     html! {
@@ -76,7 +76,7 @@ pub fn transaction_extension(props: &ExtensionProps) -> Html {
 
 #[function_component(ConditionalTransactionExtension)]
 pub fn conditional_transaction_extension(props: &Props) -> Html {
-    let department_required_fund_id = props.department_required_fund_id.clone();
+    let project_id = props.project_id.clone();
     let choice = props.choice.clone();
     let salt_string = props.salt_string.clone();
     let account_address: UseStateHandle<Option<String>> = use_state(|| None);
@@ -102,7 +102,7 @@ pub fn conditional_transaction_extension(props: &Props) -> Html {
 
         html! {
             <>
-            <TransactionExtension department_required_fund_id={department_required_fund_id} choice={choice} salt_string={salt_string} account_address={account_address} account_source={account_source} />
+            <TransactionExtension project_id={project_id} choice={choice} salt_string={salt_string} account_address={account_address} account_source={account_source} />
             </>
         }
     } else {
@@ -115,7 +115,7 @@ pub fn conditional_transaction_extension(props: &Props) -> Html {
 
 #[function_component(ConditionalTransactionModal)]
 pub fn conditional_transaction(props: &Props) -> Html {
-    let department_required_fund_id = props.department_required_fund_id.clone();
+    let project_id = props.project_id.clone();
     let choice = props.choice.clone();
     let salt_string = props.salt_string.clone();
     let (store, _) = use_store::<PhaseExists>();
@@ -126,7 +126,7 @@ pub fn conditional_transaction(props: &Props) -> Html {
     // gloo::console::log!(format!("{:?}",sign_in_method));
     if let SignInMethod::ExtensionSignIn = sign_in_method {
         html! {
-            <ConditionalTransactionExtension  department_required_fund_id={department_required_fund_id} choice={choice}  salt_string={salt_string} />
+            <ConditionalTransactionExtension  project_id={project_id} choice={choice}  salt_string={salt_string} />
         }
     } else {
         if store.phase_exists_in_state == false {
@@ -136,7 +136,7 @@ pub fn conditional_transaction(props: &Props) -> Html {
         } else {
             html! {
              <>
-             <Transaction  department_required_fund_id={department_required_fund_id} choice={choice}  salt_string={salt_string} />
+             <Transaction  project_id={project_id} choice={choice}  salt_string={salt_string} />
              </>
             }
         }

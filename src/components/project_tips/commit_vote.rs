@@ -7,12 +7,12 @@ use crate::components::project_tips::commit_vote_transaction_condition::Conditio
 
 #[derive(Properties, PartialEq)]
 pub struct Props {
-    pub department_required_fund_id: u64,
+    pub project_id: u64,
 }
 
 #[function_component(CommitVotePositiveExternality)]
 pub fn commit_vote(props: &Props) -> Html {
-    let department_required_fund_id = props.department_required_fund_id.clone();
+    let project_id = props.project_id.clone();
     let spinner_state: UseStateHandle<Option<bool>> = use_state(|| None);
     let hash_state: UseStateHandle<Option<[u8; 32]>> = use_state(|| None);
     let commit_vote_state: UseStateHandle<Option<String>> = use_state(|| None);
@@ -81,7 +81,7 @@ pub fn commit_vote(props: &Props) -> Html {
 
         html! {
             <>
-            <ConditionalTransactionModal hash={hash} department_required_fund_id={department_required_fund_id}/>
+            <ConditionalTransactionModal hash={hash} project_id={project_id}/>
             </>
         }
     }

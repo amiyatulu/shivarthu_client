@@ -7,12 +7,12 @@ use crate::components::project_tips::reveal_vote_transaction_condition::Conditio
 
 #[derive(Properties, PartialEq)]
 pub struct Props {
-    pub department_required_fund_id: u64,
+    pub project_id: u64,
 }
 
 #[function_component(RevealVote)]
 pub fn reveal_vote(props: &Props) -> Html {
-    let department_required_fund_id = props.department_required_fund_id.clone();
+    let project_id = props.project_id.clone();
     let spinner_state: UseStateHandle<Option<bool>> = use_state(|| None);
     let choice_state: UseStateHandle<Option<u128>> = use_state(|| None);
     let salt_string_state: UseStateHandle<Option<String>> = use_state(|| None);
@@ -89,7 +89,7 @@ pub fn reveal_vote(props: &Props) -> Html {
 
         html! {
             <>
-            <ConditionalTransactionModal salt_string={salt_string} department_required_fund_id={department_required_fund_id} choice={choice}/>
+            <ConditionalTransactionModal salt_string={salt_string} project_id={project_id} choice={choice}/>
             </>
         }
     }

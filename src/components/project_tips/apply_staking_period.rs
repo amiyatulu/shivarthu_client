@@ -7,12 +7,12 @@ use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]
 pub struct Props {
-    pub department_required_fund_id: u64,
+    pub project_id: u64,
 }
 
 #[function_component(ApplyStakingPeriod)]
 pub fn apply_staking_period(props: &Props) -> Html {
-    let department_required_fund_id = props.department_required_fund_id.clone();
+    let project_id = props.project_id.clone();
     let spinner_state: UseStateHandle<Option<bool>> = use_state(|| None);
     let submit_done = use_state(|| false);
     let submit_done_clone = submit_done.clone();
@@ -44,7 +44,7 @@ pub fn apply_staking_period(props: &Props) -> Html {
     } else {
         html! {
             <>
-            <ConditionalTransactionModal  department_required_fund_id={department_required_fund_id} />
+            <ConditionalTransactionModal  project_id={project_id} />
             </>
         }
     }
