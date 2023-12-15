@@ -6,4 +6,5 @@ pub mod pagination;
 pub mod get_accounts_extension;
 pub mod custom_extrinsics_extension_hook;
 pub mod common_transaction_extension_return;
-pub mod tipping_implementation;
+pub mod tipping_implementation_department_funding;
+pub mod tipping_implementation_project_tips;

@@ -12,3 +12,4 @@ pub mod jstests;
 pub mod common_component;
 pub mod positive_externality_validation;
 pub mod department_funding;
+pub mod project_tips;
