@@ -58,8 +58,10 @@ pub fn add_accounts() -> Html {
 
     let onsubmit = auth_dispatch.reduce_mut_callback_with(move |store, event: SubmitEvent| {
         event.prevent_default();
+        // log!("Submitted form");
         let dipatch_pub_account_clone = dipatch_pub_account.clone();
         if cloned_seed_state2.is_some() && cloned_password_state2.is_some() {
+            // log!("you are in state set");
             let seed_string = cloned_seed_state2.as_ref().unwrap();
             let account =
                 js_extension_binding::get_account_address_from_seed((*seed_string.clone()).to_owned());
@@ -78,7 +80,7 @@ pub fn add_accounts() -> Html {
                 <div class="card shadow-lg p-3 mb-5 bg-body rounded home">
                     <div class="d-grid gap-3">
                         if *successful_submission == false {
-                            <form onsubmit={onsubmit} autocomplete="off">
+                            <form onsubmit={onsubmit} autocomplete="off" id="seed-submit-form">
                                if seed_error.is_some() {
                                 <p>{seed_error.as_deref().unwrap_or_default()}</p>
                                }
@@ -91,7 +93,7 @@ pub fn add_accounts() -> Html {
                                     <input type="text" class="form-control" name="password"  onchange={password_changed}/> // New code: Sending props
                                 </div>
 
-                                <CustomButton label="Submit"/><br/>
+                                <CustomButton id="seed-submit-button" label="Submit" type_value="submit" /><br/>
                             </form>
                         } else {
                             <p>{"Sign in successful."}</p>

@@ -19,7 +19,7 @@ pub fn account_home() -> Html {
             // todo!()
         );
         html! {
-            <button type="button" class="btn btn-warning" {onclick}>{"Sign In"}</button>
+            <button type="button" class="btn btn-warning" id="sign-in-button" {onclick}>{"Sign In"}</button>
         }
     };
 
@@ -28,7 +28,7 @@ pub fn account_home() -> Html {
         let navigator = navigation.clone();
         let onclick = Callback::from(move |_| navigator.push(&Route::CreateAccount));
         html! {
-            <button type="button" class="btn btn-warning" {onclick}>{"Generate Account"}</button>
+            <button type="button" class="btn btn-warning" id="generate-account-button" {onclick}>{"Generate Account"}</button>
         }
     };
 
