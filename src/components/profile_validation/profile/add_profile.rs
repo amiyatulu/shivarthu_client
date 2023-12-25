@@ -97,9 +97,9 @@ pub fn add_profile() -> Html {
                 let response =
                     ipfs_call_json_string(DEFAULT_IPFS_PROVIDER, &json_string, "ipfs".to_owned())
                         .await;
-                ipfs_response_onsubmit.set(Some(response));
+                ipfs_response_onsubmit.set(Some(response.clone()));
                 spinner_clone.set(Some(false));
-                // log!(response);
+                log!(response.clone());
             });
         }
     });
@@ -131,7 +131,7 @@ pub fn add_profile() -> Html {
 
                 <div>
                 if video_cid_state.is_some() {
-                    <div class="col-md-6 offset-md-3 text-center">
+                    <div class="col-md-6 offset-md-3 text-center" id="profile-video-load">
                         <video width="320" height="240" controls={true}>
                         <source src={format!("{}{}",DEFAULT_IPFS_FETCH_PROVIDER.address, video_cid_state.as_deref().unwrap_or_default())} type="video/mp4" />
                         {"Your browser does not support the video tag."}

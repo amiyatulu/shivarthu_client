@@ -17,6 +17,8 @@ pub const IPFS_WEB3: &str = "https://w3s.link/ipfs/";
 pub const IPFS_CLOUDFLARE: &str = "https://cloudflare-ipfs.com/ipfs/";
 pub const IPFS_IO: &str = "https://gateway.ipfs.io/ipfs/";
 
+pub const EVERLAND_ENDPOINT: &str = "https://endpoint.4everland.co";
+
 pub const DEFAULT_IPFS_FETCH_PROVIDER: IPFSFetchProvider = IPFSFetchProvider {
     kind: IPFSFetchProviderKind::Web3Storage,
     address: IPFS_WEB3, 

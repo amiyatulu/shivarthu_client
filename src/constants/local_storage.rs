@@ -10,7 +10,7 @@ pub enum SignInMethod {
 
 impl Default for SignInMethod {
     fn default() -> Self {
-        SignInMethod::ExtensionSignIn
+        SignInMethod::LocalStorageSignIn
     }
 }
 
