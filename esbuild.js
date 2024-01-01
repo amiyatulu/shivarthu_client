@@ -1,10 +1,14 @@
-const esbuild = require('esbuild');
+import { build } from "esbuild";
+import { polyfillNode } from "esbuild-plugin-polyfill-node";
 
-esbuild.build({
+build({
   entryPoints: ['package.js'],
   bundle: true,
   outfile: 'src/package.js',
   format: 'esm',
   // sourcemap: 'inline',
-  minify: true,
+  // minify: true,
+  plugins: [
+		polyfillNode(),
+	],
 }).catch(() => process.exit(1));

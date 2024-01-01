@@ -14,7 +14,13 @@ use crate::components::accounts::clear_local_storage::ClearLocalStorage;
 use crate::components::markdown::markdown_component::MarkdownComponent;
 use crate::components::profile_validation::profile::add_profile::AddProfile;
 use crate::components::ipfs::form_ipfs_upload::FormIpfsUpload;
+
+// tests
 use crate::components::jstests::first_test::FirstTest;
+use crate::components::jstests::test2::Test2;
+use crate::components::jstests::upload_pin_string_everland::UploadPinStringEverland;
+
+
 use crate::components::profile_validation::profile::view_profile::ViewProfile;
 use crate::components::profile_validation::profile::view_profile_address::ViewProfileAddress;
 use crate::components::profile_validation::profile_validation_schelling_game::challenger_evidence::ChallengerEvidence;
@@ -37,6 +43,15 @@ use crate::components::department_funding::apply_staking_period::ApplyStakingPer
 
 #[derive(Debug, Clone, PartialEq, Routable)]
 pub enum Route {
+
+    // tests
+    #[at("/first-test")]
+    FirstTest,
+    #[at("/test2")]
+    Test2,
+    #[at("/test-upload-pin-eveland")]
+    UploadPinStringEverland,
+
     #[at("/children-test")]
     ContainerWithChildren,
     #[at("/transfer-balance")]
@@ -71,8 +86,6 @@ pub enum Route {
     FormIpfsUpload,
     #[at("/chat-huggingface")]
     ChatHuggingFace,
-    #[at("/first-test")]
-    FirstTest,
     #[at("/view-profile-details")]
     ViewProfile,
     #[at("/view-profile/:profile_user_account")]
@@ -110,7 +123,13 @@ pub enum Route {
 
 pub fn switch(route: Route) -> Html {
     match route {
+        // Test
+        Route::FirstTest => html! {<FirstTest/>},
+        Route::Test2 => html! {<Test2/>},
+        Route::UploadPinStringEverland => html! {<UploadPinStringEverland/>},
         Route::ContainerWithChildren => html! {<ContainerWithChildren/>},
+
+
         Route::TransferBalance => html! { <TransferBalance />},
         Route::Storage => html! { <Storage />},
         Route::Rpc => html! {<Rpc/>},
@@ -126,7 +145,7 @@ pub fn switch(route: Route) -> Html {
         Route::MarkdownComponent => html! {<MarkdownComponent/>},
         Route::AddProfile => html! {<AddProfile/>},
         Route::FormIpfsUpload => html! {<FormIpfsUpload/>},
-        Route::FirstTest => html! {<FirstTest/>},
+      
         Route::ViewProfile => html! {<ViewProfile/>},
         Route::ViewProfileAddress {
             profile_user_account,

@@ -5,10 +5,10 @@ use yew::prelude::*;
 use yew_router::prelude::*;
 mod components;
 mod constants;
-mod services;
-mod router;
 mod js_extension_binding;
-use serde::{self, Serialize, Deserialize};
+mod router;
+mod services;
+use serde::{self, Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone)]
 pub struct Accounts {
@@ -19,7 +19,7 @@ pub struct Accounts {
 pub fn app() -> Html {
     html! (
         <>
-            // <Nav/>    
+            // <Nav/>
             <BrowserRouter>
                 <Switch<Route> render={switch} />
             </BrowserRouter>

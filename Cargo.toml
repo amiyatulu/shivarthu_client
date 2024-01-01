@@ -41,6 +41,7 @@ regex= "1.8.3"
 sp-core-hashing= "14.0.0"
 yew-hooks="0.3.0"
 anyhow ="1.0.75"
+# ipfs-hasher = "0.13.0"
 # opendal = {versin="0.43.0", default-features = false,  features = ["services-s3"]}
 
 

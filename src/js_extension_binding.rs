@@ -37,5 +37,12 @@ extern "C" {
 
     #[wasm_bindgen(js_name = uploadFile4everland)]
     pub fn upload_file_4everland(endpoint: String, bucket: String, folder: String, data: String, file_name: String, key: String, secret: String, session_token: String) -> Promise;
+
+    #[wasm_bindgen(js_name = getCid)]
+    pub fn get_cid(string_data: String) -> Promise;
+
+    #[wasm_bindgen(js_name = uploadPinString4everland)]
+    pub fn upload_pin_string_4everland(bucket_endpoint: String, pinning_url: String, bucket: String, folder: String, data: String, file_name: String, access_key: String, secret_access: String, session_token: String, pin_secret: String) -> Promise;
+
     
 }
