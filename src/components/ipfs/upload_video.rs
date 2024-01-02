@@ -33,6 +33,7 @@ pub fn file_upload(props: &Props) -> Html {
             let file = event.data_transfer().unwrap().files().unwrap().get(0);
             // log!(file.clone().unwrap());
             let file_type = file.clone().unwrap().type_();
+            let file_name = file.clone().unwrap().name();
             // log!(file_type);
             // let mut filelistvalue: Vec<_> = clone_filelist.to_vec();
             // filelistvalue.push(file.clone().unwrap());
@@ -40,7 +41,7 @@ pub fn file_upload(props: &Props) -> Html {
             if file_type == "video/mp4" {
                 wasm_bindgen_futures::spawn_local(async move {
                     let ipfs_cid =
-                        ipfs_call(DEFAULT_IPFS_PROVIDER, file.unwrap(), "ipfs".to_owned()).await;
+                        ipfs_call(DEFAULT_IPFS_PROVIDER, file.unwrap(), file_name).await;
                     log!(ipfs_cid.clone());
                     handle_onchange_cid_clone.emit(ipfs_cid);
                     spinner_state_clone.set(false);
@@ -71,12 +72,14 @@ pub fn file_upload(props: &Props) -> Html {
             let handle_onchange_cid_clone = handle_onchange_cid_onchange.clone();
 
             let file_type = file.clone().unwrap().type_();
+            let file_name = file.clone().unwrap().name();
+
 
 
             if file_type == "video/mp4" {
                 wasm_bindgen_futures::spawn_local(async move {
                     let ipfs_cid =
-                        ipfs_call(DEFAULT_IPFS_PROVIDER, file.unwrap(), "ipfs".to_owned()).await;
+                        ipfs_call(DEFAULT_IPFS_PROVIDER, file.unwrap(), file_name).await;
                     log!(ipfs_cid.clone());
                     handle_onchange_cid_clone.emit(ipfs_cid);
                     spinner_state_clone.set(false);

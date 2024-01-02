@@ -7,7 +7,7 @@ build({
   outfile: 'src/package.js',
   format: 'esm',
   // sourcemap: 'inline',
-  // minify: true,
+  minify: true,
   plugins: [
 		polyfillNode(),
 	],

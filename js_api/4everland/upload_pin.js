@@ -1,6 +1,6 @@
 import { BucketClient, PinningClient } from '@4everland/upload-pin'
 
-export async function uploadPinString4everland(bucketEndpoint, pinningUrl, bucket, folder, data, fileName, accessKeyId, secretAccessKey, sessionToken, pinSecret) {
+export async function uploadPinString4everland(bucketEndpoint, pinningUrl, bucket, folder, data, fileName, fileType, accessKeyId, secretAccessKey, sessionToken, pinSecret) {
 
     // Create Bucket Client
     const bucketClient = new BucketClient({
@@ -21,10 +21,10 @@ export async function uploadPinString4everland(bucketEndpoint, pinningUrl, bucke
 
     // Upload File
     const task = bucketClient.uploadObject({
-        Bucket: bucket, 
+        Bucket: bucket,
         Key: folder + '/' + fileName,
         Body: bodyData,
-        ContentType: 'text/plain'
+        ContentType: fileType,
     })
 
 

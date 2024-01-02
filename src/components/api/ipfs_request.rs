@@ -1,13 +1,15 @@
+use crate::components::api::upload_file_everland::upload_everland_file;
 use crate::components::api::select_ipfs_provider::IPFSProvider;
-use crate::components::api::select_ipfs_provider::{CRUST_GATEWAY, WEB3_STORAGE_API_UPLOAD, EVERLAND_UPLOAD};
-use crate::constants::auth::{CRUST_TOKEN, WEB3_STORAGE_TOKEN, EVERLAND_PIN_TOKEN};
-
+use crate::components::api::select_ipfs_provider::{
+    CRUST_GATEWAY, EVERLAND_UPLOAD, WEB3_STORAGE_API_UPLOAD,
+};
+use crate::constants::auth::{CRUST_TOKEN, EVERLAND_PIN_TOKEN, WEB3_STORAGE_TOKEN};
 
 use gloo::console::log;
-use gloo::net::http::{ Headers, Request};
+use gloo::net::http::{Headers, Request};
 use serde::{Deserialize, Serialize};
-use web_sys::{Blob, File, FormData};
 use wasm_bindgen::JsValue;
+use web_sys::{Blob, File, FormData};
 #[derive(Serialize, Deserialize)]
 pub struct IPFSResponse {
     pub Name: String,
@@ -25,7 +27,6 @@ pub async fn ipfs_call(ipfs_provider: IPFSProvider, file: File, name: String) ->
         IPFSProvider::Crust => ipfs_call_crust(file, name).await,
         IPFSProvider::Web3Storage => ipfs_call_web3storage(file, name).await,
         IPFSProvider::Everland => ipfs_call_everland(file, name).await,
-        
     }
 }
 
@@ -37,8 +38,7 @@ pub async fn ipfs_call_json_string(
     match ipfs_provider {
         IPFSProvider::Crust => ipfs_call_json_string_crust(data, name).await,
         IPFSProvider::Web3Storage => ipfs_call_json_string_web3storage(data, name).await,
-        IPFSProvider::Everland => ipfs_call_json_string_everland(data,name).await,
-        
+        IPFSProvider::Everland => ipfs_call_json_string_everland(data, name).await,
     }
 }
 
@@ -98,28 +98,9 @@ pub async fn ipfs_call_web3storage(file: File, _name: String) -> String {
     // {"Name":"pexels-pixabay-326055.jpg","Hash":"QmcTJaN8SqkKLNVjWeKSVSK8zVXSodhBqxVkZZcUb1isLp","Size":"782686"}
 }
 
-
-pub async fn ipfs_call_everland(file: File, _name: String) -> String {
-    let headers = Headers::new();
-    headers.append("Access-Control-Allow-Origin", "*");
-    headers.append("Access-Control-Allow-Methods", "POST");
-    headers.append("Access-Control-Allow-Credentials", "true");
-    headers.append("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    headers.append(&"accept", "application/octet-stream");
-    headers.append(&"Authorization", EVERLAND_PIN_TOKEN);
-    log!(file.clone());
-
-    let data = Request::post(&format!("{EVERLAND_UPLOAD}/pins"))
-        .headers(headers)
-        .body(file)
-        .unwrap()
-        .send()
-        .await
-        .unwrap();
-    //    log!(data.text().await.unwrap());
-    let body = data.json::<CidResponse>().await.unwrap();
-    body.cid
-    // {"Name":"pexels-pixabay-326055.jpg","Hash":"QmcTJaN8SqkKLNVjWeKSVSK8zVXSodhBqxVkZZcUb1isLp","Size":"782686"}
+pub async fn ipfs_call_everland(file: File, name: String) -> String {
+   let cid = upload_everland_file(file, name).await;
+   cid
 }
 pub async fn ipfs_call_json_string_web3storage(data: &str, _name: String) -> String {
     let json_jsvalue = JsValue::from_str(&data);
@@ -152,7 +133,10 @@ pub async fn ipfs_call_json_string_everland(data: &str, _name: String) -> String
     headers.append("Access-Control-Allow-Origin", "*");
     headers.append("Access-Control-Allow-Methods", "*");
     headers.append("Access-Control-Allow-Credentials", "true");
-    headers.append("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    headers.append(
+        "Access-Control-Allow-Headers",
+        "Content-Type, Authorization",
+    );
     headers.append(&"accept", "application/octet-stream");
     headers.append(&"Authorization", EVERLAND_PIN_TOKEN);
 
@@ -168,4 +152,3 @@ pub async fn ipfs_call_json_string_everland(data: &str, _name: String) -> String
     let body = data.json::<CidResponse>().await.unwrap();
     body.cid
 }
-

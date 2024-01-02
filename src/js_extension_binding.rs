@@ -1,5 +1,7 @@
 use wasm_bindgen::prelude::*;
 use js_sys::Promise;
+use web_sys::File;
+
 
 #[wasm_bindgen(module = "/src/package.js")]
 extern "C" {
@@ -42,7 +44,10 @@ extern "C" {
     pub fn get_cid(string_data: String) -> Promise;
 
     #[wasm_bindgen(js_name = uploadPinString4everland)]
-    pub fn upload_pin_string_4everland(bucket_endpoint: String, pinning_url: String, bucket: String, folder: String, data: String, file_name: String, access_key: String, secret_access: String, session_token: String, pin_secret: String) -> Promise;
+    pub fn upload_pin_string_4everland(bucket_endpoint: String, pinning_url: String, bucket: String, folder: String, data: String, file_name: String, file_type: String, access_key: String, secret_access: String, session_token: String, pin_secret: String) -> Promise;
+
+    #[wasm_bindgen(js_name = uploadPinBlob4everland)]
+    pub fn upload_pin_blob_4everland(bucket_endpoint: String, pinning_url: String, bucket: String, folder: String, blob: File, file_name: String, file_type: String, access_key: String, secret_access: String, session_token: String, pin_secret: String) -> Promise;
 
     
 }
