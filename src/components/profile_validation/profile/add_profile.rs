@@ -56,7 +56,7 @@ pub fn add_profile() -> Html {
         let video_cid_value: Option<String> = if video_cid.is_empty() {
             None
         } else {
-            Some(video_cid)
+            Some(video_cid.clone())
         };
 
         video_cid_state_clone.set(video_cid_value);

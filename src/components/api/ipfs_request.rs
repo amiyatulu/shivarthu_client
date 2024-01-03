@@ -3,6 +3,7 @@ use crate::components::api::select_ipfs_provider::{
     CRUST_GATEWAY, EVERLAND_UPLOAD, WEB3_STORAGE_API_UPLOAD,
 };
 use crate::components::api::upload_file_everland::{upload_everland_file, upload_everland_string};
+use crate::components::api::blob_to_bytes::{blob_to_hash_string, file_to_hash_string};
 use crate::constants::auth::{CRUST_TOKEN, EVERLAND_PIN_TOKEN, WEB3_STORAGE_TOKEN};
 
 use gloo::console::log;
@@ -98,8 +99,9 @@ pub async fn ipfs_call_web3storage(file: File, _name: String) -> String {
     // {"Name":"pexels-pixabay-326055.jpg","Hash":"QmcTJaN8SqkKLNVjWeKSVSK8zVXSodhBqxVkZZcUb1isLp","Size":"782686"}
 }
 
-pub async fn ipfs_call_everland(file: File, name: String) -> String {
-    let cid = upload_everland_file(file, name).await;
+pub async fn ipfs_call_everland(file: File, _name: String) -> String {
+    let hash=  file_to_hash_string(file.clone());
+    let cid = upload_everland_file(file, hash).await;
     cid
 }
 pub async fn ipfs_call_json_string_web3storage(data: &str, _name: String) -> String {
@@ -124,11 +126,12 @@ pub async fn ipfs_call_json_string_web3storage(data: &str, _name: String) -> Str
     body.cid
 }
 
-pub async fn ipfs_call_json_string_everland(data: &str, name: String) -> String {
+pub async fn ipfs_call_json_string_everland(data: &str, _name: String) -> String {
     let json_jsvalue = JsValue::from_str(&data);
     let json_jsvalue_array = js_sys::Array::from_iter(std::iter::once(json_jsvalue));
     let json_blob_result = Blob::new_with_str_sequence(&json_jsvalue_array);
     let json_blob = json_blob_result.unwrap();
-    let cid = upload_everland_string(json_blob, name).await;
+    let hash=  blob_to_hash_string(json_blob.clone());
+    let cid = upload_everland_string(json_blob, hash).await;
     cid
 }

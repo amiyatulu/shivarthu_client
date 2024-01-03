@@ -36,7 +36,7 @@ pub async fn upload_everland_file(file: File, name: String) -> String {
     );
     let js_result = JsFuture::from(promise_cid).await.unwrap();
     let cid = js_result.as_string();
-    log!("data promise", cid.clone());
+    // log!("data promise", cid.clone());
     cid.unwrap()
 }
 
@@ -68,6 +68,6 @@ pub async fn upload_everland_string(json_blob: Blob, name: String) -> String {
     );
     let js_result = JsFuture::from(promise_cid).await.unwrap();
     let cid = js_result.as_string();
-    log!("data promise", cid.clone());
+    // log!("data promise", cid.clone());
     cid.unwrap()
 }
