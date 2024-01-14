@@ -9,6 +9,5 @@ pub mod multistep_account_creation;
 pub mod set_phrase_from_pass;
 pub mod account_address_view;
 pub mod clear_local_storage;
-pub mod signout_view;
 // pub mod sign_tx_async;
 pub mod hooks;

@@ -1,6 +1,6 @@
 use yew::prelude::*;
 use crate::components::accounts::account_address_view::AccountAddressView;
-use crate::components::accounts::signout_view::SignOutView;
+use crate::components::navigation::signout_view::SignOutView;
 use crate::components::navigation::login_view::LoginView;
 use yew_router::prelude::*; 
 use crate::router::Route;

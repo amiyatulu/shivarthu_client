@@ -3,7 +3,7 @@ use wasm_bindgen::JsCast;
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
 use crate::components::profile_validation::profile_validation_schelling_game::profile_validation_storage_call::get_period::GetPeriod;
-use crate::components::profile_validation::profile_validation_schelling_game::add_profile_jurors_transaction_condition::ConditionalTransactionModal;
+use crate::components::profile_validation::profile_validation_schelling_game::add_apply_jurors_transaction_condition::ConditionalTransactionModal;
 use crate::components::profile_validation::profile_validation_schelling_game::profile_validation_rpc::staking_end_block::StakingEndBlock;
 use crate::components::profile_validation::profile_validation_schelling_game::change_period::ChangePeriod;
 
@@ -62,10 +62,10 @@ pub fn add_apply_jurors(props: &Props) -> Html {
                 <input name={"juror-stake"} type="number" class={"form-control"} required={true} onchange={juror_stake_onchanged}/>
                 </div>
                 if let Some(_value) = *spinner_state {
-                    <input type="submit" value="Submit" disabled={true} />
+                    <input type="submit" value="Submit" disabled={true} id="juror-stake"/>
                     <img src="img/rolling.gif" alt="loading" width="40"/>
                 } else {
-                    <input type="submit" value="Submit" />
+                    <input type="submit" value="Submit" id="juror-stake"/>
                 }
 
                 </form>

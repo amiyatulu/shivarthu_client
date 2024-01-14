@@ -85,7 +85,7 @@ pub fn set_phrase_from_pass() -> Html {
                               <p class="alert alert-danger">{password_error.as_deref().unwrap_or_default()}</p>
                             }
 
-                            <input type="text" class="form-control" name="seed" onchange={password_changed}/>
+                            <input type="text" class="form-control" name="seed" id="input-password" onchange={password_changed}/>
                             </div>
                           <div class="modal-footer flex-column border-top-0">
                             <button type="submit"  value="Submit" class="btn btn-lg btn-primary w-100 mx-0 mb-2">{"Save changes"}</button>

@@ -29,7 +29,7 @@ pub fn change_period(props: &Props) -> Html {
                 <input type="submit" value="Change Period" disabled={true} />
                 <img src="img/rolling.gif" alt="loading" width="40"/>
             } else {
-                <input type="submit" value="Change Period" />
+                <input type="submit" value="Change Period" id="change-period"/>
             }
             </form>
             </>

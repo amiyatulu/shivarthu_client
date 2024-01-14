@@ -17,11 +17,11 @@ pub fn sign_out_view() -> Html {
         </li>
 
         <li class="nav-item">
-        <Link<Route> to={Route::ViewProfileAddress {profile_user_account: address.to_string()} } classes="nav-link">{"View Profile"}</Link<Route>>
+        <Link<Route> to={Route::ViewProfileAddress {profile_user_account: address.to_string()} } classes="nav-link view-profile-link" >{"View Profile"}</Link<Route>>
         </li>
 
         <li class="nav-item">
-        <Link<Route> to={Route::AddProfileStake {profile_user_account: address.to_string()}} classes="nav-link">{"Add Profile Stake"}</Link<Route>>
+        <Link<Route> to={Route::AddProfileStake {profile_user_account: address.to_string()}} classes="nav-link add-profile-stake-link">{"Add Profile Stake"}</Link<Route>>
         </li>
 
         </>
