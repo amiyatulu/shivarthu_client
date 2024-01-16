@@ -1,5 +1,6 @@
 use crate::components::pages::rpc_call::Rpc;
 use crate::components::pages::storage::Storage;
+use crate::routers::validation_router::{switch_validation, ValidationRoute};
 use yew::prelude::*;
 use yew_router::prelude::*;
 // use crate::components::pages::transaction::Transaction;
@@ -11,15 +12,14 @@ use crate::components::pages::fileupload::FileUpload;
 use crate::components::accounts::set_phrase_from_pass::SetPhraseFromPass;
 // use crate::components::pages::conditional_transaction_modal::ConditionalTransactionModal;
 use crate::components::accounts::clear_local_storage::ClearLocalStorage;
+use crate::components::ipfs::form_ipfs_upload::FormIpfsUpload;
 use crate::components::markdown::markdown_component::MarkdownComponent;
 use crate::components::profile_validation::profile::add_profile::AddProfile;
-use crate::components::ipfs::form_ipfs_upload::FormIpfsUpload;
 
 // tests
 use crate::components::jstests::first_test::FirstTest;
 use crate::components::jstests::test2::Test2;
 use crate::components::jstests::upload_pin_string_everland::UploadPinStringEverland;
-
 
 use crate::components::profile_validation::profile::view_profile::ViewProfile;
 use crate::components::profile_validation::profile::view_profile_address::ViewProfileAddress;
@@ -43,6 +43,8 @@ use crate::components::department_funding::apply_staking_period::ApplyStakingPer
 
 #[derive(Debug, Clone, PartialEq, Routable)]
 pub enum Route {
+    #[at("/validation/*")]
+    Validation,
 
     // tests
     #[at("/first-test")]
@@ -124,11 +126,11 @@ pub enum Route {
 pub fn switch(route: Route) -> Html {
     match route {
         // Test
+        Route::Validation => html! { <Switch<ValidationRoute> render={switch_validation} /> },
         Route::FirstTest => html! {<FirstTest/>},
         Route::Test2 => html! {<Test2/>},
         Route::UploadPinStringEverland => html! {<UploadPinStringEverland/>},
         Route::ContainerWithChildren => html! {<ContainerWithChildren/>},
-
 
         Route::TransferBalance => html! { <TransferBalance />},
         Route::Storage => html! { <Storage />},
@@ -145,7 +147,7 @@ pub fn switch(route: Route) -> Html {
         Route::MarkdownComponent => html! {<MarkdownComponent/>},
         Route::AddProfile => html! {<AddProfile/>},
         Route::FormIpfsUpload => html! {<FormIpfsUpload/>},
-      
+
         Route::ViewProfile => html! {<ViewProfile/>},
         Route::ViewProfileAddress {
             profile_user_account,
