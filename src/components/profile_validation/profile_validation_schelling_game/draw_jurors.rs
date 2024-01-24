@@ -59,13 +59,13 @@ pub fn draw_jurors(props: &Props) -> Html {
                 <form onsubmit={onsubmit}>
                 <div class="mb-3">
                 <label for="Draw Jurors" class="form-label">{"Draw Jurors:"}</label>
-                <input name={"iterations"} type="number" class={"form-control"} required={true} onchange={iterations_onchanged}/>
+                <input name={"iterations"} type="number" class={"form-control"} required={true} onchange={iterations_onchanged} id="iterations"/>
                 </div>
                 if let Some(_value) = *spinner_state {
-                    <input type="submit" value="Submit" disabled={true} />
+                    <input type="submit" value="Submit" disabled={true} id="draw-jurors-submit" />
                     <img src="img/rolling.gif" alt="loading" width="40"/>
                 } else {
-                    <input type="submit" value="Submit" />
+                    <input type="submit" value="Submit" id="draw-jurors-submit"/>
                 }
 
                 </form>
