@@ -5,6 +5,8 @@ use wasm_bindgen_futures;
 use yew::prelude::*;
 use yew_hooks::prelude::*;
 use crate::constants::constant::NODE_URL;
+use yew_icons::{Icon, IconId};
+
 
 
 
@@ -54,9 +56,9 @@ pub fn staking_end_block(props: &Props) -> Html {
         <>
        <p>
         if end_period_clone2.is_some() {
-            {"Staking Period ends: "}{*end_period}
+            {"Staking Period ends: "}<span id="end-period-time">{*end_period}</span>
         } else {
-            {"Staking Period ends: "}{"None"}
+            {"Staking Period ends: "}<span id="end-period-time"><Icon icon_id={IconId::FontAwesomeSolidSpinner} /></span>
         }
         </p>
         </>

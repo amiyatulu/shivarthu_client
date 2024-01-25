@@ -4,6 +4,8 @@ use jsonrpsee_wasm_client::WasmClientBuilder;
 use wasm_bindgen_futures;
 use yew::prelude::*;
 use yew_hooks::prelude::*;
+use yew_icons::{Icon, IconId};
+
 use crate::constants::constant::NODE_URL;
 
 
@@ -54,9 +56,9 @@ pub fn evidence_end_block(props: &Props) -> Html {
         <>
         <p>
         if end_period_clone2.is_some() {
-           {"Evidence Period ends: "} {*end_period}
+           {"Evidence Period ends: "} <span id="end-period-time">{*end_period}</span>
         } else {
-            {"Evidence Period ends: "} {"None"}
+            {"Evidence Period ends: "} <span id="end-period-time"><Icon icon_id={IconId::FontAwesomeSolidSpinner} /></span>
         }
         </p>
         </>

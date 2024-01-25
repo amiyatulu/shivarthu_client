@@ -5,6 +5,8 @@ use wasm_bindgen_futures;
 use yew::prelude::*;
 use yew_hooks::prelude::*;
 use crate::constants::constant::NODE_URL;
+use yew_icons::{Icon, IconId};
+
 
 
 
@@ -54,9 +56,9 @@ pub fn vote_end_block(props: &Props) -> Html {
         <>
         <p>
         if end_period_clone2.is_some() {
-            {"Vote Period ends: "} {*end_period}
+            {"Vote Period ends: "} <span id="end-period-time">{*end_period}</span>
         } else {
-            {"Vote Period ends: "} {"None"}
+            {"Vote Period ends: "} <span id="end-period-time"><Icon icon_id={IconId::FontAwesomeSolidSpinner} /></span>
         }
         </p>
         </>

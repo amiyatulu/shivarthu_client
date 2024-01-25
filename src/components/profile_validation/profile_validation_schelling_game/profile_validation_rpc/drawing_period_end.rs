@@ -4,6 +4,8 @@ use jsonrpsee_wasm_client::WasmClientBuilder;
 use wasm_bindgen_futures;
 use yew::prelude::*;
 use std::ops::Deref;
+use yew_icons::{Icon, IconId};
+
 use crate::constants::constant::NODE_URL;
 
 
@@ -51,9 +53,9 @@ pub fn drawing_period_end(props: &Props) -> Html {
         <>
         <p>
         if drawing_period_value_clone2.is_some() {
-            {"Drawing Period ends: "} {drawing_period_value.deref().unwrap().2}
+            {"Drawing Period ends: "} <span id="end-drawing-period-time">{drawing_period_value.deref().unwrap().2}</span>
         } else {
-            {"Drawing Period ends: "} {"None"}
+            {"Drawing Period ends: "} <span id="end-drawing-period-time"><Icon icon_id={IconId::FontAwesomeSolidSpinner} /></span>
         }
         </p>
         </>

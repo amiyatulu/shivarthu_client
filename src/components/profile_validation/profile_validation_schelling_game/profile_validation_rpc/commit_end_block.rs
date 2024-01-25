@@ -4,6 +4,7 @@ use jsonrpsee_wasm_client::WasmClientBuilder;
 use wasm_bindgen_futures;
 use yew::prelude::*;
 use yew_hooks::prelude::*;
+use yew_icons::{Icon, IconId};
 use crate::constants::constant::NODE_URL;
 
 
@@ -53,9 +54,9 @@ pub fn commit_end_block(props: &Props) -> Html {
         <>
         <p>
         if end_period_clone2.is_some() {
-            {"Commit Period ends: "}{*end_period}
+            {"Commit Period ends: "}<span id="end-period-time">{*end_period}</span>
         } else {
-            {"Commit Period ends: "}{"None"}
+            {"Commit Period ends: "}<span id="end-period-time"><Icon icon_id={IconId::FontAwesomeSolidSpinner} /></span>
         }
         </p>
         </>
