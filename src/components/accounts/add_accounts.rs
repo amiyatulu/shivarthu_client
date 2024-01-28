@@ -31,7 +31,7 @@ pub fn add_accounts() -> Html {
     let successful_submission_clone = successful_submission.clone();
     let seed_error_clone = seed_error.clone();
 
-    let seed_changed = Callback::from(move |event: Event| {
+    let seed_changed = Callback::from(move |event: InputEvent| {
         let seed = event
             .target()
             .unwrap()
@@ -42,7 +42,7 @@ pub fn add_accounts() -> Html {
         cloned_seed_state.set(seed_value);
     });
 
-    let password_changed = Callback::from(move |event: Event| {
+    let password_changed = Callback::from(move |event: InputEvent| {
         let password = event
             .target()
             .unwrap()
@@ -86,11 +86,11 @@ pub fn add_accounts() -> Html {
                                }
                                 <div class="mb-3">
                                     <label for="seed" class="form-label">{"Seed"}</label>
-                                    <input type="text" class="form-control" name="seed" onchange={seed_changed}/>
+                                    <input type="text" class="form-control" name="seed" oninput={seed_changed}/>
                                 </div>
                                 <div class="mb-3">
                                     <label for="password" class="form-label">{"Password"}</label>
-                                    <input type="text" class="form-control" name="password"  onchange={password_changed}/> // New code: Sending props
+                                    <input type="text" class="form-control" name="password"  oninput={password_changed}/> // New code: Sending props
                                 </div>
 
                                 <CustomButton id="seed-submit-button" label="Submit" type_value="submit" /><br/>

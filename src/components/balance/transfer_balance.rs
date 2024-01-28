@@ -17,13 +17,13 @@ pub fn transfer_balance() -> Html {
         let dest_account = dest_account.clone();
         let transfer_balance = transfer_balance.clone();
         let spinner = spinner.clone();
-        // gloo::console::log!(format!("{:?},{:?}", dest_account, transfer_balance));
+        gloo::console::log!(format!("{:?},{:?}", dest_account, transfer_balance));
 
         Callback::from(move |event: SubmitEvent| {
             event.prevent_default();
             spinner.set(Some(true));
             if dest_account.is_some() && transfer_balance.is_some() {
-                // gloo::console::log!(format!("inside is some {:?},{:?}", dest_account, transfer_balance));
+                gloo::console::log!(format!("inside is some {:?},{:?}", dest_account, transfer_balance));
 
                 submit_done.set(true);
             }
@@ -32,7 +32,7 @@ pub fn transfer_balance() -> Html {
 
     let transfer_balance_onchanged = {
         let transfer_balance = transfer_balance.clone();
-        Callback::from(move |event: KeyboardEvent| {
+        Callback::from(move |event: InputEvent| {
             let value = event
                 .target()
                 .unwrap()
@@ -47,7 +47,7 @@ pub fn transfer_balance() -> Html {
     let dest_account_onchanged = {
         let dest_account = dest_account.clone();
 
-        Callback::from(move |event: KeyboardEvent| {
+        Callback::from(move |event: InputEvent| {
             let value = event
                 .target()
                 .unwrap()
@@ -62,20 +62,21 @@ pub fn transfer_balance() -> Html {
         <>
         <Nav/>
         <div class="container">
-            <form onsubmit={onsubmit}>
+            <form onsubmit={onsubmit} id="balance-transfer-from">
             <div class="mb-3">
             <label for="Destination Account" class="form-label">{"Destination Account Address:"}</label>
-            <input name={"destination_account"} type="text" class={"form-control"} required={true} onkeyup={dest_account_onchanged}/>
+            <input name="destination_account" type="text" class="form-control" required={true} oninput={dest_account_onchanged}/>
             </div>
+     
             <div class="mb-3">
             <label for="Transfer Balance" class="form-label">{"Transfer Balance:"}</label>
-            <input name={"transfer_balance"} type="number" class={"form-control"} required={true} onkeyup={transfer_balance_onchanged}/>
+            <input name="transfer_balance" type="text" class="form-control" required={true} oninput={transfer_balance_onchanged}/>
             </div>
             if let Some(_value) = *spinner {
-                <input type="submit" value="Submit" disabled={true}  id="tranfer-balance-submit"/>
+                <button type="submit" disabled={true} id="tranfer-balance-submit">{"Submit"}</button>
                 <Icon icon_id={IconId::FontAwesomeSolidSpinner} />
             } else {
-                <input type="submit" value="Submit" id="tranfer-balance-submit"/>
+                <button type="submit" id="tranfer-balance-submit">{"Submit"}</button>
             }
 
             </form>
