@@ -19,17 +19,17 @@ use crate::services::common_services::polkadot;
 #[derive(Properties, PartialEq)]
 pub struct Props {
     pub dest_account: String,
-    pub tranfer_balance: u128,
+    pub transfer_balance: u128,
 }
 
 #[function_component(Transaction)]
 pub fn transaction(props: &Props) -> Html {
     let dest_account = props.dest_account.clone();
-    let tranfer_balance = props.tranfer_balance.clone();
+    let transfer_balance = props.transfer_balance.clone();
 
     let account_id32 = AccountId32::from_str(&dest_account).unwrap();
 
-    let balance_transfer_tx = polkadot::tx().balances().transfer_allow_death(subxt::utils::MultiAddress::Id(account_id32), tranfer_balance);
+    let balance_transfer_tx = polkadot::tx().balances().transfer_allow_death(subxt::utils::MultiAddress::Id(account_id32), transfer_balance);
 
     let hookdata = use_sign_tx(balance_transfer_tx);
 
@@ -49,7 +49,7 @@ pub fn transaction(props: &Props) -> Html {
 #[function_component(ConditionalTransactionModal)]
 pub fn conditional_transaction(props: &Props) -> Html {
     let dest_account = props.dest_account.clone();
-    let tranfer_balance = props.tranfer_balance.clone();
+    let transfer_balance = props.transfer_balance.clone();
     let (store, _) = use_store::<PhaseExists>();
 
     if store.phase_exists_in_state == false {
@@ -59,7 +59,7 @@ pub fn conditional_transaction(props: &Props) -> Html {
     } else {
        html! {
         <>
-        <Transaction  dest_account={dest_account} tranfer_balance={tranfer_balance}/>
+        <Transaction  dest_account={dest_account} transfer_balance={transfer_balance}/>
         </>
        }
     }
